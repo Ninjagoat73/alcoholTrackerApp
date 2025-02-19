@@ -1,0 +1,53 @@
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Local configuration files
+/local.properties
+*.keystore
+*.jks
+*.key
+
+# IntelliJ / Android Studio project files
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Log files
+*.log
+
+# Android build artifacts
+*.apk
+*.ap_
+*.aab
+
+# Cache and temp files
+*.class
+*.dex
+*.jar
+*.war
+*.ear
+*.swp
+*.swo
+.DS_Store
+*.tmp
+*.~ 
+
+# Firebase and API Keys
+google-services.json
+app/google-services.json
+*.env
+
+# Crashlytics
+crashlytics.properties
+fabric.properties
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+
+# Other OS-generated files
+Thumbs.db
+Desktop.ini
