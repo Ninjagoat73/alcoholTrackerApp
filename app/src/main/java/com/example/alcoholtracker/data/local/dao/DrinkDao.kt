@@ -13,6 +13,9 @@ interface DrinkDao {
     @Query("SELECT * FROM drinks_db ORDER BY name ASC")
     fun getAllDrinks(): Flow<List<Drink>>
 
+    @Query("SELECT name FROM drinks_db WHERE name LIKE :query || '%'")
+    suspend fun getDrinkNames(query: String): List<String>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertDrinks(drink: List<Drink>)
 

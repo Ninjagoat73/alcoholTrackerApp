@@ -17,13 +17,18 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.alcoholtracker.data.model.UserDrinkLog
+import com.example.alcoholtracker.ui.components.AutoCompleteTextField
+import com.example.alcoholtracker.ui.viewmodel.DrinkViewModel
 import com.example.alcoholtracker.ui.viewmodel.UserDrinkLogViewModel
 import java.time.LocalDate
 
 
 
 @Composable
-fun AddDrinkScreen(navController: NavController, viewModel: UserDrinkLogViewModel = hiltViewModel()) {
+fun AddDrinkScreen(
+    navController: NavController,
+    viewModel: UserDrinkLogViewModel = hiltViewModel(),
+    drinkViewModel: DrinkViewModel = hiltViewModel()) {
     var drinkName by remember { mutableStateOf("") }
     var alcoholPercentage by remember { mutableStateOf("") }
     var volume by remember { mutableStateOf("") }
@@ -32,7 +37,7 @@ fun AddDrinkScreen(navController: NavController, viewModel: UserDrinkLogViewMode
     Column(modifier = Modifier.padding(16.dp)) {
         Text("Log a New Drink", style = MaterialTheme.typography.headlineSmall)
 
-        TextField(value = drinkName, onValueChange = { drinkName = it }, label = { Text("Drink Name") })
+        AutoCompleteTextField(drinkViewModel)
         TextField(value = alcoholPercentage, onValueChange = { alcoholPercentage = it }, label = { Text("Alcohol %") })
         TextField(value = volume, onValueChange = { volume = it }, label = { Text("Volume (ml)") })
         TextField(value = cost, onValueChange = { cost = it }, label = { Text("Cost ($)") })
