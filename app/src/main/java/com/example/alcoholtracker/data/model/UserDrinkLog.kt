@@ -5,13 +5,12 @@ import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.example.alcoholtracker.di.DateConverter
 import java.time.LocalDate
-import java.util.Date
 
 @Entity(tableName = "user_drink_logs")
 
 data class UserDrinkLog(
 
-    @PrimaryKey(autoGenerate = true) val logId: Int,
+    @PrimaryKey(autoGenerate = true) val logId: Int = 0,
     val drinkId: Int,
     val userId: Int,
     val name: String,
