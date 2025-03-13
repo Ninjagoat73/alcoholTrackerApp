@@ -1,7 +1,9 @@
 package com.example.alcoholtracker.ui.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -30,7 +32,7 @@ import com.example.alcoholtracker.ui.components.AddButton
 import com.example.alcoholtracker.ui.components.HomeTopBar
 
 
-import com.example.alcoholtracker.ui.theme.AlcoholTrackerTheme
+
 import com.example.alcoholtracker.ui.viewmodel.DrinkViewModel
 import com.example.alcoholtracker.ui.viewmodel.UserDrinkLogViewModel
 import java.time.LocalDate
@@ -47,14 +49,18 @@ fun HomeScreen(
     val dailySpending by userDrinkLogViewModel.dailySpending.collectAsState()
 
     Scaffold(
+        containerColor = MaterialTheme.colorScheme.background,
         topBar = {HomeTopBar() {} },
-        floatingActionButton = {AddButton(navController)}
+        floatingActionButton = {AddButton(navController)},
+        modifier = Modifier.fillMaxSize()
+
 
     ) { padding ->
+
+
+
         Column(modifier = Modifier
             .padding(16.dp),
-
-
         ) {
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -96,7 +102,43 @@ fun dailyDrinkList(){
 @Preview (showBackground = true)
 @Composable
 fun PreviewFunction(){
-    AlcoholTrackerTheme {
 
-    }
 }
+
+val drink = listOf(
+    "Wine",
+    "Beer",
+    "Cabernet Sauvignon",
+    "Merlot",
+    "Pinot Noir",
+    "Chardonnay",
+    "Sauvignon Blanc",
+    "Riesling",
+    "Zinfandel",
+    "Syrah",
+    "Malbec",
+    "Prosecco",
+    "Champagne",
+    "Rosé",
+    "Moscato",
+    "Pinot Grigio",
+    "Shiraz",
+    "IPA (India Pale Ale)",
+    "Lager",
+    "Stout",
+    "Porter",
+    "Pilsner",
+    "Wheat Beer",
+    "Pale Ale",
+    "Sour Beer",
+    "Amber Ale",
+    "Brown Ale",
+    "Belgian Tripel",
+    "Hefeweizen",
+    "Dunkel",
+    "Bock",
+    "Kolsch",
+    "Thing",
+    "stuff",
+    "Stuff2"
+)
