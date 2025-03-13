@@ -31,7 +31,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
+            AlcoholTrackerTheme {
                 MainScreen()
+            }
             }
         }
     }

@@ -2,10 +2,11 @@ package com.example.alcoholtracker.ui.components
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -17,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.alcoholtracker.utils.getFormattedDate
 import java.time.LocalDate
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeTopBar(onCalendarClick: () -> Unit) {
     TopAppBar(
@@ -42,7 +44,6 @@ fun CurrentDayText(){
     val yesterdayDate = getFormattedDate(LocalDate.now().plusDays(-1))
     Text("$yesterdayDate - $todayDate",
         style = MaterialTheme.typography.titleMedium,
-        color = Color.Black
     )
 }
 
