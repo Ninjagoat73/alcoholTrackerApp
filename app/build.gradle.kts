@@ -37,6 +37,7 @@ android {
 dependencies {
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.compose.ui:ui-text-google-fonts:1.7.8")
+    testImplementation("junit:junit:4.12")
     ksp("androidx.room:room-compiler:2.6.1")
 
     implementation("com.seanproctor:data-table-material3:0.11.3")

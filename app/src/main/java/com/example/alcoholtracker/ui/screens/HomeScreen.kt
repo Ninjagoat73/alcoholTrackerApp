@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -29,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.alcoholtracker.ui.components.AddButton
+import com.example.alcoholtracker.ui.components.AlcoholListHome
 import com.example.alcoholtracker.ui.components.HomeTopBar
 
 
@@ -55,10 +57,15 @@ fun HomeScreen(
         modifier = Modifier.fillMaxSize()
 
 
-    ) { padding ->
+    ) {
+        Surface(modifier = Modifier.padding(top = it.calculateTopPadding())) {
+
+            AlcoholListHome(userDrinkLogs)
+        }
 
 
 
+        /*
         Column(modifier = Modifier
             .padding(16.dp),
         ) {
@@ -77,7 +84,7 @@ fun HomeScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
 
-        }
+        }*/
     }
 }
 
@@ -105,40 +112,3 @@ fun PreviewFunction(){
 
 }
 
-val drink = listOf(
-    "Wine",
-    "Beer",
-    "Cabernet Sauvignon",
-    "Merlot",
-    "Pinot Noir",
-    "Chardonnay",
-    "Sauvignon Blanc",
-    "Riesling",
-    "Zinfandel",
-    "Syrah",
-    "Malbec",
-    "Prosecco",
-    "Champagne",
-    "Rosé",
-    "Moscato",
-    "Pinot Grigio",
-    "Shiraz",
-    "IPA (India Pale Ale)",
-    "Lager",
-    "Stout",
-    "Porter",
-    "Pilsner",
-    "Wheat Beer",
-    "Pale Ale",
-    "Sour Beer",
-    "Amber Ale",
-    "Brown Ale",
-    "Belgian Tripel",
-    "Hefeweizen",
-    "Dunkel",
-    "Bock",
-    "Kolsch",
-    "Thing",
-    "stuff",
-    "Stuff2"
-)

@@ -37,7 +37,7 @@ fun AddDrinkScreen(
     Column(modifier = Modifier.padding(16.dp)) {
         Text("Log a New Drink", style = MaterialTheme.typography.headlineSmall)
 
-        AutoCompleteTextField(drinkViewModel)
+        TextField(value = drinkName, onValueChange = {drinkName = it}, label = { Text("Drink Name")})
         TextField(value = alcoholPercentage, onValueChange = { alcoholPercentage = it }, label = { Text("Alcohol %") })
         TextField(value = volume, onValueChange = { volume = it }, label = { Text("Volume (ml)") })
         TextField(value = cost, onValueChange = { cost = it }, label = { Text("Cost ($)") })
@@ -58,7 +58,7 @@ fun AddDrinkScreen(
 
                     )
                 )
-                navController.popBackStack()  // Navigate back to HomeScreen
+                navController.popBackStack()
             }
         ) {
             Text("Save Drink")

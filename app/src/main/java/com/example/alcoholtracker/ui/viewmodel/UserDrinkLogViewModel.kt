@@ -23,32 +23,6 @@ class UserDrinkLogViewModel @Inject constructor(
     private val userDrinkLogDao: UserDrinkLogDao
 ) : ViewModel() {
 
-    private val mockUserDrinks = listOf(
-        UserDrinkLog(
-            logId = 1,
-            userId = 123,
-            drinkId = 1,  // Heineken from `drinks_db`
-            name = "Heineken",
-            alcoholPercentage = 5.0,
-            amount = 330.0,
-            date = LocalDate.of(2024, Month.JUNE, 25),  // Yesterday
-            cost = 5.0,
-            recipient = "Self",
-            category = "Beer"
-        ),
-        UserDrinkLog(
-            logId = 2,
-            userId = 123,
-            drinkId = 2,  // Heineken from `drinks_db`
-            name = "Jack Daniels",
-            alcoholPercentage = 40.0,
-            amount = 330.0,
-            date = LocalDate.now(),
-            cost = 5.0,
-            recipient = "Self",
-            category = "Whiskey"
-        )
-    )
 
     private val _userId = MutableStateFlow(123)
 
@@ -77,8 +51,7 @@ class UserDrinkLogViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            userDrinkLogDao.insertDrinkLog(mockUserDrinks[0])
-            userDrinkLogDao.insertDrinkLog(mockUserDrinks[1])
+
         }
     }
 }
