@@ -6,9 +6,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 
@@ -26,13 +28,15 @@ import java.time.LocalDate
 
 @Composable
 fun AlcoholListHome(userDrinkLogs: List<UserDrinkLog>){
-    ElevatedCard(modifier = Modifier
+    OutlinedCard(modifier = Modifier
         .padding(16.dp)
         .clip(RoundedCornerShape(12.dp))
         .height(300.dp)
-        .fillMaxWidth()
-        .background(MaterialTheme.colorScheme.surfaceContainer),
-        elevation = CardDefaults.cardElevation(defaultElevation = 16.dp)) {
+        .fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainer
+        )
+        ) {
 
 
         DataTable(
