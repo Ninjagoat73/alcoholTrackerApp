@@ -19,7 +19,7 @@ import androidx.navigation.NavController
 import com.example.alcoholtracker.data.model.UserDrinkLog
 import com.example.alcoholtracker.ui.components.AutoCompleteTextField
 import com.example.alcoholtracker.ui.viewmodel.DrinkViewModel
-import com.example.alcoholtracker.ui.viewmodel.UserDrinkLogViewModel
+import com.example.alcoholtracker.ui.viewmodel.UserAndUserDrinkLogViewModel
 import java.time.LocalDate
 
 
@@ -27,7 +27,7 @@ import java.time.LocalDate
 @Composable
 fun AddDrinkScreen(
     navController: NavController,
-    viewModel: UserDrinkLogViewModel = hiltViewModel(),
+    viewModel: UserAndUserDrinkLogViewModel = hiltViewModel(),
     drinkViewModel: DrinkViewModel = hiltViewModel()) {
     var drinkName by remember { mutableStateOf("") }
     var alcoholPercentage by remember { mutableStateOf("") }

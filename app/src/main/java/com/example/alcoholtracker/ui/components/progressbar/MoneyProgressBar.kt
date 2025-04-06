@@ -17,26 +17,24 @@ import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.compose.AlcoholTrackerTheme
-import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.example.alcoholtracker.data.model.UserDrinkLog
+import java.time.LocalDate
 
 
 class MoneyProgressBar : ProgressBarInterface {
 
     @Composable
-    override fun ProgressBarCard(userDrinkLogs: List<UserDrinkLog>) {
+    override fun ProgressBarCard(money: Double, count: Double, amount: Double, target: Double) {
         OutlinedCard(modifier = Modifier
             .padding(16.dp)
             .clip(RoundedCornerShape(12.dp))
@@ -46,27 +44,22 @@ class MoneyProgressBar : ProgressBarInterface {
                 containerColor = MaterialTheme.colorScheme.surfaceContainer
             ))
             {
-                ProgressText(10.0,
-                    10,
-                    1000,)
+                ProgressText(money,
+                    count.toInt(),
+                    amount.toInt(),)
 
                 Box(modifier = Modifier
                     .fillMaxSize(),
                     contentAlignment = Alignment.BottomCenter)
                 {
-                    ProgressBar(10.0)
+                    ProgressBar(progressCalculator(money, target))
                 }
-
-
-
             }
     }
 
     @Composable
-    override fun ProgressBar(score: Double) {
-        val progressFactor = remember(score) {
-            mutableFloatStateOf((score * 0.005f).toFloat())
-        }
+    override fun ProgressBar(calculatedScore: Float) {
+
 
         Box(
             modifier = Modifier
@@ -101,7 +94,7 @@ class MoneyProgressBar : ProgressBarInterface {
             )
             Box(
                 modifier = Modifier
-                    .fillMaxWidth(1f - progressFactor.floatValue)
+                    .fillMaxWidth(1f - calculatedScore)
                     .fillMaxHeight()
                     .background(MaterialTheme.colorScheme.surfaceContainer)
                     .align(Alignment.CenterEnd)
@@ -135,13 +128,65 @@ class MoneyProgressBar : ProgressBarInterface {
 
     }
 
+    override fun progressCalculator(unCalculatedScore: Double, target: Double): Float {
 
-    /*
+        val score = unCalculatedScore/target
+
+        return if (score in 0.0..1.0)
+            score.toFloat()
+        else if (score > 1.0)
+            1.0F
+        else
+            0F
+    }
+
+    val mockLogs = listOf(
+        UserDrinkLog(
+            drinkId = 1,
+            userId = 1,
+            name = "Beer",
+            cost = 5.0,
+            alcoholPercentage = 5.0,
+            amount = 500.0,
+            category = "Beer",
+            recipient = "Myself",
+            date = LocalDate.now() // today
+        ),
+        UserDrinkLog(
+            drinkId = 2,
+            userId = 1,
+            name = "Wine",
+            cost = 10.0,
+            alcoholPercentage = 12.5,
+            amount = 250.0,
+            category = "Wine",
+            recipient = "Myself",
+            date = LocalDate.now().minusDays(1) // yesterday
+        ),
+        UserDrinkLog(
+            drinkId = 3,
+            userId = 1,
+            name = "Whiskey",
+            cost = 15.0,
+            alcoholPercentage = 40.0,
+            amount = 50.0,
+            category = "Spirits",
+            recipient = "Friend",
+            date = LocalDate.now().minusDays(2) // two days ago
+        )
+    )
+
+
+
+
     @Preview(showBackground = true)
     @Composable
     fun Preview(){
         AlcoholTrackerTheme {
-            ProgressBarCard(null)
+            ProgressBarCard(10.0,
+                10.0,
+                2000.0,
+                200.0)
         }
-    }*/
+    }
 }

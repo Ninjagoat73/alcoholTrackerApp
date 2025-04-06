@@ -6,6 +6,8 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.alcoholtracker.data.model.User
 import com.example.alcoholtracker.data.model.UserDrinkLog
+import com.example.alcoholtracker.data.model.UserDrinkLogSummary
+import java.nio.DoubleBuffer
 
 @Dao
 interface UserAndUserDrinkLogDao {
@@ -22,7 +24,16 @@ interface UserAndUserDrinkLogDao {
     @Query("SELECT * FROM log WHERE userId = :userId")
     suspend fun getDrinkLogsByUserId(userId: Int): List<UserDrinkLog>
 
-    @Query("Select * FROM users WHERE userEmail = :userEmail AND userPassword = :userPassword")
-    fun verifyUserLogin(userEmail: String, userPassword: String)
+
+    @Query("""
+            SELECT 
+                SUM(cost) AS totalCost, 
+                COUNT(*) AS drinkCount, 
+                SUM(amount) AS totalAmount 
+            FROM log 
+            WHERE userId = :userId 
+            AND date(date) IN (date('now'), date('now', '-1 day'))
+            """)
+    suspend fun getTwoDaySummary(userId: Int): UserDrinkLogSummary
 
 }

@@ -4,21 +4,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 import com.example.alcoholtracker.data.model.UserDrinkLog
+import com.example.alcoholtracker.data.model.UserDrinkLogSummary
 import com.example.alcoholtracker.data.repository.UserAndUserDrinkLogRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.time.Month
-import java.util.Calendar
-import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,28 +23,29 @@ class UserAndUserDrinkLogViewModel @Inject constructor(
 
 
     private val _userId = MutableStateFlow(123)
-    private val _totalSpent = MutableLiveData<Double>()
-    val totalSpent: LiveData<Double> = _totalSpent
+    private val _twoDaySummary = MutableLiveData<UserDrinkLogSummary>()
+    private val _drinkLogs = MutableStateFlow<List<UserDrinkLog>>(emptyList())
+    val drinkLogs: StateFlow<List<UserDrinkLog>> = _drinkLogs
+    val twoDaySummary: LiveData<UserDrinkLogSummary> = _twoDaySummary
 
-    fun fetchTotalSpent(date: LocalDate) {
+
+
+    fun getTwoDaySummary() {
         viewModelScope.launch {
-            _totalSpent.value = UserAndUserDrinkLogRepository.getDailyCost(_userId.value, date)
+            _twoDaySummary.value = userAndUserDrinkLogRepository.getTwoDaySummary(_userId.value)
         }
     }
 
-    fun logDrink(drink: UserDrinkLog) {
+    fun getDrinkLogsByUserId(){
         viewModelScope.launch {
-            userDrinkLogRepository.insertDrinkLog(drink)
+            _drinkLogs.value = userAndUserDrinkLogRepository.getDrinkLogsByUserId(_userId.value)
         }
     }
 
-    private fun calculateSpending(drinks: List<UserDrinkLog>, daysAgo: Int): Double{
-        val today = System.currentTimeMillis()
-        val startOfDay = today - (daysAgo *24*60*60*1000)
-
-        return drinks
-            .filter { it.date >= LocalDate.now() }
-            .sumOf { it.cost ?: 0.0 }
+    fun logDrink(drinkLog: UserDrinkLog){
+        viewModelScope.launch {
+            userAndUserDrinkLogRepository.insertDrinkLog(drinkLog)
+        }
     }
 
     init { viewModelScope.launch {} }

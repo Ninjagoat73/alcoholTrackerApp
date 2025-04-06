@@ -7,6 +7,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.alcoholtracker.data.local.dao.DrinkDao
 import com.example.alcoholtracker.data.local.dao.UserAndUserDrinkLogDao
 import com.example.alcoholtracker.data.local.database.DrinksDatabase
+import com.example.alcoholtracker.data.local.database.UserAndUserDrinkLogDataBase
 import com.example.alcoholtracker.data.model.Drink
 import dagger.Module
 import dagger.Provides
@@ -34,12 +35,14 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideUserDrinkLogDatabase(@ApplicationContext context: Context): UserDrinkLogDatabase {
-        return UserDrinkLogDatabase.getDatabase(context)
+    fun provideUserDrinkLogDatabase(@ApplicationContext context: Context): UserAndUserDrinkLogDataBase {
+        return UserAndUserDrinkLogDataBase.getDatabase(context)
     }
 
     @Provides
-    fun provideUserDrinkLogDao(db: UserDrinkLogDatabase): UserDrinkLogDao = db.userDrinkLogDao()
+    fun provideUserDrinkLogDao(db: UserAndUserDrinkLogDataBase): UserAndUserDrinkLogDao {
+        return db.userAndUserDrinkLogDao()
+    }
 
     @Provides
     @Singleton

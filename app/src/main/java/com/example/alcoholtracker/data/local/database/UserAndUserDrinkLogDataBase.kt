@@ -2,6 +2,7 @@ package com.example.alcoholtracker.data.local.database
 
 import android.content.Context
 import androidx.room.Database
+import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.alcoholtracker.data.local.dao.UserAndUserDrinkLogDao
@@ -17,12 +18,20 @@ abstract class UserAndUserDrinkLogDataBase : RoomDatabase() {
 
     companion object{
 
+        private fun buildDatabase(context: Context): UserAndUserDrinkLogDataBase{
+            return Room.databaseBuilder(context, UserAndUserDrinkLogDataBase::class.java, "userAndUserDrinkLog.db")
+                .build()
+        }
+
         @Volatile private var INSTANCE: UserAndUserDrinkLogDataBase? = null
 
-        private fun getDatabase(context: Context): UserAndUserDrinkLogDataBase {
+        fun getDatabase(context: Context): UserAndUserDrinkLogDataBase {
             if (INSTANCE == null) {
-
+                synchronized(this){
+                    INSTANCE = buildDatabase(context)
+                }
             }
+            return INSTANCE!!
         }
     }
 

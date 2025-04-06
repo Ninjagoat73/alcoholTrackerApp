@@ -32,11 +32,11 @@ import androidx.navigation.NavController
 import com.example.alcoholtracker.ui.components.AddButton
 import com.example.alcoholtracker.ui.components.AlcoholListHome
 import com.example.alcoholtracker.ui.components.HomeTopBar
-
+import com.example.alcoholtracker.ui.components.progressbar.MoneyProgressBar
 
 
 import com.example.alcoholtracker.ui.viewmodel.DrinkViewModel
-import com.example.alcoholtracker.ui.viewmodel.UserDrinkLogViewModel
+import com.example.alcoholtracker.ui.viewmodel.UserAndUserDrinkLogViewModel
 import java.time.LocalDate
 import com.example.alcoholtracker.utils.getFormattedDate
 
@@ -44,11 +44,12 @@ import com.example.alcoholtracker.utils.getFormattedDate
 fun HomeScreen(
     navController: NavController,
     drinkViewModel: DrinkViewModel = hiltViewModel(),
-    userDrinkLogViewModel: UserDrinkLogViewModel = hiltViewModel()
+    userDrinkLogViewModel: UserAndUserDrinkLogViewModel = hiltViewModel()
 ){
     val drinks by drinkViewModel.drinks.collectAsState()
-    val userDrinkLogs by userDrinkLogViewModel.userDrinkLogs.collectAsState()
-    val dailySpending by userDrinkLogViewModel.dailySpending.collectAsState()
+    val userDrinkLogs by userDrinkLogViewModel.drinkLogs.collectAsState()
+    val twoDaySummary = userDrinkLogViewModel.twoDaySummary
+
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
@@ -61,6 +62,14 @@ fun HomeScreen(
         Surface(modifier = Modifier.padding(top = it.calculateTopPadding())) {
 
             AlcoholListHome(userDrinkLogs)
+
+            var progressBar = MoneyProgressBar()
+
+            progressBar.ProgressBarCard(
+                twoDaySummary.value?.totalCost ?: 0.0,
+                twoDaySummary.value?.drinkCount?.toDouble() ?: 0.0,
+                twoDaySummary.value?.totalAmount ?: 0.0,
+                200.0)
         }
 
 
