@@ -32,7 +32,7 @@ interface UserAndUserDrinkLogDao {
                 SUM(amount) AS totalAmount 
             FROM log 
             WHERE userId = :userId 
-            AND date(date) IN (date('now'), date('now', '-1 day'))
+            AND date BETWEEN date('now', '-1 day') AND date('now')
             """)
     suspend fun getTwoDaySummary(userId: Int): UserDrinkLogSummary
 

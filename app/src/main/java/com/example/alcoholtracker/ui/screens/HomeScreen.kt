@@ -29,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.alcoholtracker.data.model.UserDrinkLogSummary
 import com.example.alcoholtracker.ui.components.AddButton
 import com.example.alcoholtracker.ui.components.AlcoholListHome
 import com.example.alcoholtracker.ui.components.HomeTopBar
@@ -48,8 +49,11 @@ fun HomeScreen(
 ){
     val drinks by drinkViewModel.drinks.collectAsState()
     val userDrinkLogs by userDrinkLogViewModel.drinkLogs.collectAsState()
-    val twoDaySummary = userDrinkLogViewModel.twoDaySummary
+    val twoDaySummary by userDrinkLogViewModel.twoDaySummary.collectAsState()
 
+    val randomTest = UserDrinkLogSummary(10.0, 10, 10.0)
+
+    println("$randomTest")
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
@@ -61,15 +65,17 @@ fun HomeScreen(
     ) {
         Surface(modifier = Modifier.padding(top = it.calculateTopPadding())) {
 
-            AlcoholListHome(userDrinkLogs)
+            Column {             AlcoholListHome(userDrinkLogs)
 
-            var progressBar = MoneyProgressBar()
+                var progressBar = MoneyProgressBar()
 
-            progressBar.ProgressBarCard(
-                twoDaySummary.value?.totalCost ?: 0.0,
-                twoDaySummary.value?.drinkCount?.toDouble() ?: 0.0,
-                twoDaySummary.value?.totalAmount ?: 0.0,
-                200.0)
+                progressBar.ProgressBarCard(
+                    twoDaySummary?.totalCost ?: 0.0,
+                    twoDaySummary?.drinkCount?.toDouble() ?: 0.0,
+                    twoDaySummary?.totalAmount ?: 0.0,
+                    200.0) }
+
+
         }
 
 

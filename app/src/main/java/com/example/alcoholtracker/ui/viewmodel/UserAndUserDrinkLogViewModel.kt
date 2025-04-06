@@ -23,15 +23,17 @@ class UserAndUserDrinkLogViewModel @Inject constructor(
 
 
     private val _userId = MutableStateFlow(123)
-    private val _twoDaySummary = MutableLiveData<UserDrinkLogSummary>()
+    private val _twoDaySummary = MutableStateFlow<UserDrinkLogSummary?>(null)
     private val _drinkLogs = MutableStateFlow<List<UserDrinkLog>>(emptyList())
     val drinkLogs: StateFlow<List<UserDrinkLog>> = _drinkLogs
-    val twoDaySummary: LiveData<UserDrinkLogSummary> = _twoDaySummary
+    val twoDaySummary: StateFlow<UserDrinkLogSummary?> = _twoDaySummary
 
 
 
     fun getTwoDaySummary() {
         viewModelScope.launch {
+            val summary = userAndUserDrinkLogRepository.getTwoDaySummary(_userId.value)
+            println("DEBUG: TwoDaySummary = $summary")
             _twoDaySummary.value = userAndUserDrinkLogRepository.getTwoDaySummary(_userId.value)
         }
     }
@@ -48,5 +50,8 @@ class UserAndUserDrinkLogViewModel @Inject constructor(
         }
     }
 
-    init { viewModelScope.launch {} }
+    init { viewModelScope.launch {
+        getDrinkLogsByUserId()
+        getTwoDaySummary()
+    } }
 }
