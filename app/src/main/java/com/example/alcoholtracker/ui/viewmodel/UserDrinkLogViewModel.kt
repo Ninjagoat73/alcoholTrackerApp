@@ -1,9 +1,12 @@
 package com.example.alcoholtracker.ui.viewmodel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.alcoholtracker.data.local.dao.UserDrinkLogDao
+
 import com.example.alcoholtracker.data.model.UserDrinkLog
+import com.example.alcoholtracker.data.repository.UserAndUserDrinkLogRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -19,24 +22,24 @@ import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
-class UserDrinkLogViewModel @Inject constructor(
-    private val userDrinkLogDao: UserDrinkLogDao
+class UserAndUserDrinkLogViewModel @Inject constructor(
+    private val userAndUserDrinkLogRepository: UserAndUserDrinkLogRepository
 ) : ViewModel() {
 
 
     private val _userId = MutableStateFlow(123)
+    private val _totalSpent = MutableLiveData<Double>()
+    val totalSpent: LiveData<Double> = _totalSpent
 
-    val userDrinkLogs = _userId.flatMapLatest { id ->
-        userDrinkLogDao.getUserLogs(id)
-    }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
-
-    val dailySpending: StateFlow<Double> = userDrinkLogs.map { logs ->
-        calculateSpending(logs,1)
-    }.stateIn(viewModelScope, SharingStarted.Lazily,0.0)
+    fun fetchTotalSpent(date: LocalDate) {
+        viewModelScope.launch {
+            _totalSpent.value = UserAndUserDrinkLogRepository.getDailyCost(_userId.value, date)
+        }
+    }
 
     fun logDrink(drink: UserDrinkLog) {
         viewModelScope.launch {
-            userDrinkLogDao.insertDrinkLog(drink)
+            userDrinkLogRepository.insertDrinkLog(drink)
         }
     }
 
@@ -49,9 +52,5 @@ class UserDrinkLogViewModel @Inject constructor(
             .sumOf { it.cost ?: 0.0 }
     }
 
-    init {
-        viewModelScope.launch {
-
-        }
-    }
+    init { viewModelScope.launch {} }
 }

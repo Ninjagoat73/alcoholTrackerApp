@@ -13,18 +13,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-
 import com.example.alcoholtracker.data.model.UserDrinkLog
-import com.example.compose.AlcoholTrackerTheme
 import com.seanproctor.datatable.DataColumn
 import com.seanproctor.datatable.material3.DataTable
 import java.time.LocalDate
-
 
 @Composable
 fun AlcoholListHome(userDrinkLogs: List<UserDrinkLog>){
@@ -57,11 +52,13 @@ fun AlcoholListHome(userDrinkLogs: List<UserDrinkLog>){
             },
         )) {
             for (drink in userDrinkLogs){
-                row {
-                    cell { Text(drink.name) }
-                    cell { Text("${drink.amount}ml")}
-                    cell { Text("${drink.cost}$") }
-                    cell { Text("${drink.alcoholPercentage}%")}
+                if (drink.date == LocalDate.now() || drink.date == LocalDate.now().minusDays(1)) {
+                    row {
+                        cell { Text(drink.name) }
+                        cell { Text("${drink.amount}ml")}
+                        cell { Text("${drink.cost}$") }
+                        cell { Text("${drink.alcoholPercentage}%")}
+                    }
                 }
             }
         }
@@ -75,42 +72,3 @@ fun HeaderText(text: String){
         maxLines = 1,
         )
 }
-
-
-/*
-val drinks = listOf(
-    UserDrinkLog(
-        drinkId = 1,
-        name = "A",
-        category = "B",
-        logId = 0,
-        userId = 0,
-        cost = 3.0,
-        alcoholPercentage = 2.0,
-        amount = 1.0,
-        recipient = "Me",
-        date = LocalDate.now(),
-    ),
-    UserDrinkLog(
-        drinkId = 1,
-        name = "B",
-        category = "B",
-        logId = 1,
-        userId = 0,
-        cost = 3.0,
-        alcoholPercentage = 2.0,
-        amount = 1.0,
-        recipient = "Me",
-        date = LocalDate.now(),
-    )
-
-)
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun Preview(){
-    AlcoholTrackerTheme {
-        AlcoholListHome(drinks)
-    }
-}
-*/

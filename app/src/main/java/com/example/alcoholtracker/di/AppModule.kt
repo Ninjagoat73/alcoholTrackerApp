@@ -5,9 +5,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.alcoholtracker.data.local.dao.DrinkDao
-import com.example.alcoholtracker.data.local.dao.UserDrinkLogDao
+import com.example.alcoholtracker.data.local.dao.UserAndUserDrinkLogDao
 import com.example.alcoholtracker.data.local.database.DrinksDatabase
-import com.example.alcoholtracker.data.local.database.UserDrinkLogDatabase
 import com.example.alcoholtracker.data.model.Drink
 import dagger.Module
 import dagger.Provides
