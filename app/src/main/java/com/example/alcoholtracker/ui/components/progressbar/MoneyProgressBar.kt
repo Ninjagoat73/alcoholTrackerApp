@@ -33,8 +33,13 @@ import java.time.LocalDate
 
 class MoneyProgressBar : ProgressBarInterface {
 
+
+
     @Composable
-    override fun ProgressBarCard(money: Double, count: Double, amount: Double, target: Double) {
+    override fun ProgressBarCard(logs: List<UserDrinkLog>) {
+
+        val summary = progressCalculator(logs)
+
         OutlinedCard(modifier = Modifier
             .padding(16.dp)
             .clip(RoundedCornerShape(12.dp))
@@ -43,24 +48,24 @@ class MoneyProgressBar : ProgressBarInterface {
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.surfaceContainer
             ))
+
+
             {
-                ProgressText(money,
-                    count.toInt(),
-                    amount.toInt(),)
+
+
+                ProgressText(summary.totalCost, summary.drinkCount, summary.totalAmount.toInt())
 
                 Box(modifier = Modifier
                     .fillMaxSize(),
                     contentAlignment = Alignment.BottomCenter)
                 {
-                    ProgressBar(progressCalculator(money, target))
+                    ProgressBar(progressCalculator(summary.totalCost, 200.0))
                 }
             }
     }
 
     @Composable
     override fun ProgressBar(calculatedScore: Float) {
-
-
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -178,7 +183,7 @@ class MoneyProgressBar : ProgressBarInterface {
 
 
 
-
+/*
     @Preview(showBackground = true)
     @Composable
     fun Preview(){
@@ -189,4 +194,5 @@ class MoneyProgressBar : ProgressBarInterface {
                 200.0)
         }
     }
+    */
 }

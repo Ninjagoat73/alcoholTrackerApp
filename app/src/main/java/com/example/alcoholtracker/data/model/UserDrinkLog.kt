@@ -22,7 +22,7 @@ data class UserDrinkLog(
     val name: String,
 
     @ColumnInfo("cost")
-    val cost: Double?,
+    val cost: Double,
 
     @ColumnInfo("alcoholPercentage")
     val alcoholPercentage: Double,

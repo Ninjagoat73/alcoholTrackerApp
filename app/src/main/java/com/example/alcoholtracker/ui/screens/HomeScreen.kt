@@ -50,10 +50,8 @@ fun HomeScreen(
     val drinks by drinkViewModel.drinks.collectAsState()
     val userDrinkLogs by userDrinkLogViewModel.drinkLogs.collectAsState()
     val twoDaySummary by userDrinkLogViewModel.twoDaySummary.collectAsState()
+    var progressBar = MoneyProgressBar()
 
-    val randomTest = UserDrinkLogSummary(10.0, 10, 10.0)
-
-    println("$randomTest")
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
@@ -65,15 +63,13 @@ fun HomeScreen(
     ) {
         Surface(modifier = Modifier.padding(top = it.calculateTopPadding())) {
 
-            Column {             AlcoholListHome(userDrinkLogs)
+            Column {
 
-                var progressBar = MoneyProgressBar()
+                AlcoholListHome(userDrinkLogs)
 
-                progressBar.ProgressBarCard(
-                    twoDaySummary?.totalCost ?: 0.0,
-                    twoDaySummary?.drinkCount?.toDouble() ?: 0.0,
-                    twoDaySummary?.totalAmount ?: 0.0,
-                    200.0) }
+                progressBar.ProgressBarCard(userDrinkLogs)
+
+            }
 
 
         }

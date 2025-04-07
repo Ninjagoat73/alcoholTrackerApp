@@ -11,7 +11,9 @@ import com.example.alcoholtracker.data.model.UserDrinkLogSummary
 import com.example.alcoholtracker.data.repository.UserAndUserDrinkLogRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import javax.inject.Inject
@@ -23,26 +25,23 @@ class UserAndUserDrinkLogViewModel @Inject constructor(
 
 
     private val _userId = MutableStateFlow(123)
-    private val _twoDaySummary = MutableStateFlow<UserDrinkLogSummary?>(null)
+    private val _twoDaySummary = MutableStateFlow<List<UserDrinkLog>?>(null)
     private val _drinkLogs = MutableStateFlow<List<UserDrinkLog>>(emptyList())
-    val drinkLogs: StateFlow<List<UserDrinkLog>> = _drinkLogs
-    val twoDaySummary: StateFlow<UserDrinkLogSummary?> = _twoDaySummary
+    val twoDaySummary: StateFlow<List<UserDrinkLog>?> = _twoDaySummary
+
+    val drinkLogs: StateFlow<List<UserDrinkLog>> = userAndUserDrinkLogRepository
+        .getDrinkLogsByUserId(_userId.value)
+        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
 
 
     fun getTwoDaySummary() {
         viewModelScope.launch {
-            val summary = userAndUserDrinkLogRepository.getTwoDaySummary(_userId.value)
-            println("DEBUG: TwoDaySummary = $summary")
-            _twoDaySummary.value = userAndUserDrinkLogRepository.getTwoDaySummary(_userId.value)
+            val summary = userAndUserDrinkLogRepository.getTwoDayLogs(_userId.value)
+            _twoDaySummary.value = userAndUserDrinkLogRepository.getTwoDayLogs(_userId.value)
         }
     }
 
-    fun getDrinkLogsByUserId(){
-        viewModelScope.launch {
-            _drinkLogs.value = userAndUserDrinkLogRepository.getDrinkLogsByUserId(_userId.value)
-        }
-    }
 
     fun logDrink(drinkLog: UserDrinkLog){
         viewModelScope.launch {
@@ -51,7 +50,6 @@ class UserAndUserDrinkLogViewModel @Inject constructor(
     }
 
     init { viewModelScope.launch {
-        getDrinkLogsByUserId()
         getTwoDaySummary()
     } }
 }
