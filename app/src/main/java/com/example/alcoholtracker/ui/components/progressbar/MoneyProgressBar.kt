@@ -32,9 +32,6 @@ import java.time.LocalDate
 
 
 class MoneyProgressBar : ProgressBarInterface {
-
-
-
     @Composable
     override fun ProgressBarCard(logs: List<UserDrinkLog>) {
 

@@ -26,8 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.alcoholtracker.data.model.UserDrinkLog
 
-class AmountProgressBar: ProgressBarInterface {
-
+class CountProgressBar: ProgressBarInterface {
     @Composable
     override fun ProgressBarCard(logs: List<UserDrinkLog>) {
 
@@ -52,7 +51,7 @@ class AmountProgressBar: ProgressBarInterface {
                 .fillMaxSize(),
                 contentAlignment = Alignment.BottomCenter)
             {
-                ProgressBar(progressCalculator(summary.totalAmount, 2000.0))
+                ProgressBar(progressCalculator(summary.drinkCount.toDouble(), 4.0))
             }
         }
     }
@@ -110,12 +109,12 @@ class AmountProgressBar: ProgressBarInterface {
             .fillMaxWidth()
             .padding(top = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally){
-            Text(text = "${amount}ml",
+            Text(text = "$count drinks",
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp,
                 modifier = Modifier.padding(bottom = 4.dp))
             Row {
-                Text(text = "$money$ , $count drinks",
+                Text(text = "${amount}ml, $money$",
                     modifier = Modifier.padding(end = 12.dp),
                     fontSize = 12.sp
                 )
