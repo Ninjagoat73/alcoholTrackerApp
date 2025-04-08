@@ -40,6 +40,7 @@ import com.example.alcoholtracker.ui.components.HomeTopBar
 import com.example.alcoholtracker.ui.components.progressbar.AmountProgressBar
 import com.example.alcoholtracker.ui.components.progressbar.CountProgressBar
 import com.example.alcoholtracker.ui.components.progressbar.MoneyProgressBar
+import com.example.alcoholtracker.ui.components.progressbar.ProgressBarEditDialog
 import com.example.alcoholtracker.ui.components.progressbar.ProgressBarInterface
 import com.example.alcoholtracker.ui.components.progressbar.ProgressBarType
 
@@ -58,9 +59,14 @@ fun HomeScreen(
     val drinks by drinkViewModel.drinks.collectAsState()
     val userDrinkLogs by userDrinkLogViewModel.drinkLogs.collectAsState()
     val twoDaySummary by userDrinkLogViewModel.twoDaySummary.collectAsState()
+    var showDialog by remember { mutableStateOf(false)}
     var currentType by remember { mutableStateOf(ProgressBarType.MONEY) }
 
-    val progressBar = MoneyProgressBar()
+    val progressBar: ProgressBarInterface = when (currentType) {
+        ProgressBarType.MONEY -> MoneyProgressBar()
+        ProgressBarType.COUNT -> CountProgressBar()
+        ProgressBarType.AMOUNT -> AmountProgressBar()
+    }
 
 
     Scaffold(
@@ -77,8 +83,17 @@ fun HomeScreen(
 
                 AlcoholListHome(userDrinkLogs)
 
-
                 progressBar.ProgressBarCard(userDrinkLogs)
+
+                Button(onClick = {showDialog = true}
+                )
+                {
+                    Text("Switch State")
+                }
+
+                if (showDialog){
+                    ProgressBarEditDialog(currentType)
+                }
 
             }
 

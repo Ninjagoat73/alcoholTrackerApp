@@ -30,7 +30,7 @@ class CountProgressBar: ProgressBarInterface {
     @Composable
     override fun ProgressBarCard(logs: List<UserDrinkLog>) {
 
-        val summary = progressCalculator(logs)
+        val summary = twoDaySummaryGetter(logs)
 
         OutlinedCard(modifier = Modifier
             .padding(16.dp)

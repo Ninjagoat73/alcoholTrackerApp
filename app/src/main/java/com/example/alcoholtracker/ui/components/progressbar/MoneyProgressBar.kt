@@ -11,7 +11,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.Button
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
@@ -35,7 +40,7 @@ class MoneyProgressBar : ProgressBarInterface {
     @Composable
     override fun ProgressBarCard(logs: List<UserDrinkLog>) {
 
-        val summary = progressCalculator(logs)
+        val summary = twoDaySummaryGetter(logs)
 
         OutlinedCard(modifier = Modifier
             .padding(16.dp)
@@ -48,15 +53,27 @@ class MoneyProgressBar : ProgressBarInterface {
 
 
             {
+                Box {
 
 
-                ProgressText(summary.totalCost, summary.drinkCount, summary.totalAmount.toInt())
+                    IconButton(onClick = {
 
-                Box(modifier = Modifier
-                    .fillMaxSize(),
-                    contentAlignment = Alignment.BottomCenter)
-                {
-                    ProgressBar(progressCalculator(summary.totalCost, 200.0))
+                    }, modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(12.dp)) {
+                        Icon(Icons.Default.Edit,
+                            contentDescription = "Edit",
+                            tint = MaterialTheme.colorScheme.onSurface)
+                    }
+
+                    ProgressText(summary.totalCost, summary.drinkCount, summary.totalAmount.toInt())
+
+                    Box(modifier = Modifier
+                        .fillMaxSize(),
+                        contentAlignment = Alignment.BottomCenter)
+                    {
+                        ProgressBar(progressCalculator(summary.totalCost, 200.0))
+                    }
                 }
             }
     }
