@@ -21,6 +21,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -58,9 +59,9 @@ fun HomeScreen(
 ){
     val drinks by drinkViewModel.drinks.collectAsState()
     val userDrinkLogs by userDrinkLogViewModel.drinkLogs.collectAsState()
-    val twoDaySummary by userDrinkLogViewModel.twoDaySummary.collectAsState()
     var showDialog by remember { mutableStateOf(false)}
     var currentType by remember { mutableStateOf(ProgressBarType.MONEY) }
+    var currentTarget by remember { mutableDoubleStateOf(0.0) }
 
     val progressBar: ProgressBarInterface = when (currentType) {
         ProgressBarType.MONEY -> MoneyProgressBar()
@@ -83,65 +84,19 @@ fun HomeScreen(
 
                 AlcoholListHome(userDrinkLogs)
 
-                progressBar.ProgressBarCard(userDrinkLogs)
-
-                Button(onClick = {showDialog = true}
+                progressBar.ProgressBarCard(
+                    userDrinkLogs,
+                    target = currentTarget,
+                    onDismiss = {showDialog = false},
+                    onConfirm = {selectedType, target ->
+                        currentTarget = target
+                        currentType = selectedType
+                        showDialog = false}
                 )
-                {
-                    Text("Switch State")
-                }
-
-                if (showDialog){
-                    ProgressBarEditDialog(currentType)
-                }
-
             }
-
-
         }
-
-
-
-        /*
-        Column(modifier = Modifier
-            .padding(16.dp),
-        ) {
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Text("Your Drink Logs:", style = MaterialTheme.typography.titleMedium)
-            LazyColumn {
-                items(userDrinkLogs) { log ->
-                    Text("${log.name} - ${log.alcoholPercentage}% on ${log.date}")
-                }
-            }
-
-            DailySpending(dailySpending)
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-
-        }*/
     }
 }
-
-
-@Composable
-fun DailySpending(dailySpending: Double){
-    Text("Current Daily Spending: $dailySpending",
-        style = MaterialTheme.typography.titleLarge,
-        textAlign = TextAlign.Center)
-}
-
-fun goalBar(){
-
-}
-
-fun dailyDrinkList(){
-
-}
-
-
 
 
 

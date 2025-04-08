@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -30,17 +32,20 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.zIndex
 import com.example.alcoholtracker.data.model.UserDrinkLog
 import com.example.alcoholtracker.data.model.UserDrinkLogSummary
@@ -65,12 +70,20 @@ fun twoDaySummaryGetter(logs: List<UserDrinkLog>): UserDrinkLogSummary{
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProgressBarEditDialog(currentType: ProgressBarType){
+fun ProgressBarEditDialog(
+    currentTarget: Double,
+    currentType: ProgressBarType,
+    onDismiss: () -> Unit,
+    onConfirm: (ProgressBarType, Double) -> Unit ){
 
-    val types by remember { mutableStateOf(listOf("Good", "Bad", "Worst"))}
-    var selectedChoiceIndex by remember { mutableStateOf(0) }
+    val types by remember { mutableStateOf(ProgressBarType.entries.toTypedArray()) }
+    var selectedGoal by remember { mutableStateOf(currentType.toString()) }
+    var isExpanded by remember { mutableStateOf(false) }
+    var newTarget by remember { mutableStateOf("") }
 
-    Dialog(onDismissRequest = { TODO() },
+
+    Dialog(onDismissRequest = onDismiss,
+        properties = DialogProperties(usePlatformDefaultWidth = false)
         )
     {
         Card(modifier = Modifier
@@ -82,6 +95,7 @@ fun ProgressBarEditDialog(currentType: ProgressBarType){
             Column(modifier = Modifier
                 .padding(8.dp)
                 .fillMaxSize()
+                .zIndex(1f)
             ) {
                 Row(modifier = Modifier.fillMaxWidth()
                     .padding(start = 8.dp),
@@ -92,7 +106,7 @@ fun ProgressBarEditDialog(currentType: ProgressBarType){
 
                     Spacer(modifier = Modifier.weight(1f))
 
-                    IconButton(onClick = { /*TODO*/ },
+                    IconButton(onClick = { TODO() },
                         modifier = Modifier)
                     {
                         Icon(Icons.Default.Close,
@@ -102,18 +116,71 @@ fun ProgressBarEditDialog(currentType: ProgressBarType){
                 }
                 Spacer(modifier = Modifier.height(8.dp))
 
+                Box(modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentSize(Alignment.TopStart)
+                    .zIndex(2f)) {
+                    ExposedDropdownMenuBox(
+                        expanded = isExpanded,
+                        onExpandedChange = {isExpanded = it},
+                        modifier = Modifier
+                            .heightIn(max = 100.dp)
+                            .widthIn(max = 200.dp)
+                            .zIndex(3f))
+                    {
+                        TextField(
+                            value = selectedGoal.toString().lowercase().replaceFirstChar { it.titlecase() },
+                            onValueChange = {},
+                            readOnly = true,
+                            trailingIcon = {ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded)},
+                            modifier = Modifier.menuAnchor(type = MenuAnchorType.PrimaryNotEditable)
+                        )
+
+                        ExposedDropdownMenu(
+                            expanded = isExpanded,
+                            onDismissRequest = { isExpanded = false }
+                        )
+                        {
+                            types.forEach { type ->
+                                DropdownMenuItem(
+                                    text = { Text(text = type.toString().lowercase().replaceFirstChar { it.titlecase() })},
+                                    onClick = {
+                                        selectedGoal = type.toString()
+                                        isExpanded = false
+                                    }
+                                )
+                            }
+                        }
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                TextField(value = newTarget,
+                    onValueChange = {
+                        newTarget = if (newTarget == ""){
+                            currentTarget.toString()
+                        } else{
+                            it
+                        }
+                    } ,
+                    label = {Text("Goal")} )
+
+                Button(onClick = {
+                    val selectedType = ProgressBarType.valueOf(selectedGoal.uppercase())
+                    val selectedTarget = newTarget.toDouble()
+
+                    onConfirm(selectedType, selectedTarget)
+                }) {
+                    Text("Save")
+                }
+
             }
         }
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun Preview(){
-    AlcoholTrackerTheme {
-        ProgressBarEditDialog(ProgressBarType.MONEY)
-    }
-}
+
 
 
 

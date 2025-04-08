@@ -8,7 +8,10 @@ import com.example.alcoholtracker.data.model.UserDrinkLog
 interface ProgressBarInterface {
 
     @Composable
-    fun ProgressBarCard(logs: List<UserDrinkLog>)
+    fun ProgressBarCard(logs: List<UserDrinkLog>,
+                        target: Double,
+                        onDismiss: () -> Unit,
+                        onConfirm: (ProgressBarType, Double) -> Unit)
 
     @Composable
     fun ProgressBar(calculatedScore: Float)
