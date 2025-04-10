@@ -45,14 +45,9 @@ import java.time.LocalDate
 
 class MoneyProgressBar : ProgressBarInterface {
     @Composable
-    override fun ProgressBarCard(
-        logs: List<UserDrinkLog>,
-        target: Double,
-        onDismiss: () -> Unit,
-        onConfirm: (ProgressBarType, Double) -> Unit
-    ) {
+    override fun ProgressBarCard(logs: List<UserDrinkLog>, target: Double, onEditClick: () -> Unit) {
 
-        var showDialog by remember { mutableStateOf(false) }
+
         val summary = twoDaySummaryGetter(logs)
 
 
@@ -68,18 +63,10 @@ class MoneyProgressBar : ProgressBarInterface {
 
             {
 
-                if (showDialog) {
-                    ProgressBarEditDialog(
-                        target,
-                        ProgressBarType.MONEY,
-                        onDismiss,
-                        onConfirm)
-                }
 
                 Box {
-                    IconButton(onClick = {
-                        showDialog = true
-                    }, modifier = Modifier
+                    IconButton(onClick = onEditClick
+                        , modifier = Modifier
                         .align(Alignment.TopEnd)
                         .padding(12.dp)
                         .size(20.dp)) {

@@ -61,7 +61,7 @@ fun HomeScreen(
     val userDrinkLogs by userDrinkLogViewModel.drinkLogs.collectAsState()
     var showDialog by remember { mutableStateOf(false)}
     var currentType by remember { mutableStateOf(ProgressBarType.MONEY) }
-    var currentTarget by remember { mutableDoubleStateOf(0.0) }
+    var currentTarget by remember { mutableDoubleStateOf(200.0) }
 
     val progressBar: ProgressBarInterface = when (currentType) {
         ProgressBarType.MONEY -> MoneyProgressBar()
@@ -84,14 +84,22 @@ fun HomeScreen(
 
                 AlcoholListHome(userDrinkLogs)
 
+                if (showDialog){
+                    ProgressBarEditDialog(
+                        currentType,
+                        currentTarget,
+                        onDismiss = {showDialog = false},
+                        onConfirm = {selectedType, selectedTarget ->
+                            currentTarget = selectedTarget
+                            currentType = selectedType
+                            showDialog = false
+                        })
+                }
+
                 progressBar.ProgressBarCard(
                     userDrinkLogs,
                     target = currentTarget,
-                    onDismiss = {showDialog = false},
-                    onConfirm = {selectedType, target ->
-                        currentTarget = target
-                        currentType = selectedType
-                        showDialog = false}
+                    onEditClick = {showDialog = true}
                 )
             }
         }

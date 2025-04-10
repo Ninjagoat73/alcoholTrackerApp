@@ -10,8 +10,7 @@ interface ProgressBarInterface {
     @Composable
     fun ProgressBarCard(logs: List<UserDrinkLog>,
                         target: Double,
-                        onDismiss: () -> Unit,
-                        onConfirm: (ProgressBarType, Double) -> Unit)
+                        onEditClick: () -> Unit)
 
     @Composable
     fun ProgressBar(calculatedScore: Float)

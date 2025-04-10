@@ -38,14 +38,9 @@ import com.example.alcoholtracker.data.model.UserDrinkLog
 
 class CountProgressBar: ProgressBarInterface {
     @Composable
-    override fun ProgressBarCard(
-        logs: List<UserDrinkLog>,
-        target: Double,
-        onDismiss: () -> Unit,
-        onConfirm: (ProgressBarType, Double) -> Unit
-    ) {
+    override fun ProgressBarCard(logs: List<UserDrinkLog>, target: Double, onEditClick: () -> Unit) {
 
-        var showDialog by remember { mutableStateOf(false) }
+
         val summary = twoDaySummaryGetter(logs)
 
         OutlinedCard(modifier = Modifier
@@ -60,19 +55,9 @@ class CountProgressBar: ProgressBarInterface {
 
         {
 
-            if (showDialog) {
-                ProgressBarEditDialog(
-                    target,
-                    ProgressBarType.COUNT,
-                    onDismiss,
-                    onConfirm)
-            }
-
             Box(){
 
-                IconButton(onClick = {
-                    showDialog = true
-                }, modifier = Modifier
+                IconButton(onClick = onEditClick, modifier = Modifier
                     .align(Alignment.TopEnd)
                     .padding(12.dp)
                     .size(20.dp)) {

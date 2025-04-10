@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
@@ -31,6 +32,7 @@ import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateListOf
@@ -41,6 +43,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -71,19 +74,23 @@ fun twoDaySummaryGetter(logs: List<UserDrinkLog>): UserDrinkLogSummary{
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProgressBarEditDialog(
-    currentTarget: Double,
     currentType: ProgressBarType,
+    currentTarget: Double,
     onDismiss: () -> Unit,
     onConfirm: (ProgressBarType, Double) -> Unit ){
 
-    val types by remember { mutableStateOf(ProgressBarType.entries.toTypedArray()) }
-    var selectedGoal by remember { mutableStateOf(currentType.toString()) }
+    val types by remember { mutableStateOf(ProgressBarType.entries.map{it.name}) }
+    var selectedGoal by remember { mutableStateOf("") }
     var isExpanded by remember { mutableStateOf(false) }
     var newTarget by remember { mutableStateOf("") }
 
+    LaunchedEffect(Unit){
+        selectedGoal = currentType.name
+        newTarget = ""
+    }
+
 
     Dialog(onDismissRequest = onDismiss,
-        properties = DialogProperties(usePlatformDefaultWidth = false)
         )
     {
         Card(modifier = Modifier
@@ -106,7 +113,7 @@ fun ProgressBarEditDialog(
 
                     Spacer(modifier = Modifier.weight(1f))
 
-                    IconButton(onClick = { TODO() },
+                    IconButton(onClick = onDismiss,
                         modifier = Modifier)
                     {
                         Icon(Icons.Default.Close,
@@ -157,20 +164,15 @@ fun ProgressBarEditDialog(
                 Spacer(modifier = Modifier.height(8.dp))
 
                 TextField(value = newTarget,
-                    onValueChange = {
-                        newTarget = if (newTarget == ""){
-                            currentTarget.toString()
-                        } else{
-                            it
-                        }
-                    } ,
+                    onValueChange = { newTarget = it } ,
+                    keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
                     label = {Text("Goal")} )
 
                 Button(onClick = {
                     val selectedType = ProgressBarType.valueOf(selectedGoal.uppercase())
-                    val selectedTarget = newTarget.toDouble()
-
+                    val selectedTarget = newTarget.toDoubleOrNull() ?: currentTarget
                     onConfirm(selectedType, selectedTarget)
+                    onDismiss()
                 }) {
                     Text("Save")
                 }
