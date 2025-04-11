@@ -1,16 +1,17 @@
 package com.example.alcoholtracker.ui.components.progressbar
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import com.example.alcoholtracker.data.model.UserDrinkLog
+import kotlinx.coroutines.flow.StateFlow
 
 
 interface ProgressBarInterface {
 
     @Composable
-    fun ProgressBarCard(logs: List<UserDrinkLog>,
-                        target: Double,
-                        onEditClick: () -> Unit)
+    fun ProgressBarCard(
+        logs: List<UserDrinkLog>,
+        target: Double,
+        onEditClick: () -> Unit)
 
     @Composable
     fun ProgressBar(calculatedScore: Float)

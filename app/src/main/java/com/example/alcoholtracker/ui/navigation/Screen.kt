@@ -1,8 +1,8 @@
 package com.example.alcoholtracker.ui.navigation
 
 sealed class Screen(val rout: String) {
-    object Home: Screen("HomeScreen")
-    object Profile: Screen("ProfileScreen")
-    object Analytics: Screen("AnalyticsScreen")
-    object List: Screen("ListScreen")
+    data object Home: Screen("HomeScreen")
+    data object Profile: Screen("ProfileScreen")
+    data object Analytics: Screen("AnalyticsScreen")
+    data object List: Screen("ListScreen")
 }

@@ -40,6 +40,7 @@ dependencies {
     testImplementation("junit:junit:4.12")
     ksp("androidx.room:room-compiler:2.6.1")
 
+    implementation("androidx.datastore:datastore-preferences:1.1.4")
     implementation("com.seanproctor:data-table-material3:0.11.3")
     implementation("androidx.compose.ui:ui:1.7.8")
     implementation("androidx.compose.ui:ui-tooling-preview:1.7.8")

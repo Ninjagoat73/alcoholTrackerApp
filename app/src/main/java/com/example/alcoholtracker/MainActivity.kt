@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -19,9 +20,12 @@ import com.example.alcoholtracker.ui.screens.AnalyticsScreen
 import com.example.alcoholtracker.ui.screens.HomeScreen
 import com.example.alcoholtracker.ui.screens.ListScreen
 import com.example.alcoholtracker.ui.screens.ProfileScreen
+import com.example.alcoholtracker.ui.viewmodel.ProgressBarViewModel
 
 import com.example.compose.AlcoholTrackerTheme
 import dagger.hilt.android.AndroidEntryPoint
+
+
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -39,6 +43,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainScreen() {
 
+    val progressBarViewModel: ProgressBarViewModel = hiltViewModel()
     val navController = rememberNavController()
 
     Scaffold(
@@ -55,8 +60,8 @@ fun MainScreen() {
                 composable(route = Screen.Analytics.rout) {
                     AnalyticsScreen()
                 }
-                composable(route = Screen.Home.rout) {
-                    HomeScreen(navController)
+                composable(route = Screen.Home.rout,) {
+                    HomeScreen(navController, progressBarViewModel)
                 }
                 composable(route = Screen.Profile.rout) {
                     ProfileScreen()
