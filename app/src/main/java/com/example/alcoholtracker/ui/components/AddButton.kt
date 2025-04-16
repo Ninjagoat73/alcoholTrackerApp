@@ -10,12 +10,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
+import com.example.alcoholtracker.ui.navigation.Screen
 
 
 @Composable
 fun AddButton(navController: NavController){
     FloatingActionButton(
-        onClick = { navController.navigate("logDrink")},
+        onClick = { navController.navigate(Screen.AddDrink.rout)},
         )
     {
         Icon(Icons.Filled.Add, "Add Button")

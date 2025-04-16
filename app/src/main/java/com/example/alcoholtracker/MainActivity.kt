@@ -20,6 +20,7 @@ import com.example.alcoholtracker.ui.screens.AnalyticsScreen
 import com.example.alcoholtracker.ui.screens.HomeScreen
 import com.example.alcoholtracker.ui.screens.ListScreen
 import com.example.alcoholtracker.ui.screens.ProfileScreen
+import com.example.alcoholtracker.ui.screens.SignInScreen
 import com.example.alcoholtracker.ui.viewmodel.ProgressBarViewModel
 
 import com.example.compose.AlcoholTrackerTheme
@@ -53,7 +54,7 @@ fun MainScreen() {
     ) { innerPadding ->
 
         val graph =
-            navController.createGraph(startDestination = Screen.Home.rout) {
+            navController.createGraph(startDestination = Screen.SignIn.rout) {
                 composable(route = Screen.List.rout) {
                     ListScreen()
                 }
@@ -66,8 +67,14 @@ fun MainScreen() {
                 composable(route = Screen.Profile.rout) {
                     ProfileScreen()
                 }
-                composable(route = "logDrink"){
+                composable(route = Screen.AddDrink.rout){
                     AddDrinkScreen(navController)
+                }
+                composable(route = Screen.SignIn.rout){
+                    SignInScreen()
+                }
+                composable(route = Screen.SignUp.rout){
+
                 }
             }
         NavHost(
