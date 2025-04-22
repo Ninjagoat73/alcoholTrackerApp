@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.rounded.Done
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -47,6 +48,7 @@ fun SignInScreen(
             text = "Login",
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.padding(bottom = 32.dp)
+                .align(Alignment.CenterHorizontally)
         )
 
         OutlinedTextField(
@@ -69,7 +71,7 @@ fun SignInScreen(
             trailingIcon = {
                 IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
                     Icon(
-                        imageVector = if (isPasswordVisible) Icons.Default.Clear else Icons.Default.Check,
+                        imageVector = if (isPasswordVisible) Icons.Rounded.Done else Icons.Default.Check,
                         contentDescription = null
                     )
                 }

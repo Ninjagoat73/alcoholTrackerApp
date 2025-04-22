@@ -7,10 +7,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.createGraph
 import com.example.alcoholtracker.ui.components.BottomNavigationBar
@@ -44,13 +47,27 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainScreen() {
 
+    val bottomBarScreens = listOf(
+        Screen.Home,
+        Screen.List,
+        Screen.Analytics,
+        Screen.Profile,
+        Screen.AddDrink
+    )
+
     val progressBarViewModel: ProgressBarViewModel = hiltViewModel()
     val navController = rememberNavController()
+    val showBottomBar = navController
+        .currentBackStackEntryAsState().value?.destination?.route in bottomBarScreens.map { it.rout }
 
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
-        bottomBar = { BottomNavigationBar(navController) }
+        bottomBar = {
+            if (showBottomBar){
+                BottomNavigationBar(navController)
+            }
+        }
     ) { innerPadding ->
 
         val graph =
@@ -85,3 +102,5 @@ fun MainScreen() {
 
     }
 }
+
+
