@@ -28,7 +28,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.alcoholtracker.ui.components.ArcBackground
+import com.example.compose.AlcoholTrackerTheme
 
 @Composable
 fun SignInScreen(
@@ -38,12 +41,17 @@ fun SignInScreen(
     var isPasswordVisible by rememberSaveable { mutableStateOf(false) }
     val isFormValid = email.isNotBlank() && password.length >= 6
 
+    ArcBackground()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(24.dp),
         verticalArrangement = Arrangement.Center
     ) {
+
+
+
         Text(
             text = "Login",
             style = MaterialTheme.typography.headlineMedium,
@@ -95,5 +103,15 @@ fun SignInScreen(
         Button(onClick = {}, modifier = Modifier.align(Alignment.CenterHorizontally)) {
             Text("Don't have an account? Register")
         }
+
+
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun Preview(){
+    AlcoholTrackerTheme {
+        SignInScreen()
     }
 }
