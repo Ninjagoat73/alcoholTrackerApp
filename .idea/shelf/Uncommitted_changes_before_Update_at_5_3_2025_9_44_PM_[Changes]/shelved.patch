@@ -1,0 +1,51 @@
+Index: app/src/main/java/com/example/alcoholtracker/ui/screens/SignInScreen.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.alcoholtracker.ui.screens\r\n\r\nimport androidx.compose.foundation.layout.Arrangement\r\nimport androidx.compose.foundation.layout.Column\r\nimport androidx.compose.foundation.layout.Spacer\r\nimport androidx.compose.foundation.layout.fillMaxSize\r\nimport androidx.compose.foundation.layout.fillMaxWidth\r\nimport androidx.compose.foundation.layout.height\r\nimport androidx.compose.foundation.layout.padding\r\nimport androidx.compose.material.icons.Icons\r\nimport androidx.compose.material.icons.filled.Check\r\nimport androidx.compose.material.icons.filled.Clear\r\nimport androidx.compose.material.icons.filled.Email\r\nimport androidx.compose.material.icons.filled.Lock\r\nimport androidx.compose.material.icons.rounded.Done\r\nimport androidx.compose.material3.Button\r\nimport androidx.compose.material3.Icon\r\nimport androidx.compose.material3.IconButton\r\nimport androidx.compose.material3.MaterialTheme\r\nimport androidx.compose.material3.OutlinedTextField\r\nimport androidx.compose.material3.Text\r\nimport androidx.compose.runtime.Composable\r\nimport androidx.compose.runtime.getValue\r\nimport androidx.compose.runtime.mutableStateOf\r\nimport androidx.compose.runtime.saveable.rememberSaveable\r\nimport androidx.compose.runtime.setValue\r\nimport androidx.compose.ui.Alignment\r\nimport androidx.compose.ui.Modifier\r\nimport androidx.compose.ui.text.input.PasswordVisualTransformation\r\nimport androidx.compose.ui.text.input.VisualTransformation\r\nimport androidx.compose.ui.unit.dp\r\n\r\n@Composable\r\nfun SignInScreen(\r\n) {\r\n    var email by rememberSaveable { mutableStateOf(\"\") }\r\n    var password by rememberSaveable { mutableStateOf(\"\") }\r\n    var isPasswordVisible by rememberSaveable { mutableStateOf(false) }\r\n    val isFormValid = email.isNotBlank() && password.length >= 6\r\n\r\n    Column(\r\n        modifier = Modifier\r\n            .fillMaxSize()\r\n            .padding(24.dp),\r\n        verticalArrangement = Arrangement.Center\r\n    ) {\r\n        Text(\r\n            text = \"Login\",\r\n            style = MaterialTheme.typography.headlineMedium,\r\n            modifier = Modifier.padding(bottom = 32.dp)\r\n                .align(Alignment.CenterHorizontally)\r\n        )\r\n\r\n        OutlinedTextField(\r\n            value = email,\r\n            onValueChange = { email = it },\r\n            label = { Text(\"Email\") },\r\n            leadingIcon = { Icon(Icons.Default.Email, contentDescription = null) },\r\n            singleLine = true,\r\n            modifier = Modifier.fillMaxWidth()\r\n        )\r\n\r\n        Spacer(modifier = Modifier.height(16.dp))\r\n\r\n        OutlinedTextField(\r\n            value = password,\r\n            onValueChange = { password = it },\r\n            label = { Text(\"Password\") },\r\n            singleLine = true,\r\n            visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),\r\n            trailingIcon = {\r\n                IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {\r\n                    Icon(\r\n                        imageVector = if (isPasswordVisible) Icons.Rounded.Done else Icons.Default.Check,\r\n                        contentDescription = null\r\n                    )\r\n                }\r\n            },\r\n            leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },\r\n            modifier = Modifier.fillMaxWidth()\r\n        )\r\n\r\n        Spacer(modifier = Modifier.height(24.dp))\r\n\r\n        Button(\r\n            onClick = { },\r\n            modifier = Modifier.fillMaxWidth(),\r\n            enabled = isFormValid\r\n        ) {\r\n            Text(\"Login\")\r\n        }\r\n\r\n        Spacer(modifier = Modifier.height(12.dp))\r\n\r\n        Button(onClick = {}, modifier = Modifier.align(Alignment.CenterHorizontally)) {\r\n            Text(\"Don't have an account? Register\")\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/alcoholtracker/ui/screens/SignInScreen.kt b/app/src/main/java/com/example/alcoholtracker/ui/screens/SignInScreen.kt
+--- a/app/src/main/java/com/example/alcoholtracker/ui/screens/SignInScreen.kt	(revision 70a59b707434b9bedbdeb71aeb8dd33257c8b809)
++++ b/app/src/main/java/com/example/alcoholtracker/ui/screens/SignInScreen.kt	(date 1746301359044)
+@@ -29,9 +29,11 @@
+ import androidx.compose.ui.text.input.PasswordVisualTransformation
+ import androidx.compose.ui.text.input.VisualTransformation
+ import androidx.compose.ui.unit.dp
++import androidx.navigation.NavController
++import com.example.alcoholtracker.ui.navigation.Screen
+ 
+ @Composable
+-fun SignInScreen(
++fun SignInScreen( navController: NavController
+ ) {
+     var email by rememberSaveable { mutableStateOf("") }
+     var password by rememberSaveable { mutableStateOf("") }
+@@ -83,7 +85,7 @@
+         Spacer(modifier = Modifier.height(24.dp))
+ 
+         Button(
+-            onClick = { },
++            onClick = { navController.navigate(Screen.Home.rout) },
+             modifier = Modifier.fillMaxWidth(),
+             enabled = isFormValid
+         ) {
+Index: app/src/main/java/com/example/alcoholtracker/MainActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.alcoholtracker\r\n\r\nimport android.os.Bundle\r\nimport androidx.activity.ComponentActivity\r\nimport androidx.activity.compose.setContent\r\nimport androidx.compose.foundation.layout.fillMaxSize\r\nimport androidx.compose.foundation.layout.padding\r\nimport androidx.compose.material3.Scaffold\r\nimport androidx.compose.runtime.Composable\r\nimport androidx.compose.runtime.getValue\r\nimport androidx.compose.ui.Modifier\r\nimport androidx.hilt.navigation.compose.hiltViewModel\r\nimport androidx.navigation.NavHostController\r\nimport androidx.navigation.compose.NavHost\r\nimport androidx.navigation.compose.composable\r\nimport androidx.navigation.compose.currentBackStackEntryAsState\r\nimport androidx.navigation.compose.rememberNavController\r\nimport androidx.navigation.createGraph\r\nimport com.example.alcoholtracker.ui.components.BottomNavigationBar\r\nimport com.example.alcoholtracker.ui.navigation.Screen\r\nimport com.example.alcoholtracker.ui.screens.AddDrinkScreen\r\nimport com.example.alcoholtracker.ui.screens.AnalyticsScreen\r\nimport com.example.alcoholtracker.ui.screens.HomeScreen\r\nimport com.example.alcoholtracker.ui.screens.ListScreen\r\nimport com.example.alcoholtracker.ui.screens.ProfileScreen\r\nimport com.example.alcoholtracker.ui.screens.SignInScreen\r\nimport com.example.alcoholtracker.ui.viewmodel.ProgressBarViewModel\r\n\r\nimport com.example.compose.AlcoholTrackerTheme\r\nimport dagger.hilt.android.AndroidEntryPoint\r\n\r\n\r\n\r\n@AndroidEntryPoint\r\nclass MainActivity : ComponentActivity() {\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n\r\n        setContent {\r\n            AlcoholTrackerTheme {\r\n                MainScreen()\r\n            }\r\n            }\r\n        }\r\n    }\r\n\r\n@Composable\r\nfun MainScreen() {\r\n\r\n    val bottomBarScreens = listOf(\r\n        Screen.Home,\r\n        Screen.List,\r\n        Screen.Analytics,\r\n        Screen.Profile,\r\n        Screen.AddDrink\r\n    )\r\n\r\n    val progressBarViewModel: ProgressBarViewModel = hiltViewModel()\r\n    val navController = rememberNavController()\r\n    val showBottomBar = navController\r\n        .currentBackStackEntryAsState().value?.destination?.route in bottomBarScreens.map { it.rout }\r\n\r\n    Scaffold(\r\n        modifier = Modifier\r\n            .fillMaxSize(),\r\n        bottomBar = {\r\n            if (showBottomBar){\r\n                BottomNavigationBar(navController)\r\n            }\r\n        }\r\n    ) { innerPadding ->\r\n\r\n        val graph =\r\n            navController.createGraph(startDestination = Screen.SignIn.rout) {\r\n                composable(route = Screen.List.rout) {\r\n                    ListScreen()\r\n                }\r\n                composable(route = Screen.Analytics.rout) {\r\n                    AnalyticsScreen()\r\n                }\r\n                composable(route = Screen.Home.rout,) {\r\n                    HomeScreen(navController, progressBarViewModel)\r\n                }\r\n                composable(route = Screen.Profile.rout) {\r\n                    ProfileScreen()\r\n                }\r\n                composable(route = Screen.AddDrink.rout){\r\n                    AddDrinkScreen(navController)\r\n                }\r\n                composable(route = Screen.SignIn.rout){\r\n                    SignInScreen()\r\n                }\r\n                composable(route = Screen.SignUp.rout){\r\n\r\n                }\r\n            }\r\n        NavHost(\r\n            navController = navController,\r\n            graph = graph,\r\n            modifier = Modifier.padding(innerPadding)\r\n        )\r\n\r\n    }\r\n}\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/alcoholtracker/MainActivity.kt b/app/src/main/java/com/example/alcoholtracker/MainActivity.kt
+--- a/app/src/main/java/com/example/alcoholtracker/MainActivity.kt	(revision 70a59b707434b9bedbdeb71aeb8dd33257c8b809)
++++ b/app/src/main/java/com/example/alcoholtracker/MainActivity.kt	(date 1746301448646)
+@@ -88,7 +88,7 @@
+                     AddDrinkScreen(navController)
+                 }
+                 composable(route = Screen.SignIn.rout){
+-                    SignInScreen()
++                    SignInScreen(navController)
+                 }
+                 composable(route = Screen.SignUp.rout){
+ 
