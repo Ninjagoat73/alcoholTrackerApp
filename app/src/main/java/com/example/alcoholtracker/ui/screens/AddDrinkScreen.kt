@@ -20,6 +20,7 @@ import com.example.alcoholtracker.data.model.UserDrinkLog
 import com.example.alcoholtracker.ui.components.AutoCompleteTextField
 import com.example.alcoholtracker.ui.viewmodel.DrinkViewModel
 import com.example.alcoholtracker.ui.viewmodel.UserAndUserDrinkLogViewModel
+import com.google.firebase.auth.FirebaseAuth
 import java.time.LocalDate
 
 
@@ -47,7 +48,7 @@ fun AddDrinkScreen(
                 viewModel.logDrink(
                     UserDrinkLog(
                         drinkId = 2,
-                        userId = 123,
+                        userId = FirebaseAuth.getInstance().currentUser?.uid ?: "",
                         name = drinkName,
                         alcoholPercentage = alcoholPercentage.toDoubleOrNull() ?: 0.0,
                         amount = volume.toDoubleOrNull() ?: 0.0,

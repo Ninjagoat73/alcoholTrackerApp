@@ -1,12 +1,18 @@
 package com.example.alcoholtracker
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -24,28 +30,81 @@ import com.example.alcoholtracker.ui.screens.HomeScreen
 import com.example.alcoholtracker.ui.screens.ListScreen
 import com.example.alcoholtracker.ui.screens.ProfileScreen
 import com.example.alcoholtracker.ui.screens.SignInScreen
+import com.example.alcoholtracker.ui.viewmodel.AuthViewModel
 import com.example.alcoholtracker.ui.viewmodel.ProgressBarViewModel
+import com.example.alcoholtracker.ui.viewmodel.UserAndUserDrinkLogViewModel
 
 import com.example.compose.AlcoholTrackerTheme
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.auth
 import dagger.hilt.android.AndroidEntryPoint
 
 
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    private lateinit var auth: FirebaseAuth
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        auth = Firebase.auth
+    }
+
+    override fun onStart() {
+        super.onStart()
+
         setContent {
             AlcoholTrackerTheme {
-                MainScreen()
-            }
+                val authViewModel: AuthViewModel = hiltViewModel()
+                val userId by authViewModel.userId.collectAsState()
+
+                if (userId != null){
+                    MainScreen()
+                }else{
+                    SignInScreen(authViewModel)
+                }
             }
         }
+
     }
+
+
+
+    @Composable
+    private fun updateUI(user: FirebaseUser? = null){
+        val viewModel: UserAndUserDrinkLogViewModel = hiltViewModel()
+        LaunchedEffect(Unit) {
+            val userId = user?.uid
+            println("userId: $userId")
+            viewModel.setUserId(userId?:"")
+        }
+
+    }
+    private fun reload() {
+    }
+    companion object {
+        private const val TAG = "EmailPassword"
+    }
+}
 
 @Composable
 fun MainScreen() {
+
+    val authViewModel: AuthViewModel = hiltViewModel()
+    val drinkLogViewModel: UserAndUserDrinkLogViewModel = hiltViewModel()
+
+    val userId by authViewModel.userId.collectAsState()
+
+    LaunchedEffect(userId) {
+        userId?.let { uid ->
+            drinkLogViewModel.setUserId(uid)
+        }
+    }
 
     val bottomBarScreens = listOf(
         Screen.Home,
@@ -71,7 +130,7 @@ fun MainScreen() {
     ) { innerPadding ->
 
         val graph =
-            navController.createGraph(startDestination = Screen.SignIn.rout) {
+            navController.createGraph(startDestination = Screen.Home.rout) {
                 composable(route = Screen.List.rout) {
                     ListScreen()
                 }
@@ -86,9 +145,6 @@ fun MainScreen() {
                 }
                 composable(route = Screen.AddDrink.rout){
                     AddDrinkScreen(navController)
-                }
-                composable(route = Screen.SignIn.rout){
-                    SignInScreen()
                 }
                 composable(route = Screen.SignUp.rout){
 

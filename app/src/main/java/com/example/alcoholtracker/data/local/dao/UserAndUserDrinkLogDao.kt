@@ -20,10 +20,10 @@ interface UserAndUserDrinkLogDao {
     suspend fun insertDrinkLog(log: UserDrinkLog)
 
     @Query("SELECT * FROM users WHERE userId = :userId")
-    suspend fun getUserById(userId: Int): User
+    suspend fun getUserById(userId: String): User
 
     @Query("SELECT * FROM log WHERE userId = :userId")
-    fun getDrinkLogsByUserId(userId: Int): Flow<List<UserDrinkLog>>
+    fun getDrinkLogsByUserId(userId: String): Flow<List<UserDrinkLog>>
 
     @Query("""
             SELECT *
@@ -32,6 +32,6 @@ interface UserAndUserDrinkLogDao {
             AND date = date('now') 
             OR date = date('now', '-1 day')
             """)
-    suspend fun getTwoDayLogs(userId: Int): List<UserDrinkLog>
+    suspend fun getTwoDayLogs(userId: String): List<UserDrinkLog>
 
 }

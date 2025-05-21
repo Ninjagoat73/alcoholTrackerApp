@@ -18,15 +18,15 @@ class UserAndUserDrinkLogRepository @Inject constructor(private val userAndUserD
         userAndUserDrinkLogDao.insertDrinkLog(log)
     }
 
-    suspend fun getUserById(userId: Int): User {
+    suspend fun getUserById(userId: String): User {
         return userAndUserDrinkLogDao.getUserById(userId)
     }
 
-    fun getDrinkLogsByUserId(userId: Int): Flow<List<UserDrinkLog>> {
+    fun getDrinkLogsByUserId(userId: String): Flow<List<UserDrinkLog>> {
         return userAndUserDrinkLogDao.getDrinkLogsByUserId(userId)
     }
 
-    suspend fun getTwoDayLogs(userId: Int): List<UserDrinkLog>{
+    suspend fun getTwoDayLogs(userId: String): List<UserDrinkLog>{
         return  userAndUserDrinkLogDao.getTwoDayLogs(userId)
     }
 }

@@ -160,41 +160,6 @@ class MoneyProgressBar : ProgressBarInterface {
             0F
     }
 
-    val mockLogs = listOf(
-        UserDrinkLog(
-            drinkId = 1,
-            userId = 1,
-            name = "Beer",
-            cost = 5.0,
-            alcoholPercentage = 5.0,
-            amount = 500.0,
-            category = "Beer",
-            recipient = "Myself",
-            date = LocalDate.now() // today
-        ),
-        UserDrinkLog(
-            drinkId = 2,
-            userId = 1,
-            name = "Wine",
-            cost = 10.0,
-            alcoholPercentage = 12.5,
-            amount = 250.0,
-            category = "Wine",
-            recipient = "Myself",
-            date = LocalDate.now().minusDays(1) // yesterday
-        ),
-        UserDrinkLog(
-            drinkId = 3,
-            userId = 1,
-            name = "Whiskey",
-            cost = 15.0,
-            alcoholPercentage = 40.0,
-            amount = 50.0,
-            category = "Spirits",
-            recipient = "Friend",
-            date = LocalDate.now().minusDays(2) // two days ago
-        )
-    )
 
 
 

@@ -64,6 +64,12 @@ fun HomeScreen(
 
             Column {
 
+                print("I am loading home screen")
+
+                if (userDrinkLogs.isEmpty()){
+                    print("shit is fucked")
+                }
+
                 AlcoholListHome(userDrinkLogs)
 
                 if (showDialog){

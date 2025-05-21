@@ -1,5 +1,6 @@
 package com.example.alcoholtracker.ui.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -26,20 +27,28 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.alcoholtracker.MainScreen
 import com.example.alcoholtracker.ui.components.ArcBackground
+import com.example.alcoholtracker.ui.viewmodel.AuthViewModel
 import com.example.compose.AlcoholTrackerTheme
+
+
 
 @Composable
 fun SignInScreen(
+    authViewModel: AuthViewModel = hiltViewModel(),
 ) {
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     var isPasswordVisible by rememberSaveable { mutableStateOf(false) }
     val isFormValid = email.isNotBlank() && password.length >= 6
+    val context = LocalContext.current
 
     ArcBackground()
 
@@ -91,7 +100,10 @@ fun SignInScreen(
         Spacer(modifier = Modifier.height(24.dp))
 
         Button(
-            onClick = { },
+            onClick = {
+                authViewModel.signIn(email, password) { success ->
+                    if (!success) Toast.makeText(context, "Login failed", Toast.LENGTH_SHORT).show()
+                }},
             modifier = Modifier.fillMaxWidth(),
             enabled = isFormValid
         ) {
@@ -108,10 +120,3 @@ fun SignInScreen(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun Preview(){
-    AlcoholTrackerTheme {
-        SignInScreen()
-    }
-}

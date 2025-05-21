@@ -16,7 +16,7 @@ data class UserDrinkLog(
     val drinkId: Int?,
 
     @ColumnInfo("userId")
-    val userId: Int,
+    val userId: String,
 
     @ColumnInfo("name")
     val name: String,
