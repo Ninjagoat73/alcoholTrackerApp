@@ -31,7 +31,7 @@ class DrinkViewModel @Inject constructor(
 
     fun addDrink(drink: Drink) {
         viewModelScope.launch {
-            drinkDao.insertDrinks(listOf(drink)) // Uses insertDrinks function from DrinkDao
+            drinkDao.insertDrinks(listOf(drink))
         }
     }
 }

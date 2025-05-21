@@ -9,7 +9,17 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f77ccfbd-1736-4c76-8578-d85baac9a3f0" name="Changes" comment="forgor" />
+    <list default="true" id="f77ccfbd-1736-4c76-8578-d85baac9a3f0" name="Changes" comment="forgor">
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/archive.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/data/local/dao/UserAndUserDrinkLogDao.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/data/local/dao/UserAndUserDrinkLogDao.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/data/repository/UserAndUserDrinkLogRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/data/repository/UserAndUserDrinkLogRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/components/AlcoholListHome.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/components/AlcoholListHome.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/viewmodel/DrinkViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/viewmodel/DrinkViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/viewmodel/UserAndUserDrinkLogViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/viewmodel/UserAndUserDrinkLogViewModel.kt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -55,6 +65,7 @@
         <option value="Kotlin Class" />
         <option value="Kotlin Enum" />
         <option value="Kotlin File" />
+        <option value="resourceFile" />
       </list>
     </option>
   </component>
@@ -93,6 +104,7 @@
     &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;com.google.services.firebase.aqiPopupShown&quot;: &quot;true&quot;,
@@ -269,5 +281,21 @@
     <MESSAGE value="nothing works, everything sucks, fuck this" />
     <MESSAGE value="forgor" />
     <option name="LAST_COMMIT_MESSAGE" value="forgor" />
+  </component>
+  <component name="play_dynamic_filters_status">
+    <option name="appIdToCheckInfo">
+      <map>
+        <entry key="com.example.alcoholtracker">
+          <value>
+            <CheckInfo lastCheckTimestamp="1747851646891" />
+          </value>
+        </entry>
+        <entry key="com.example.alcoholtracker.test">
+          <value>
+            <CheckInfo lastCheckTimestamp="1747851646891" />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

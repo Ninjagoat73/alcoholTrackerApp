@@ -40,7 +40,7 @@ class UserAndUserDrinkLogViewModel @Inject constructor(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val drinkLogs: StateFlow<List<UserDrinkLog>> = _userId
-        .filter { it.isNotEmpty() } // Skip empty userId
+        .filter { it.isNotEmpty() }
         .flatMapLatest { userId ->
             userAndUserDrinkLogRepository.getDrinkLogsByUserId(userId)
         }
@@ -71,6 +71,12 @@ class UserAndUserDrinkLogViewModel @Inject constructor(
             _userId.value?.let {
                 _twoDaySummary.value = userAndUserDrinkLogRepository.getTwoDayLogs(it)
             }
+        }
+    }
+
+    fun deleteDrink(log: UserDrinkLog){
+        viewModelScope.launch {
+            userAndUserDrinkLogRepository.deleteDrinkLog(log)
         }
     }
 

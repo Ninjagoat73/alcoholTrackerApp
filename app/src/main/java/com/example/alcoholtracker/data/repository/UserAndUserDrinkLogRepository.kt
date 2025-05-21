@@ -18,6 +18,10 @@ class UserAndUserDrinkLogRepository @Inject constructor(private val userAndUserD
         userAndUserDrinkLogDao.insertDrinkLog(log)
     }
 
+    suspend fun deleteDrinkLog(log: UserDrinkLog){
+        userAndUserDrinkLogDao.deleteDrinkLog(log)
+    }
+
     suspend fun getUserById(userId: String): User {
         return userAndUserDrinkLogDao.getUserById(userId)
     }

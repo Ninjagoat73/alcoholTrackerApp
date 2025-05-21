@@ -1,6 +1,7 @@
 package com.example.alcoholtracker.data.local.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -18,6 +19,9 @@ interface UserAndUserDrinkLogDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertDrinkLog(log: UserDrinkLog)
+
+    @Delete
+    suspend fun deleteDrinkLog(log: UserDrinkLog)
 
     @Query("SELECT * FROM users WHERE userId = :userId")
     suspend fun getUserById(userId: String): User
