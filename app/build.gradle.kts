@@ -36,6 +36,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":shared"))
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.compose.ui:ui-text-google-fonts:1.7.8")
     implementation("com.google.firebase:firebase-auth:23.2.0")
