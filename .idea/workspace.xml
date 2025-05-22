@@ -9,14 +9,57 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f77ccfbd-1736-4c76-8578-d85baac9a3f0" name="Changes" comment="forgor">
-      <change afterPath="$PROJECT_DIR$/shared/build.gradle.kts" afterDir="false" />
+    <list default="true" id="f77ccfbd-1736-4c76-8578-d85baac9a3f0" name="Changes" comment="forgot to push a few things">
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/data/local/dao/DrinkDao.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/data/local/dao/DrinkDao.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/data/local/dao/UserAndUserDrinkLogDao.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/data/local/dao/UserAndUserDrinkLogDao.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/data/local/database/DrinksDatabase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/data/local/database/DrinksDatabase.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/data/local/database/UserAndUserDrinkLogDataBase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/data/local/database/UserAndUserDrinkLogDataBase.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/data/model/Drink.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/data/model/Drink.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/data/model/User.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/data/model/User.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/data/model/UserDrinkLog.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/data/model/UserDrinkLog.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/data/model/UserDrinkLogSummary.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/data/model/UserDrinkLogSummary.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/data/preferences/UserPreferences.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/data/preferences/UserPreferences.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/data/repository/DrinkRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/data/repository/DrinkRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/data/repository/UserAndUserDrinkLogRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/data/repository/UserAndUserDrinkLogRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/di/AppModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/di/AppModule.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/di/DateConverter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/di/DateConverter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/domain/usecase/GetSpendingStats.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/usecase/GetSpendingStats.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/components/AddButton.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/ui/components/AddButton.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/components/AlcoholListHome.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/ui/components/AlcoholListHome.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/components/AutoCompleteTextField.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/ui/components/AutoCompleteTextField.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/components/NavigationBar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/ui/components/NavigationBar.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/components/TopBar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/ui/components/TopBar.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/components/TopRightQuarterCircle.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/ui/components/TopRightQuarterCircle.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/components/VerticalDivider.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/ui/components/VerticalDivider.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/components/progressbar/AmountProgressBar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/ui/components/progressbar/AmountProgressBar.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/components/progressbar/CountProgressBar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/ui/components/progressbar/CountProgressBar.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/components/progressbar/MoneyProgressBar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/ui/components/progressbar/MoneyProgressBar.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/components/progressbar/ProgressBarFunctions.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/ui/components/progressbar/ProgressBarFunctions.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/components/progressbar/ProgressBarInterface.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/ui/components/progressbar/ProgressBarInterface.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/components/progressbar/ProgressBarType.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/ui/components/progressbar/ProgressBarType.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/navigation/NavigationItem.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/ui/navigation/NavigationItem.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/navigation/Screen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/ui/navigation/Screen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/screens/AddDrinkScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/ui/screens/AddDrinkScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/screens/AnalyticsScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/ui/screens/AnalyticsScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/screens/HomeScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/ui/screens/HomeScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/screens/ListScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/ui/screens/ListScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/screens/ProfileScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/ui/screens/ProfileScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/screens/SignInScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/ui/screens/SignInScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/screens/SignUpScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/ui/screens/SignUpScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/theme/Color.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/ui/theme/Color.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/theme/Theme.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/ui/theme/Theme.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/theme/Type.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/ui/theme/Type.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/viewmodel/AuthViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/ui/viewmodel/AuthViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/viewmodel/DrinkViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/ui/viewmodel/DrinkViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/viewmodel/ProgressBarViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/ui/viewmodel/ProgressBarViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/viewmodel/UserAndUserDrinkLogViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/ui/viewmodel/UserAndUserDrinkLogViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/utils/DateUtils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/com/example/shared/utils/DateUtils.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/shared/build.gradle.kts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,11 +152,24 @@
     "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
     "last_directory_selection": "F:/alcohol_tracker_app/app/src/main/java",
-    "last_opened_file_path": "F:/alcohol_tracker_app/shared/src/commonMain/kotlin",
+    "last_opened_file_path": "F:/alcohol_tracker_app/shared/src/commonMain/kotlin/com/example/shared",
     "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.17",
+    "project.structure.side.proportion": "0.2",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\alcohol_tracker_app\shared\src\commonMain\kotlin\com\example\shared" />
+      <recent name="F:\alcohol_tracker_app\shared\src\commonMain\kotlin" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\alcohol_tracker_app\app" />
+      <recent name="F:\alcohol_tracker_app\app\src\main\java\app" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
       <module name="Alcohol_Tracker.app" />
@@ -254,7 +310,23 @@
       <option name="project" value="LOCAL" />
       <updated>1745354486267</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="added kotlin multiplatform, before file movement">
+      <option name="closed" value="true" />
+      <created>1747941809490</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1747941809490</updated>
+    </task>
+    <task id="LOCAL-00008" summary="forgot to push a few things">
+      <option name="closed" value="true" />
+      <created>1747941904455</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1747941904455</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -279,7 +351,9 @@
     <MESSAGE value="TODO: fix crashing when progressbardialog is empty, and close even if selection isnt changed" />
     <MESSAGE value="nothing works, everything sucks, fuck this" />
     <MESSAGE value="forgor" />
-    <option name="LAST_COMMIT_MESSAGE" value="forgor" />
+    <MESSAGE value="added kotlin multiplatform, before file movement" />
+    <MESSAGE value="forgot to push a few things" />
+    <option name="LAST_COMMIT_MESSAGE" value="forgot to push a few things" />
   </component>
   <component name="play_dynamic_filters_status">
     <option name="appIdToCheckInfo">
@@ -292,6 +366,11 @@
         <entry key="com.example.alcoholtracker.test">
           <value>
             <CheckInfo lastCheckTimestamp="1747851646891" />
+          </value>
+        </entry>
+        <entry key="com.example.shared.test">
+          <value>
+            <CheckInfo lastCheckTimestamp="1747941840702" />
           </value>
         </entry>
       </map>

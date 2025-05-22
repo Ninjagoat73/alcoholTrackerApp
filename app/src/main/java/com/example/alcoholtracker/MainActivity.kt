@@ -1,12 +1,8 @@
 package com.example.alcoholtracker
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -16,23 +12,22 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.createGraph
-import com.example.alcoholtracker.ui.components.BottomNavigationBar
-import com.example.alcoholtracker.ui.navigation.Screen
-import com.example.alcoholtracker.ui.screens.AddDrinkScreen
-import com.example.alcoholtracker.ui.screens.AnalyticsScreen
-import com.example.alcoholtracker.ui.screens.HomeScreen
-import com.example.alcoholtracker.ui.screens.ListScreen
-import com.example.alcoholtracker.ui.screens.ProfileScreen
-import com.example.alcoholtracker.ui.screens.SignInScreen
-import com.example.alcoholtracker.ui.viewmodel.AuthViewModel
-import com.example.alcoholtracker.ui.viewmodel.ProgressBarViewModel
-import com.example.alcoholtracker.ui.viewmodel.UserAndUserDrinkLogViewModel
+import com.example.shared.ui.components.BottomNavigationBar
+import com.example.shared.ui.navigation.Screen
+import com.example.shared.ui.screens.AddDrinkScreen
+import com.example.shared.ui.screens.AnalyticsScreen
+import com.example.shared.ui.screens.HomeScreen
+import com.example.shared.ui.screens.ListScreen
+import com.example.shared.ui.screens.ProfileScreen
+import com.example.shared.ui.screens.SignInScreen
+import com.example.shared.ui.viewmodel.AuthViewModel
+import com.example.shared.ui.viewmodel.ProgressBarViewModel
+import com.example.shared.ui.viewmodel.UserAndUserDrinkLogViewModel
 
 import com.example.compose.AlcoholTrackerTheme
 import com.google.firebase.Firebase
