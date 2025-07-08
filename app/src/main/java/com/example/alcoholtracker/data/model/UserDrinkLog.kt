@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.example.alcoholtracker.di.DateConverter
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 @Entity(tableName = "log")
 data class UserDrinkLog(
@@ -38,6 +39,6 @@ data class UserDrinkLog(
 
     @TypeConverters(DateConverter::class)
     @ColumnInfo("date")
-    val date: LocalDate
+    val date: LocalDateTime
 
 )

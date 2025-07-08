@@ -38,13 +38,11 @@ class UserAndUserDrinkLogViewModel @Inject constructor(
     private val _drinkLogs = MutableStateFlow<List<UserDrinkLog>>(emptyList())
     val twoDaySummary: StateFlow<List<UserDrinkLog>?> = _twoDaySummary
 
-    @OptIn(ExperimentalCoroutinesApi::class)
-    val drinkLogs: StateFlow<List<UserDrinkLog>> = _userId
-        .filter { it.isNotEmpty() }
-        .flatMapLatest { userId ->
-            userAndUserDrinkLogRepository.getDrinkLogsByUserId(userId)
-        }
-        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+
+    fun getDrinkLogs(userId: String): StateFlow<List<UserDrinkLog>>{
+        return userAndUserDrinkLogRepository.getDrinkLogsByUserId(userId)
+            .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+    }
 
 
     fun setUserId(userId: String) {
@@ -66,12 +64,9 @@ class UserAndUserDrinkLogViewModel @Inject constructor(
     }
 
 
-    fun getTwoDaySummary() {
-        viewModelScope.launch {
-            _userId.value?.let {
-                _twoDaySummary.value = userAndUserDrinkLogRepository.getTwoDayLogs(it)
-            }
-        }
+    fun getTwoDaySummary(userId: String): StateFlow<List<UserDrinkLog>> {
+        return userAndUserDrinkLogRepository.getTwoDayLogsByUser(userId)
+            .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
     }
 
     fun deleteDrink(log: UserDrinkLog){
@@ -88,7 +83,7 @@ class UserAndUserDrinkLogViewModel @Inject constructor(
     }
 
     init { viewModelScope.launch {
-        getTwoDaySummary()
+
         val currentUserId = auth.currentUser?.uid ?: ""
         if (currentUserId.isNotEmpty()) {
             _userId.value = currentUserId

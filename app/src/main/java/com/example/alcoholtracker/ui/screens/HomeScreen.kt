@@ -17,14 +17,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.alcoholtracker.ui.components.AddButton
-import com.example.alcoholtracker.ui.components.AlcoholListHome
+import com.example.alcoholtracker.ui.components.alcohollist.AlcoholListHome
 import com.example.alcoholtracker.ui.components.HomeTopBar
+import com.example.alcoholtracker.ui.components.alcohollist.AlcoholListHomeWrapper
 import com.example.alcoholtracker.ui.components.progressbar.AmountProgressBar
 import com.example.alcoholtracker.ui.components.progressbar.CountProgressBar
 import com.example.alcoholtracker.ui.components.progressbar.MoneyProgressBar
 import com.example.alcoholtracker.ui.components.progressbar.ProgressBarEditDialog
 import com.example.alcoholtracker.ui.components.progressbar.ProgressBarInterface
 import com.example.alcoholtracker.ui.components.progressbar.ProgressBarType
+import com.example.alcoholtracker.ui.viewmodel.AuthViewModel
 
 
 import com.example.alcoholtracker.ui.viewmodel.DrinkViewModel
@@ -35,14 +37,13 @@ import com.example.alcoholtracker.ui.viewmodel.UserAndUserDrinkLogViewModel
 fun HomeScreen(
     navController: NavController,
     progressBarViewModel: ProgressBarViewModel,
-    drinkViewModel: DrinkViewModel = hiltViewModel(),
+    authViewModel: AuthViewModel = hiltViewModel(),
     userDrinkLogViewModel: UserAndUserDrinkLogViewModel = hiltViewModel(),
 ){
-
-    val drinks by drinkViewModel.drinks.collectAsState()
-    val userDrinkLogs by userDrinkLogViewModel.drinkLogs.collectAsState()
+    val userId by authViewModel.getUserID()
+    val userDrinkLogs by userDrinkLogViewModel.getDrinkLogs(userId!!).collectAsState()
     var showDialog by remember { mutableStateOf(false)}
-    val currentType = progressBarViewModel.currentType
+    val currentType = progressBarViewModel.currentType.collectAsState().value
     val currentTarget = progressBarViewModel.currentTarget.collectAsState().value
 
     val progressBar: ProgressBarInterface = when (currentType) {
@@ -50,7 +51,6 @@ fun HomeScreen(
         ProgressBarType.COUNT -> CountProgressBar()
         ProgressBarType.AMOUNT -> AmountProgressBar()
     }
-
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
@@ -63,15 +63,7 @@ fun HomeScreen(
         Surface(modifier = Modifier.padding(top = it.calculateTopPadding())) {
 
             Column {
-
-                print("I am loading home screen")
-
-                if (userDrinkLogs.isEmpty()){
-                    print("shit is fucked")
-                }
-
-                AlcoholListHome(userDrinkLogs)
-
+                AlcoholListHomeWrapper()
                 if (showDialog){
                     ProgressBarEditDialog(
                         currentType,

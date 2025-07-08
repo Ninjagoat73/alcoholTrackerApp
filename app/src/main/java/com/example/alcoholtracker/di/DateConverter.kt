@@ -2,16 +2,17 @@ package com.example.alcoholtracker.di
 
 import androidx.room.TypeConverter
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 
 class DateConverter {
     @TypeConverter
-    fun fromTimestamp(value: String?): LocalDate? {
-        return value?.let { LocalDate.parse(it) }
+    fun fromTimestamp(value: String?): LocalDateTime? {
+        return value?.let { LocalDateTime.parse(it) }
     }
 
     @TypeConverter
-    fun dateToTimestamp(date: LocalDate?): String? {
+    fun dateToTimestamp(date: LocalDateTime?): String? {
         return date?.toString()
     }
 }

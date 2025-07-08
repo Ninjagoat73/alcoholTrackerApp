@@ -22,7 +22,7 @@ import com.example.alcoholtracker.ui.viewmodel.DrinkViewModel
 import com.example.alcoholtracker.ui.viewmodel.UserAndUserDrinkLogViewModel
 import com.google.firebase.auth.FirebaseAuth
 import java.time.LocalDate
-
+import java.time.LocalDateTime
 
 
 @Composable
@@ -52,7 +52,7 @@ fun AddDrinkScreen(
                         name = drinkName,
                         alcoholPercentage = alcoholPercentage.toDoubleOrNull() ?: 0.0,
                         amount = volume.toDoubleOrNull() ?: 0.0,
-                        date = LocalDate.now(),
+                        date = LocalDateTime.now(),
                         cost = cost.toDoubleOrNull() ?: 0.0,
                         category = "Beer",
                         recipient = "Self",

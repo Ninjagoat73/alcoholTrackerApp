@@ -42,6 +42,7 @@ dependencies {
     implementation("androidx.credentials:credentials:1.5.0")
     implementation("androidx.credentials:credentials-play-services-auth:1.5.0")
     implementation("com.google.android.libraries.identity.googleid:googleid:1.1.1")
+    implementation("androidx.media3:media3-common-ktx:1.7.1")
     testImplementation("junit:junit:4.12")
     ksp("androidx.room:room-compiler:2.6.1")
 

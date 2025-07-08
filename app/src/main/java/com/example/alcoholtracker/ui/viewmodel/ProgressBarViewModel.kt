@@ -1,18 +1,14 @@
 package com.example.alcoholtracker.ui.viewmodel
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableDoubleStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.alcoholtracker.data.preferences.UserPreferences
-import com.example.alcoholtracker.ui.components.progressbar.ProgressBarType
 import dagger.hilt.android.lifecycle.HiltViewModel
+import com.example.alcoholtracker.ui.components.progressbar.ProgressBarType
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.WhileSubscribed
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -28,12 +24,15 @@ class ProgressBarViewModel @Inject constructor(
             SharingStarted.WhileSubscribed(5000),
             "MONEY").toString()
 
-    val currentType = when (currentTypeAsString) {
-        "MONEY" -> ProgressBarType.MONEY
-        "COUNT" -> ProgressBarType.COUNT
-        "AMOUNT" -> ProgressBarType.AMOUNT
-        else -> ProgressBarType.MONEY
-    }
+
+    val currentType: StateFlow<ProgressBarType> = userPreferences.progressBarType
+        .map { typeString -> when(typeString) {
+            "MONEY" -> ProgressBarType.MONEY
+            "COUNT" -> ProgressBarType.COUNT
+            "AMOUNT" -> ProgressBarType.AMOUNT
+            else -> ProgressBarType.MONEY
+        }
+        }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), ProgressBarType.MONEY)
 
     val currentTarget: StateFlow<Double> = userPreferences.progressBarTarget.stateIn(
         viewModelScope,
