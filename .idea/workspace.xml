@@ -9,30 +9,11 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f77ccfbd-1736-4c76-8578-d85baac9a3f0" name="Changes" comment="forgor">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/components/alcohollist/AlcoholListFull.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/components/alcohollist/AlcoholListFullWrapper.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/components/alcohollist/AlcoholListHomeWrapper.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/components/alcohollist/AlcoholListInterface.kt" afterDir="false" />
+    <list default="true" id="f77ccfbd-1736-4c76-8578-d85baac9a3f0" name="Changes" comment="gitignore">
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/appInsightsSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/appInsightsSettings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/data/local/dao/UserAndUserDrinkLogDao.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/data/local/dao/UserAndUserDrinkLogDao.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/data/model/UserDrinkLog.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/data/model/UserDrinkLog.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/data/repository/UserAndUserDrinkLogRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/data/repository/UserAndUserDrinkLogRepository.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/di/DateConverter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/di/DateConverter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/components/AlcoholListHome.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/components/alcohollist/AlcoholListHome.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/screens/AddDrinkScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/screens/AddDrinkScreen.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/screens/HomeScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/screens/HomeScreen.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/screens/ListScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/screens/ListScreen.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/viewmodel/ProgressBarViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/viewmodel/ProgressBarViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/viewmodel/UserAndUserDrinkLogViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/alcoholtracker/ui/viewmodel/UserAndUserDrinkLogViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/google-services.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +23,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=LocalEmulator, isTemplate=false, identifier=path=C:\Users\levay\.android\avd\Medium_Phone_API_35.avd)]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=LocalEmulator, isTemplate=false, identifier=path=C:\Users\ZETENY\.android\avd\Pixel_9.avd)]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -93,12 +74,12 @@
     &quot;assignee&quot;: &quot;Ninjagoat73&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/Ninjagoat73/alcoholTrackerApp.git&quot;,
-    &quot;accountId&quot;: &quot;7e00adf2-2412-4e72-92cb-bdabe84a224c&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Ninjagoat73/alcoholTrackerApp.git",
+    "accountId": "28ac1b38-4f53-4510-897a-76b1261b3d67"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -277,7 +258,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745354486267</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="gitignore">
+      <option name="closed" value="true" />
+      <created>1752006246738</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1752006246738</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -302,19 +291,20 @@
     <MESSAGE value="TODO: fix crashing when progressbardialog is empty, and close even if selection isnt changed" />
     <MESSAGE value="nothing works, everything sucks, fuck this" />
     <MESSAGE value="forgor" />
-    <option name="LAST_COMMIT_MESSAGE" value="forgor" />
+    <MESSAGE value="gitignore" />
+    <option name="LAST_COMMIT_MESSAGE" value="gitignore" />
   </component>
   <component name="play_dynamic_filters_status">
     <option name="appIdToCheckInfo">
       <map>
         <entry key="com.example.alcoholtracker">
           <value>
-            <CheckInfo lastCheckTimestamp="1747851646891" />
+            <CheckInfo lastCheckTimestamp="1752006725868" />
           </value>
         </entry>
         <entry key="com.example.alcoholtracker.test">
           <value>
-            <CheckInfo lastCheckTimestamp="1747851646891" />
+            <CheckInfo lastCheckTimestamp="1752006725872" />
           </value>
         </entry>
       </map>
