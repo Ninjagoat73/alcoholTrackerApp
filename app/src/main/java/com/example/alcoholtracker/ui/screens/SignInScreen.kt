@@ -15,6 +15,7 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.rounded.Done
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -43,6 +44,7 @@ import com.example.compose.AlcoholTrackerTheme
 @Composable
 fun SignInScreen(
     authViewModel: AuthViewModel = hiltViewModel(),
+    onGuestLogin: () -> Unit = { authViewModel.signInAnonymously() }
 ) {
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
@@ -77,6 +79,8 @@ fun SignInScreen(
             modifier = Modifier.fillMaxWidth()
         )
 
+
+
         Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedTextField(
@@ -108,6 +112,16 @@ fun SignInScreen(
             enabled = isFormValid
         ) {
             Text("Login")
+        }
+
+        Button(
+            onClick = onGuestLogin,
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.secondaryContainer
+            )
+        ) {
+            Text("Continue as Guest")
         }
 
         Spacer(modifier = Modifier.height(12.dp))
