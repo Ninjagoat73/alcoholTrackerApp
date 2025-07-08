@@ -52,12 +52,8 @@ class AmountProgressBar: ProgressBarInterface {
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.surfaceContainer
             ))
-
-
         {
-
-
-            Box() {
+            Box {
 
                 IconButton(
                     onClick = onEditClick, modifier = Modifier
@@ -72,7 +68,7 @@ class AmountProgressBar: ProgressBarInterface {
                     )
                 }
 
-                ProgressText(summary.totalCost, summary.drinkCount, summary.totalAmount.toInt())
+                ProgressText(summary.totalCost, summary.drinkCount, summary.totalAmount.toInt(), target)
 
                 Box(
                     modifier = Modifier
@@ -133,13 +129,14 @@ class AmountProgressBar: ProgressBarInterface {
     @Composable
     override fun ProgressText(money: Double,
                               count: Int,
-                              amount: Int, ) {
+                              amount: Int,
+                              target: Double) {
 
         Column(modifier = Modifier
             .fillMaxWidth()
             .padding(top = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally){
-            Text(text = "${amount}ml",
+            Text(text = "${amount}/${target}ml",
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp,
                 modifier = Modifier.padding(bottom = 4.dp))

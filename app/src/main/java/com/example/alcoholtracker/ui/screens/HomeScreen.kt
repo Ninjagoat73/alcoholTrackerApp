@@ -42,9 +42,21 @@ fun HomeScreen(
 ){
     val userId by authViewModel.getUserID()
     val userDrinkLogs by userDrinkLogViewModel.getDrinkLogs(userId!!).collectAsState()
+    val twoDayDrinkLogs by userDrinkLogViewModel.getTwoDaySummary(userId!!).collectAsState()
     var showDialog by remember { mutableStateOf(false)}
-    val currentType = progressBarViewModel.currentType.collectAsState().value
-    val currentTarget = progressBarViewModel.currentTarget.collectAsState().value
+    val currentType by progressBarViewModel.currentType.collectAsState()
+
+    val moneyTarget by  progressBarViewModel.moneyTarget.collectAsState()
+    val countTarget by progressBarViewModel.countTarget.collectAsState()
+    val amountTarget by  progressBarViewModel.amountTarget.collectAsState()
+    val currentTargets =
+        mapOf(
+            ProgressBarType.MONEY to moneyTarget,
+            ProgressBarType.COUNT to countTarget,
+            ProgressBarType.AMOUNT to amountTarget
+        )
+
+    val currentTarget = currentTargets[currentType]
 
     val progressBar: ProgressBarInterface = when (currentType) {
         ProgressBarType.MONEY -> MoneyProgressBar()
@@ -67,18 +79,18 @@ fun HomeScreen(
                 if (showDialog){
                     ProgressBarEditDialog(
                         currentType,
-                        currentTarget,
+                        currentTargets,
                         onDismiss = {showDialog = false},
                         onConfirm = { selectedType, selectedTarget ->
                             progressBarViewModel.updateType(selectedType.toString())
-                            progressBarViewModel.updateTarget(selectedTarget)
+                            progressBarViewModel.updateTarget(selectedTarget, selectedType)
                             showDialog = false
                         })
                 }
 
                 progressBar.ProgressBarCard(
-                    userDrinkLogs,
-                    target = currentTarget,
+                    twoDayDrinkLogs,
+                    target = currentTarget!!,
                     onEditClick = {showDialog = true}
                 )
             }

@@ -17,7 +17,7 @@ interface ProgressBarInterface {
     fun ProgressBar(calculatedScore: Float)
 
     @Composable
-    fun ProgressText(money: Double, count: Int, amount: Int)
+    fun ProgressText(money: Double, count: Int, amount: Int, target: Double)
 
     fun progressCalculator(unCalculatedScore: Double,target: Double ): Float
 }

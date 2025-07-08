@@ -32,7 +32,7 @@ interface UserAndUserDrinkLogDao {
     @Query("""
     SELECT * FROM log 
     WHERE userId = :userId 
-    AND date BETWEEN date('now', '-1 day') AND date('now')
+    AND date(date) IN (date('now'), date('now', '-1 day'))
 """)
     fun getTwoDayLogs(userId: String): Flow<List<UserDrinkLog>>
 

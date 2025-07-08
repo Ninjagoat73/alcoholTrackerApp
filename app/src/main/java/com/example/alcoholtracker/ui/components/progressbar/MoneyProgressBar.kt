@@ -1,5 +1,6 @@
 package com.example.alcoholtracker.ui.components.progressbar
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -67,7 +68,8 @@ class MoneyProgressBar : ProgressBarInterface {
                             tint = MaterialTheme.colorScheme.onSurface)
                     }
 
-                    ProgressText(summary.totalCost, summary.drinkCount, summary.totalAmount.toInt())
+                    ProgressText(summary.totalCost, summary.drinkCount, summary.totalAmount.toInt(),target)
+
 
                     Box(modifier = Modifier
                         .fillMaxSize(),
@@ -126,13 +128,14 @@ class MoneyProgressBar : ProgressBarInterface {
     @Composable
     override fun ProgressText(money: Double,
                               count: Int,
-                              amount: Int, ) {
+                              amount: Int,
+                              target: Double) {
 
         Column(modifier = Modifier
             .fillMaxWidth()
             .padding(top = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally){
-            Text(text = "$money$",
+            Text(text = "$money/$target$",
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp,
                 modifier = Modifier.padding(bottom = 4.dp))
@@ -143,11 +146,7 @@ class MoneyProgressBar : ProgressBarInterface {
                 )
             }
         }
-
-
-
     }
-
     override fun progressCalculator(unCalculatedScore: Double, target: Double): Float {
 
         val score = unCalculatedScore/target
@@ -159,20 +158,4 @@ class MoneyProgressBar : ProgressBarInterface {
         else
             0F
     }
-
-
-
-
-/*
-    @Preview(showBackground = true)
-    @Composable
-    fun Preview(){
-        AlcoholTrackerTheme {
-            ProgressBarCard(10.0,
-                10.0,
-                2000.0,
-                200.0)
-        }
-    }
-    */
 }
