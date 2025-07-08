@@ -132,7 +132,7 @@ fun MainScreen() {
         val graph =
             navController.createGraph(startDestination = Screen.Home.rout) {
                 composable(route = Screen.List.rout) {
-                    ListScreen()
+                    ListScreen(navController)
                 }
                 composable(route = Screen.Analytics.rout) {
                     AnalyticsScreen()

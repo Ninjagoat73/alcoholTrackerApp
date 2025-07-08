@@ -9,10 +9,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="com.example.alcoholtracker" />
-                  <option name="mobileSdkAppId" value="1:861962764304:android:f8548a4027a5cd7581ca95" />
-                  <option name="projectId" value="alcohol-tracker-b1a42" />
-                  <option name="projectNumber" value="861962764304" />
+                  <option name="appId" value="PLACEHOLDER" />
+                  <option name="mobileSdkAppId" value="" />
+                  <option name="projectId" value="" />
+                  <option name="projectNumber" value="" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

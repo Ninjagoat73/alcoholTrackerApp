@@ -29,8 +29,7 @@ class UserAndUserDrinkLogRepository @Inject constructor(private val userAndUserD
     fun getDrinkLogsByUserId(userId: String): Flow<List<UserDrinkLog>> {
         return userAndUserDrinkLogDao.getDrinkLogsByUserId(userId)
     }
-
-    suspend fun getTwoDayLogs(userId: String): List<UserDrinkLog>{
-        return  userAndUserDrinkLogDao.getTwoDayLogs(userId)
+    fun getTwoDayLogsByUser(userId: String): Flow<List<UserDrinkLog>> {
+        return userAndUserDrinkLogDao.getTwoDayLogs(userId)
     }
 }
