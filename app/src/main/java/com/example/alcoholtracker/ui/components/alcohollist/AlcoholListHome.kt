@@ -63,7 +63,6 @@ class AlcoholListHome: AlcoholListInterface {
         val userId by authViewModel.getUserID()
         val drinkLogs by remember{userDrinkLogViewModel.getTwoDaySummary(userId!!)}.collectAsState()
 
-        Text("Items: ${drinkLogs.size}")
 
 
         OutlinedCard(modifier = Modifier

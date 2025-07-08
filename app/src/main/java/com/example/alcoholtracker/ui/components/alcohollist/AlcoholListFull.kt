@@ -192,7 +192,6 @@ class AlcoholListFull: AlcoholListInterface {
             ) {
                 Column(
                     modifier = Modifier
-                        .padding(horizontal = 8.dp)
                         .clickable { expanded = !expanded }
                         .animateContentSize()
                 ) {
@@ -227,8 +226,8 @@ class AlcoholListFull: AlcoholListInterface {
 
                     if (expanded) {
                         Column(modifier = Modifier.padding(start = 16.dp, bottom = 12.dp, top = 4.dp)) {
-                            Text("Notes: ${item.recipient ?: "None"}")
-                            Text("Location: ${item.category ?: "N/A"}")
+                            Text("Recipient: ${item.recipient ?: "None"}")
+                            Text("Category: ${item.category ?: "N/A"}")
                         }
                     }
 

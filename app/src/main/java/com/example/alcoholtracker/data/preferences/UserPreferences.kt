@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -21,14 +22,48 @@ class UserPreferences @Inject constructor (
             preferences[PROGRESS_BAR_TYPE] ?: "MONEY"
         }
 
-    val progressBarTarget = context.dataStore.data
+    private val amountProgressBarTarget = context.dataStore.data
         .map { preferences ->
-            preferences[PROGRESS_BAR_TARGET] ?: 0.0
+            preferences[AMOUNT_PROGRESS_BAR_TARGET] ?: 0.0
         }
 
-    suspend fun updateTarget(target: Double){
+    suspend fun updateAmountTarget(target: Double){
         context.dataStore.edit { preferences ->
-            preferences[PROGRESS_BAR_TARGET] = target
+            preferences[AMOUNT_PROGRESS_BAR_TARGET] = target
+        }
+    }
+
+    fun getAmountTarget(): Flow<Double> {
+        return amountProgressBarTarget
+    }
+
+    private val countProgressBarTarget = context.dataStore.data
+        .map { preferences ->
+            preferences[COUNT_PROGRESS_BAR_TARGET] ?: 0.0
+        }
+
+    suspend fun updateCountTarget(target: Double){
+        context.dataStore.edit { preferences ->
+            preferences[COUNT_PROGRESS_BAR_TARGET] = target
+        }
+    }
+
+    fun getCountTarget(): Flow<Double> {
+        return countProgressBarTarget
+    }
+
+    private val moneyProgressBarTarget = context.dataStore.data
+        .map { preferences ->
+            preferences[MONEY_PROGRESS_BAR_TARGET] ?: 0.0
+        }
+
+    fun getMoneyTarget(): Flow<Double> {
+        return moneyProgressBarTarget
+    }
+
+    suspend fun updateMoneyTarget(target: Double){
+        context.dataStore.edit { preferences ->
+            preferences[MONEY_PROGRESS_BAR_TARGET] = target
         }
     }
 
@@ -41,7 +76,10 @@ class UserPreferences @Inject constructor (
 
     companion object{
         val PROGRESS_BAR_TYPE = stringPreferencesKey("progress_bar_type")
-        val PROGRESS_BAR_TARGET = doublePreferencesKey("progress_bar_target")
+        val AMOUNT_PROGRESS_BAR_TARGET = doublePreferencesKey("amount_progress_bar_target")
+        val COUNT_PROGRESS_BAR_TARGET = doublePreferencesKey("count_progress_bar_target")
+        val MONEY_PROGRESS_BAR_TARGET = doublePreferencesKey("money_progress_bar_target")
+
 
     }
 }

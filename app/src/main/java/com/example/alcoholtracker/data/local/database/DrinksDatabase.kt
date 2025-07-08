@@ -8,7 +8,7 @@ import com.example.alcoholtracker.data.local.dao.DrinkDao
 import com.example.alcoholtracker.data.model.Drink
 
 
-@Database(entities = [Drink::class], version = 1)
+@Database(entities = [Drink::class], version = 1, exportSchema = false)
 abstract class DrinksDatabase : RoomDatabase() {
     abstract fun drinkDao(): DrinkDao
 

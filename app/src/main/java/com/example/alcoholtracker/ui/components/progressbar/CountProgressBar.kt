@@ -63,7 +63,7 @@ class CountProgressBar: ProgressBarInterface {
                         tint = MaterialTheme.colorScheme.onSurface)
                 }
 
-                ProgressText(summary.totalCost, summary.drinkCount, summary.totalAmount.toInt())
+                ProgressText(summary.totalCost, summary.drinkCount, summary.totalAmount.toInt(), target)
 
                 Box(modifier = Modifier
                     .fillMaxSize(),
@@ -74,7 +74,6 @@ class CountProgressBar: ProgressBarInterface {
             }
         }
     }
-
     @Composable
     override fun ProgressBar(calculatedScore: Float) {
         Box(
@@ -118,17 +117,17 @@ class CountProgressBar: ProgressBarInterface {
 
         }
     }
-
     @Composable
     override fun ProgressText(money: Double,
                               count: Int,
-                              amount: Int, ) {
+                              amount: Int,
+                              target: Double) {
 
         Column(modifier = Modifier
             .fillMaxWidth()
             .padding(top = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally){
-            Text(text = "$count drinks",
+            Text(text = "$count/${target.toInt()} drinks",
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp,
                 modifier = Modifier.padding(bottom = 4.dp))
@@ -139,11 +138,7 @@ class CountProgressBar: ProgressBarInterface {
                 )
             }
         }
-
-
-
     }
-
     override fun progressCalculator(unCalculatedScore: Double, target: Double): Float {
 
         val score = unCalculatedScore/target
