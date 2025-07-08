@@ -51,7 +51,6 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         auth = Firebase.auth
     }
 
@@ -66,7 +65,8 @@ class MainActivity : ComponentActivity() {
                 if (userId != null){
                     MainScreen()
                 }else{
-                    SignInScreen(authViewModel)
+                    SignInScreen(authViewModel,
+                            onGuestLogin = { authViewModel.signInAnonymously() })
                 }
             }
         }
