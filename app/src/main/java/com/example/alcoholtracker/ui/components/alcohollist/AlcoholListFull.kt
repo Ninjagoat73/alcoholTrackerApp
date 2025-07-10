@@ -16,9 +16,11 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Card
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
@@ -57,12 +59,8 @@ class AlcoholListFull: AlcoholListInterface {
         userDrinkLogViewModel: UserAndUserDrinkLogViewModel
     ) {
 
-
         val userId by authViewModel.getUserID()
         val drinkLogs by userDrinkLogViewModel.getDrinkLogs(userId!!).collectAsState()
-
-
-
 
         Box(modifier = Modifier.fillMaxSize()){
         LazyColumn {
@@ -181,7 +179,9 @@ class AlcoholListFull: AlcoholListInterface {
         ) {
 
             val formatter = DateTimeFormatter.ofPattern("dd-MM")
+            val timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss")
             val date  = item.date.toLocalDate().format(formatter)
+            val time = item.date.toLocalTime().format(timeFormatter)
             var expanded by remember { mutableStateOf(false) }
 
             Card(
@@ -228,6 +228,7 @@ class AlcoholListFull: AlcoholListInterface {
                         Column(modifier = Modifier.padding(start = 16.dp, bottom = 12.dp, top = 4.dp)) {
                             Text("Recipient: ${item.recipient ?: "None"}")
                             Text("Category: ${item.category ?: "N/A"}")
+                            Text("Time: $time")
                         }
                     }
 

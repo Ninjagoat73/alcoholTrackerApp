@@ -23,16 +23,16 @@ data class UserDrinkLog(
     val name: String,
 
     @ColumnInfo("cost")
-    val cost: Double,
+    val cost: Double?,
 
     @ColumnInfo("alcoholPercentage")
-    val alcoholPercentage: Double,
+    val alcoholPercentage: Double?,
 
     @ColumnInfo("amount")
-    val amount: Double,
+    val amount: Double?,
 
     @ColumnInfo("category")
-    val category: String?,
+    val category: DrinkCategory,
 
     @ColumnInfo("recipient")
     val recipient: String?,

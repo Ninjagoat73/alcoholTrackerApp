@@ -16,7 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.alcoholtracker.data.model.DrinkCategory
 import com.example.alcoholtracker.data.model.UserDrinkLog
+import com.example.alcoholtracker.domain.usecase.onCreateDrinkClick
 import com.example.alcoholtracker.ui.components.AutoCompleteTextField
 import com.example.alcoholtracker.ui.viewmodel.DrinkViewModel
 import com.example.alcoholtracker.ui.viewmodel.UserAndUserDrinkLogViewModel
@@ -45,19 +47,15 @@ fun AddDrinkScreen(
 
         Button(
             onClick = {
-                viewModel.logDrink(
-                    UserDrinkLog(
-                        drinkId = 2,
-                        userId = FirebaseAuth.getInstance().currentUser?.uid ?: "",
-                        name = drinkName,
-                        alcoholPercentage = alcoholPercentage.toDoubleOrNull() ?: 0.0,
-                        amount = volume.toDoubleOrNull() ?: 0.0,
-                        date = LocalDateTime.now(),
-                        cost = cost.toDoubleOrNull() ?: 0.0,
-                        category = "Beer",
-                        recipient = "Self",
-
-                    )
+                onCreateDrinkClick(
+                    drinkName,
+                    DrinkCategory.BEER,
+                    alcoholPercentage.toDoubleOrNull(),
+                    volume.toDoubleOrNull(),
+                    cost.toDoubleOrNull(),
+                    "Self",
+                    null,
+                    viewModel
                 )
                 navController.popBackStack()
             }

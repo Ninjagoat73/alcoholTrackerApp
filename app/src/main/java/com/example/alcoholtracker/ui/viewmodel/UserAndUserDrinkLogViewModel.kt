@@ -5,11 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.alcoholtracker.data.model.DrinkCategory
 import com.example.alcoholtracker.data.model.User
 
 import com.example.alcoholtracker.data.model.UserDrinkLog
 import com.example.alcoholtracker.data.model.UserDrinkLogSummary
 import com.example.alcoholtracker.data.repository.UserAndUserDrinkLogRepository
+import com.example.alcoholtracker.domain.usecase.DrinkCreateRequest
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -22,6 +24,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
@@ -76,9 +79,23 @@ class UserAndUserDrinkLogViewModel @Inject constructor(
     }
 
 
-    fun logDrink(drinkLog: UserDrinkLog){
+    fun logDrink(request: DrinkCreateRequest){
+
+        val drink = UserDrinkLog(
+            drinkId = 2,
+            userId = FirebaseAuth.getInstance().currentUser!!.uid,
+            name = request.name,
+            cost = request.cost,
+            alcoholPercentage = request.abv,
+            amount = request.volume,
+            category = request.category,
+            recipient = request.recipient,
+            date = request.dateTime?: LocalDateTime.now()
+        )
+
+
         viewModelScope.launch {
-            userAndUserDrinkLogRepository.insertDrinkLog(drinkLog)
+            userAndUserDrinkLogRepository.insertDrinkLog(drink)
         }
     }
 
