@@ -4,6 +4,7 @@ package com.example.alcoholtracker.ui.screens
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -17,9 +18,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.alcoholtracker.data.model.DrinkCategory
-import com.example.alcoholtracker.data.model.UserDrinkLog
-import com.example.alcoholtracker.domain.usecase.onCreateDrinkClick
-import com.example.alcoholtracker.ui.components.AutoCompleteTextField
+import com.example.alcoholtracker.domain.usecase.DrinkCreateRequest
+
 import com.example.alcoholtracker.ui.viewmodel.DrinkViewModel
 import com.example.alcoholtracker.ui.viewmodel.UserAndUserDrinkLogViewModel
 import com.google.firebase.auth.FirebaseAuth
@@ -47,16 +47,16 @@ fun AddDrinkScreen(
 
         Button(
             onClick = {
-                onCreateDrinkClick(
-                    drinkName,
-                    DrinkCategory.BEER,
-                    alcoholPercentage.toDoubleOrNull(),
-                    volume.toDoubleOrNull(),
-                    cost.toDoubleOrNull(),
-                    "Self",
-                    null,
-                    viewModel
-                )
+                val request = DrinkCreateRequest(
+                    name = drinkName,
+                    category = DrinkCategory.BEER,
+                    abv = alcoholPercentage.toDoubleOrNull(),
+                    volume = volume.toDoubleOrNull(),
+                    cost = cost.toDoubleOrNull(),
+                    recipient = "Self",
+                    dateTime = null,
+                    logId = null)
+                viewModel.logDrink(request)
                 navController.popBackStack()
             }
         ) {

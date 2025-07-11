@@ -9,6 +9,7 @@ import com.example.alcoholtracker.data.local.dao.UserAndUserDrinkLogDao
 import com.example.alcoholtracker.data.local.database.DrinksDatabase
 import com.example.alcoholtracker.data.local.database.UserAndUserDrinkLogDataBase
 import com.example.alcoholtracker.data.model.Drink
+import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -61,4 +62,7 @@ object AppModule {
             }
         }).build()
     }
+    @Provides
+    @Singleton
+    fun provideFirebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
 }

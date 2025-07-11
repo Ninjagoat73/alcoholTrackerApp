@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.example.alcoholtracker.data.model.User
 import com.example.alcoholtracker.data.model.UserDrinkLog
 import com.example.alcoholtracker.data.model.UserDrinkLogSummary
@@ -19,6 +20,9 @@ interface UserAndUserDrinkLogDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertDrinkLog(log: UserDrinkLog)
+
+    @Update
+    suspend fun updateDrinkLog(log: UserDrinkLog)
 
     @Delete
     suspend fun deleteDrinkLog(log: UserDrinkLog)

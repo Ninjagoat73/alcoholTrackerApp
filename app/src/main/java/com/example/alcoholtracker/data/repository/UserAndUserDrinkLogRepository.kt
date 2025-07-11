@@ -18,6 +18,10 @@ class UserAndUserDrinkLogRepository @Inject constructor(private val userAndUserD
         userAndUserDrinkLogDao.insertDrinkLog(log)
     }
 
+    suspend fun updateDrinkLog(log: UserDrinkLog){
+        userAndUserDrinkLogDao.updateDrinkLog(log)
+    }
+
     suspend fun deleteDrinkLog(log: UserDrinkLog){
         userAndUserDrinkLogDao.deleteDrinkLog(log)
     }
@@ -25,6 +29,7 @@ class UserAndUserDrinkLogRepository @Inject constructor(private val userAndUserD
     suspend fun getUserById(userId: String): User {
         return userAndUserDrinkLogDao.getUserById(userId)
     }
+
 
     fun getDrinkLogsByUserId(userId: String): Flow<List<UserDrinkLog>> {
         return userAndUserDrinkLogDao.getDrinkLogsByUserId(userId)
