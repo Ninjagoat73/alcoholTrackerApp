@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -125,6 +126,12 @@ class AlcoholListFull: AlcoholListInterface {
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.onPrimaryContainer
             )
+            IconButton(
+                onClick = {  },
+                modifier = Modifier.weight(0.75f)
+            ) {
+                Icon(Icons.Default.Search, "Filter")
+            }
         }
     }
 
@@ -171,7 +178,9 @@ class AlcoholListFull: AlcoholListInterface {
                         imageVector = Icons.Default.Delete,
                         contentDescription = "Delete",
                         tint = Color.White,
-                        modifier = Modifier.align(Alignment.CenterEnd).padding(12.dp)
+                        modifier = Modifier
+                            .align(Alignment.CenterEnd)
+                            .padding(12.dp)
                     )
                 }
             },

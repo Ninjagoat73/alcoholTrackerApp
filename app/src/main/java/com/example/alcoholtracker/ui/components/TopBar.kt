@@ -54,13 +54,3 @@ fun CurrentDayText(){
         style = MaterialTheme.typography.titleLarge,
     )
 }
-
-@Composable
-@Preview
-fun preview(){
-    AlcoholTrackerTheme {
-        HomeTopBar(){
-            //TODO
-        }
-    }
-}
