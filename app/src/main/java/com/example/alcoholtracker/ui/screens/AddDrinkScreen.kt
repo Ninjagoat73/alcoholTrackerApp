@@ -4,7 +4,6 @@ package com.example.alcoholtracker.ui.screens
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
-import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -17,14 +16,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.alcoholtracker.data.model.DrinkCategory
+import com.example.alcoholtracker.domain.model.DrinkCategory
 import com.example.alcoholtracker.domain.usecase.DrinkCreateRequest
+import com.example.alcoholtracker.ui.components.dropdownmenu.DropDownMenuCategory
 
 import com.example.alcoholtracker.ui.viewmodel.DrinkViewModel
 import com.example.alcoholtracker.ui.viewmodel.UserAndUserDrinkLogViewModel
-import com.google.firebase.auth.FirebaseAuth
-import java.time.LocalDate
-import java.time.LocalDateTime
 
 
 @Composable
@@ -39,6 +36,8 @@ fun AddDrinkScreen(
 
     Column(modifier = Modifier.padding(16.dp)) {
         Text("Log a New Drink", style = MaterialTheme.typography.headlineSmall)
+
+        DropDownMenuCategory().DropDownMenuComposable()
 
         TextField(value = drinkName, onValueChange = {drinkName = it}, label = { Text("Drink Name")})
         TextField(value = alcoholPercentage, onValueChange = { alcoholPercentage = it }, label = { Text("Alcohol %") })

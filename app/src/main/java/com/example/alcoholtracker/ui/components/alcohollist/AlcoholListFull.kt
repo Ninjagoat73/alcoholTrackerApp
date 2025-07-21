@@ -126,12 +126,15 @@ class AlcoholListFull: AlcoholListInterface {
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.onPrimaryContainer
             )
+            /*
             IconButton(
                 onClick = {  },
                 modifier = Modifier.weight(0.75f)
             ) {
                 Icon(Icons.Default.Search, "Filter")
             }
+
+             */
         }
     }
 

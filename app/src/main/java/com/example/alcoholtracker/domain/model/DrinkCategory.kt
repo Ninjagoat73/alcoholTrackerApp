@@ -1,4 +1,4 @@
-package com.example.alcoholtracker.data.model
+package com.example.alcoholtracker.domain.model
 
 enum class DrinkCategory(id: Int, name: String, defaultABV: Double) {
     BEER(1,"Beer", 6.0),

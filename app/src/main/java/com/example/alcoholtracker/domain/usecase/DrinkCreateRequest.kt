@@ -1,6 +1,6 @@
 package com.example.alcoholtracker.domain.usecase
 
-import com.example.alcoholtracker.data.model.DrinkCategory
+import com.example.alcoholtracker.domain.model.DrinkCategory
 import java.time.LocalDateTime
 
 data class DrinkCreateRequest(

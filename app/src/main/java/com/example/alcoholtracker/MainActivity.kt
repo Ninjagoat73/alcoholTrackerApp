@@ -22,6 +22,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.createGraph
+import com.example.alcoholtracker.domain.logic.handlers.BeerHandler
 import com.example.alcoholtracker.ui.components.BottomNavigationBar
 import com.example.alcoholtracker.ui.navigation.Screen
 import com.example.alcoholtracker.ui.screens.AddDrinkScreen
@@ -51,6 +52,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        BeerHandler.init(applicationContext)
         auth = Firebase.auth
     }
 

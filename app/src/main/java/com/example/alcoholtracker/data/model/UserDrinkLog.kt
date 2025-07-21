@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.example.alcoholtracker.di.DateConverter
-import java.time.LocalDate
+import com.example.alcoholtracker.domain.model.DrinkCategory
 import java.time.LocalDateTime
 
 @Entity(tableName = "log")

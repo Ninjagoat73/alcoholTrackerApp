@@ -45,6 +45,7 @@ dependencies {
     implementation("androidx.media3:media3-common-ktx:1.7.1")
     testImplementation("junit:junit:4.12")
     ksp("androidx.room:room-compiler:2.6.1")
+    implementation("com.google.code.gson:gson:2.13.1")
 
     implementation("androidx.datastore:datastore-preferences:1.1.4")
     implementation("com.seanproctor:data-table-material3:0.11.3")
