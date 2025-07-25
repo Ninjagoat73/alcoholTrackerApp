@@ -16,9 +16,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.alcoholtracker.data.model.Drink
 import com.example.alcoholtracker.domain.model.DrinkCategory
 import com.example.alcoholtracker.domain.usecase.DrinkCreateRequest
-import com.example.alcoholtracker.ui.components.dropdownmenu.DropDownMenuCategory
+import com.example.alcoholtracker.ui.components.dropdownmenu.CategoryDropDown
+import com.example.alcoholtracker.ui.components.dropdownmenu.DrinkDropDown
 
 import com.example.alcoholtracker.ui.viewmodel.DrinkViewModel
 import com.example.alcoholtracker.ui.viewmodel.UserAndUserDrinkLogViewModel
@@ -33,17 +35,31 @@ fun AddDrinkScreen(
     var alcoholPercentage by remember { mutableStateOf("") }
     var volume by remember { mutableStateOf("") }
     var cost by remember { mutableStateOf("") }
+    var selectedCategory by remember { mutableStateOf<DrinkCategory?>(null) }
+    var selectedDrink by remember { mutableStateOf<Drink?>(null) }
+
 
     Column(modifier = Modifier.padding(16.dp)) {
         Text("Log a New Drink", style = MaterialTheme.typography.headlineSmall)
 
-        DropDownMenuCategory().DropDownMenuComposable()
+        CategoryDropDown(
+            selected = selectedCategory,
+            onSelected = {selectedCategory = it}
+        )
 
+        DrinkDropDown(
+            selected = selectedCategory ?: DrinkCategory.OTHER,
+            onSelected = {selectedDrink = it},
+            viewModel = drinkViewModel)
+
+        /*
         TextField(value = drinkName, onValueChange = {drinkName = it}, label = { Text("Drink Name")})
         TextField(value = alcoholPercentage, onValueChange = { alcoholPercentage = it }, label = { Text("Alcohol %") })
         TextField(value = volume, onValueChange = { volume = it }, label = { Text("Volume (ml)") })
         TextField(value = cost, onValueChange = { cost = it }, label = { Text("Cost ($)") })
 
+
+         */
         Button(
             onClick = {
                 val request = DrinkCreateRequest(

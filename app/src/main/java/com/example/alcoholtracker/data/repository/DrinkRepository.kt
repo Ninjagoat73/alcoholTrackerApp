@@ -8,4 +8,8 @@ import javax.inject.Inject
 
 class DrinkRepository @Inject constructor(private val drinkDao: DrinkDao) {
     fun getAllDrinks(): Flow<List<Drink>> = drinkDao.getAllDrinks()
+
+    suspend fun insertDrink(drink: Drink){
+        drinkDao.insertDrink(drink)
+    }
 }

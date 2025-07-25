@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.example.alcoholtracker.di.DateConverter
+import com.example.alcoholtracker.di.Converters
 import com.example.alcoholtracker.domain.model.DrinkCategory
 import java.time.LocalDateTime
 
@@ -37,7 +37,7 @@ data class UserDrinkLog(
     @ColumnInfo("recipient")
     val recipient: String?,
 
-    @TypeConverters(DateConverter::class)
+    @TypeConverters(Converters::class)
     @ColumnInfo("date")
     val date: LocalDateTime
 

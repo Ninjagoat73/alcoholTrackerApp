@@ -8,6 +8,7 @@ import com.example.alcoholtracker.data.model.Drink
 import kotlinx.coroutines.flow.Flow
 
 @Dao
+
 interface DrinkDao {
 
     @Query("SELECT * FROM drinks_db ORDER BY name ASC")

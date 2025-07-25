@@ -10,9 +10,13 @@ import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,60 +28,49 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
-import com.example.alcoholtracker.domain.logic.handlers.BeerHandler
 import com.example.alcoholtracker.domain.model.DrinkCategory
+import com.example.alcoholtracker.ui.viewmodel.DrinkViewModel
 
-class DropDownMenuCategory : DropDownMenuInterface {
+
+    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    override fun DropDownMenuComposable() {
+    fun CategoryDropDown(    selected: DrinkCategory?,
+                             onSelected: (DrinkCategory) -> Unit) {
+
+
         var expanded by remember { mutableStateOf(false) }
+        var search by remember { mutableStateOf("") }
 
-        val categories = DrinkCategory.entries
+        val categories = DrinkCategory.entries.toList()
 
-        var selectedText by remember { mutableStateOf("") }
-
-        var textFieldSize by remember { mutableStateOf(Size.Zero)}
-
-        val icon = if (expanded)
-            Icons.Filled.KeyboardArrowUp
-        else
-            Icons.Filled.KeyboardArrowDown
-
-        Column(Modifier.padding(20.dp)) {
-
-
-            OutlinedTextField(
-                value = selectedText,
-                onValueChange = { selectedText = it },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .onGloballyPositioned { coordinates ->
-
-                    textFieldSize = coordinates.size.toSize()
-                },
-                label = {Text("Label")},
-                trailingIcon = {
-                    Icon(icon,"contentDescription",
-                        Modifier.clickable { expanded = !expanded })
-                }
+        ExposedDropdownMenuBox(
+            expanded = expanded,
+            onExpandedChange = { expanded = !expanded }
+        ){
+            TextField(
+                value = search,
+                onValueChange = {search = it},
+                readOnly = true,
+                label = { Text("Category") },
+                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                modifier = Modifier.menuAnchor()
+                    .clickable { expanded = true }
             )
 
-            DropdownMenu(
+            ExposedDropdownMenu(
                 expanded = expanded,
-                onDismissRequest = { expanded = false },
-                modifier = Modifier
-                    .width(with(LocalDensity.current){textFieldSize.width.toDp()})
+                onDismissRequest = { expanded = false }
             ) {
-                categories.forEach { label ->
+                categories.forEach { option ->
                     DropdownMenuItem(
-                        text = { Text(text = label.name) },
+                        text = { Text(option.nameString)},
                         onClick = {
-                            selectedText = label.name
+                            onSelected(option)
                             expanded = false
+                            search = option.nameString
                         }
                     )
                 }
             }
         }
     }
-}

@@ -9,6 +9,7 @@ import com.example.alcoholtracker.data.local.dao.UserAndUserDrinkLogDao
 import com.example.alcoholtracker.data.local.database.DrinksDatabase
 import com.example.alcoholtracker.data.local.database.UserAndUserDrinkLogDataBase
 import com.example.alcoholtracker.data.model.Drink
+import com.example.alcoholtracker.domain.model.DrinkCategory
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
@@ -25,11 +26,10 @@ import javax.inject.Singleton
 object AppModule {
 
     private val mockDrinks = listOf(
-        Drink(1, "Heineken", 5.0,"Beer", "",),
-        Drink(2, "Jack Daniels", 40.0, "Whiskey", "",),
-        Drink(3, "Margarita", 15.0 ,"Cocktail", "", ),
-        Drink(4, "Coca-Cola", 0.0,"Non-Alcoholic", "", ),
-        Drink(5, "Red Wine", 13.5,"Wine", "", )
+        Drink(1, "Heineken", 5.0,"Beer",),
+        Drink(2, "Jack Daniels", 40.0, "Spirit"),
+        Drink(3, "Margarita", 15.0 ,"Cocktail" ),
+        Drink(5, "Red Wine", 13.5,"Wine")
     )
     @Provides
     fun provideDrinkDao(db: DrinksDatabase): DrinkDao = db.drinkDao()

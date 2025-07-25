@@ -1,19 +1,16 @@
 package com.example.alcoholtracker.domain.logic.handlers
 
-import android.content.Context
 import com.example.alcoholtracker.data.model.Drink
-import com.example.alcoholtracker.data.remote.Beer
 import com.example.alcoholtracker.data.remote.BeerRemoteSource
 import com.example.alcoholtracker.domain.logic.DrinkCategoryHandler
 import com.example.alcoholtracker.domain.model.DrinkUnit
 import javax.inject.Inject
 
-class BeerHandler @Inject constructor(
+class OtherHandler @Inject constructor(
     private val source: BeerRemoteSource
-) : DrinkCategoryHandler
-{
+) : DrinkCategoryHandler {
     override fun fetchSuggestions(): List<Drink> {
-       return source.getBeers()
+        return source.getBeers()
     }
 
     override fun getUnitOptions(): List<DrinkUnit> {

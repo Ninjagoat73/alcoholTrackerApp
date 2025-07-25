@@ -8,11 +8,11 @@ import androidx.room.TypeConverters
 import com.example.alcoholtracker.data.local.dao.UserAndUserDrinkLogDao
 import com.example.alcoholtracker.data.model.User
 import com.example.alcoholtracker.data.model.UserDrinkLog
-import com.example.alcoholtracker.di.DateConverter
+import com.example.alcoholtracker.di.Converters
 
 
 @Database(entities = [User::class, UserDrinkLog::class], version = 1)
-@TypeConverters(DateConverter::class)
+@TypeConverters(Converters::class)
 abstract class UserAndUserDrinkLogDataBase : RoomDatabase() {
     abstract fun userAndUserDrinkLogDao(): UserAndUserDrinkLogDao
 

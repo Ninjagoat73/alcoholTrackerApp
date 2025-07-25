@@ -1,18 +1,26 @@
 package com.example.alcoholtracker.data.remote
 
 import android.content.Context
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.alcoholtracker.data.model.Drink
+import com.example.alcoholtracker.data.repository.DrinkRepository
+import com.example.alcoholtracker.ui.viewmodel.DrinkViewModel
 import com.google.gson.Gson
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
-class BeerRemoteSource (
-    private val context: Context
+class BeerRemoteSource @Inject constructor(
+    @ApplicationContext private val context: Context,
 ) {
 
-     fun getBeers() : List<Beer>{
+     fun getBeers() : List<Drink>{
 
         val beerList = mutableListOf(Beer("Mock", 0.0))
 
+         val drinkList: MutableList<Drink>  = mutableListOf()
 
-        val jsonString = context.assets.open("beerSearchText.json")
+
+        val jsonString = context.assets.open("beerSearchTest.json")
             .bufferedReader()
             .use { it.readText() }
 
@@ -24,9 +32,16 @@ class BeerRemoteSource (
         for (beerItem in result.beers.items) {
             println("Name: ${beerItem.beer.name}, ABV: ${beerItem.beer.abv}")
             beerList.add(beerItem.beer)
+            val newDrink = Drink(
+                name = beerItem.beer.name,
+                alcoholContent = beerItem.beer.abv,
+                category = "Beer",
+            )
+            drinkList.add(newDrink)
+
         }
 
-        return beerList
+        return drinkList
     }
 }
 
