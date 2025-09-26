@@ -9,6 +9,7 @@ import com.example.alcoholtracker.data.repository.UserAndUserDrinkLogRepository
 import com.example.alcoholtracker.domain.usecase.DrinkCreateRequest
 import com.example.alcoholtracker.domain.usecase.DrinkHandler
 import com.google.firebase.auth.FirebaseAuth
+import com.vamsi.snapnotify.SnapNotify
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -72,7 +73,14 @@ class UserAndUserDrinkLogViewModel @Inject constructor(
     fun logDrink(request: DrinkCreateRequest){
 
         viewModelScope.launch {
-            drinkHandler.createDrink(request)
+            try {
+                drinkHandler.createDrink(request)
+                SnapNotify.showSuccess("Drink logged")
+            }
+            catch (e: Exception){
+                SnapNotify.showError("Failed to log drink")
+            }
+
         }
     }
 

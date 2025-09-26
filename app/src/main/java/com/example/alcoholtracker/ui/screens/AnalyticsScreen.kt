@@ -9,7 +9,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun AnalyticsScreen(){
+fun AnalyticsScreen(
+){
     Box (modifier = Modifier
         .fillMaxSize(),
         contentAlignment = Alignment.Center

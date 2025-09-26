@@ -9,7 +9,7 @@ import javax.inject.Inject
 class OtherHandler @Inject constructor(
     private val source: BeerRemoteSource
 ) : DrinkCategoryHandler {
-    override fun fetchSuggestions(): List<Drink> {
+    override fun fetchSuggestions(query: String): List<Drink> {
         return source.getBeers()
     }
 
@@ -18,7 +18,7 @@ class OtherHandler @Inject constructor(
             DrinkUnit("Can (500 ml)", 500),
             DrinkUnit("Small Bottle (300 ml)", 300),
             DrinkUnit("Bottle (330 ml)", 330),
-            DrinkUnit("milliliters", null)
+            DrinkUnit("milliliters", 1)
         )
     }
 }

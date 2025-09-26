@@ -10,12 +10,17 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -40,6 +45,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.auth
+import com.vamsi.snapnotify.SnapNotifyProvider
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -59,15 +65,17 @@ class MainActivity : ComponentActivity() {
         super.onStart()
 
         setContent {
-            AlcoholTrackerTheme {
-                val authViewModel: AuthViewModel = hiltViewModel()
-                val userId by authViewModel.userId.collectAsState()
+            SnapNotifyProvider {
+                AlcoholTrackerTheme {
+                    val authViewModel: AuthViewModel = hiltViewModel()
+                    val userId by authViewModel.userId.collectAsState()
 
-                if (userId != null){
-                    MainScreen()
-                }else{
-                    SignInScreen(authViewModel,
-                            onGuestLogin = { authViewModel.signInAnonymously() })
+                    if (userId != null){
+                        MainScreen()
+                    }else{
+                        SignInScreen(authViewModel,
+                                onGuestLogin = { authViewModel.signInAnonymously() })
+                    }
                 }
             }
         }
@@ -99,6 +107,9 @@ fun MainScreen() {
     val authViewModel: AuthViewModel = hiltViewModel()
     val drinkLogViewModel: UserAndUserDrinkLogViewModel = hiltViewModel()
 
+    val context = LocalContext.current
+    val snackbarHostState = remember { SnackbarHostState() }
+
     val userId by authViewModel.userId.collectAsState()
 
     LaunchedEffect(userId) {
@@ -106,6 +117,7 @@ fun MainScreen() {
             drinkLogViewModel.setUserId(uid)
         }
     }
+
 
     val bottomBarScreens = listOf(
         Screen.Home,
@@ -115,7 +127,7 @@ fun MainScreen() {
         Screen.AddDrink
     )
 
-    val progressBarViewModel: ProgressBarViewModel = hiltViewModel()
+
     val navController = rememberNavController()
     val showBottomBar = navController
         .currentBackStackEntryAsState().value?.destination?.route in bottomBarScreens.map { it.rout }
@@ -139,7 +151,7 @@ fun MainScreen() {
                     AnalyticsScreen()
                 }
                 composable(route = Screen.Home.rout,) {
-                    HomeScreen(navController, progressBarViewModel)
+                    HomeScreen(navController)
                 }
                 composable(route = Screen.Profile.rout) {
                     ProfileScreen()

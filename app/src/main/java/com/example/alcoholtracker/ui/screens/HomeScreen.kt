@@ -14,7 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.alcoholtracker.ui.components.AddButton
 import com.example.alcoholtracker.ui.components.alcohollist.AlcoholListHome
@@ -36,7 +36,7 @@ import com.example.alcoholtracker.ui.viewmodel.UserAndUserDrinkLogViewModel
 @Composable
 fun HomeScreen(
     navController: NavController,
-    progressBarViewModel: ProgressBarViewModel,
+    progressBarViewModel: ProgressBarViewModel = hiltViewModel(),
     authViewModel: AuthViewModel = hiltViewModel(),
     userDrinkLogViewModel: UserAndUserDrinkLogViewModel = hiltViewModel(),
 ){

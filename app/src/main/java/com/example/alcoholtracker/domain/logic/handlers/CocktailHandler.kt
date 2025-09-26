@@ -9,7 +9,7 @@ import javax.inject.Inject
 class CocktailHandler @Inject constructor(
     private val source: BeerRemoteSource
 ) : DrinkCategoryHandler {
-    override fun fetchSuggestions(): List<Drink> {
+    override fun fetchSuggestions(query: String): List<Drink> {
         TODO("Not yet implemented")
     }
 

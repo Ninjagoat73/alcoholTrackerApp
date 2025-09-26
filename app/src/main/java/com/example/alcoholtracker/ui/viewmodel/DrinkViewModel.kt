@@ -1,12 +1,15 @@
 package com.example.alcoholtracker.ui.viewmodel
 
+import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.alcoholtracker.data.local.dao.DrinkDao
 import com.example.alcoholtracker.data.model.Drink
+import com.example.alcoholtracker.data.repository.DrinkRepository
 import com.example.alcoholtracker.domain.logic.handlers.DrinkHandlerRegistry
 import com.example.alcoholtracker.domain.model.DrinkCategory
 import com.example.alcoholtracker.domain.model.DrinkUnit
+import com.vamsi.snapnotify.SnapNotify
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -18,37 +21,45 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DrinkViewModel @Inject constructor(
-    private val drinkDao: DrinkDao,
+    private val repository: DrinkRepository,
     private val handlerRegistry: DrinkHandlerRegistry
 ) : ViewModel() {
 
-    private val _suggestions = MutableStateFlow<List<String>>(emptyList())
-    val suggestions: StateFlow<List<String>> = _suggestions.asStateFlow()
+    private val allLocalDrinks = mutableStateListOf<Drink>()
+    private val _suggestions = MutableStateFlow<List<Drink>>(emptyList())
+    val suggestions: StateFlow<List<Drink>> = _suggestions.asStateFlow()
 
-    fun fetchDrinkNames(query: String) {
+
+    fun loadLocalDrinks() {
         viewModelScope.launch {
-            _suggestions.value = drinkDao.getDrinkNames(query)
+            try {
+                allLocalDrinks.clear()
+                allLocalDrinks.addAll(repository.getAllDrinks())
+            }
+            catch (e: Exception){
+                SnapNotify.showError("Failed to load local drinks")
+            }
+
         }
     }
-    val drinks: StateFlow<List<Drink>> = drinkDao.getAllDrinks()
-        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
-    fun addDrink(drink: Drink) {
+    fun searchDrinks(query: String, category: DrinkCategory)  {
         viewModelScope.launch {
-            drinkDao.insertDrinks(listOf(drink))
-        }
-    }
 
-    fun getDrinksForCategory(category: DrinkCategory): List<Drink> {
-        return when (category) {
-            DrinkCategory.BEER -> handlerRegistry.beerHandler.fetchSuggestions()
-            DrinkCategory.WINE -> handlerRegistry.wineHandler.fetchSuggestions()
-            DrinkCategory.SPIRIT -> handlerRegistry.spiritHandler.fetchSuggestions()
-            DrinkCategory.COCKTAIL -> handlerRegistry.cocktailHandler.fetchSuggestions()
-            DrinkCategory.CIDER -> handlerRegistry.ciderHandler.fetchSuggestions()
-            DrinkCategory.LIQUEUR -> handlerRegistry.liquerHandler.fetchSuggestions()
-            DrinkCategory.MIXED_SHOT -> handlerRegistry.mixedShotHandler.fetchSuggestions()
-            DrinkCategory.OTHER -> handlerRegistry.otherHandler.fetchSuggestions()
+            loadLocalDrinks()
+
+            val localResults = allLocalDrinks
+                .filter { (it.category == category.nameString) && it.name.contains(query, ignoreCase = true) }
+
+            val finalResults = if (localResults.size < 5) {
+                val remoteResults = repository.searchApiDrinks(query, category)
+                allLocalDrinks.addAll(remoteResults)
+                (localResults + remoteResults)
+            } else {
+                localResults
+            }
+
+            _suggestions.value = finalResults
         }
     }
 

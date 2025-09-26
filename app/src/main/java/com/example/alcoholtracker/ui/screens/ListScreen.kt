@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.alcoholtracker.ui.components.AddButton
 import com.example.alcoholtracker.ui.components.HomeTopBar
@@ -17,7 +18,7 @@ import com.example.alcoholtracker.ui.components.alcohollist.AlcoholListFullWrapp
 
 @Composable
 fun ListScreen(
-    navController: NavController
+    navController: NavController,
 ) {
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,

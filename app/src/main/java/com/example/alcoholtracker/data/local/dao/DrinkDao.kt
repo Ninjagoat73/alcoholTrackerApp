@@ -11,15 +11,12 @@ import kotlinx.coroutines.flow.Flow
 
 interface DrinkDao {
 
-    @Query("SELECT * FROM drinks_db ORDER BY name ASC")
-    fun getAllDrinks(): Flow<List<Drink>>
-
-    @Query("SELECT name FROM drinks_db WHERE name LIKE :query || '%'")
-    suspend fun getDrinkNames(query: String): List<String>
+    @Query("SELECT * FROM drinks_db ")
+    suspend fun getAllDrinks(): List<Drink>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertDrinks(drink: List<Drink>)
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertDrink(drink: Drink)
 }

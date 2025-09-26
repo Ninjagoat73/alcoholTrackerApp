@@ -25,12 +25,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-    private val mockDrinks = listOf(
-        Drink(1, "Heineken", 5.0,"Beer",),
-        Drink(2, "Jack Daniels", 40.0, "Spirit"),
-        Drink(3, "Margarita", 15.0 ,"Cocktail" ),
-        Drink(5, "Red Wine", 13.5,"Wine")
-    )
     @Provides
     fun provideDrinkDao(db: DrinksDatabase): DrinkDao = db.drinkDao()
 
@@ -57,7 +51,7 @@ object AppModule {
                 super.onCreate(db)
                 CoroutineScope(Dispatchers.IO).launch {
                     val drinkDao = provideDrinksDatabase(context).drinkDao()
-                    drinkDao.insertDrinks(mockDrinks)  // Insert mock drinks
+                      // Insert mock drinks
                 }
             }
         }).build()
