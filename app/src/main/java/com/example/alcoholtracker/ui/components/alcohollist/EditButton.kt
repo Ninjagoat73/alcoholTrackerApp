@@ -7,9 +7,9 @@ import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 
 @Composable
-fun EditButton(){
+fun EditButton(onClick: Unit){
     IconButton(
-        onClick = TODO()
+        onClick = { onClick }
     ) {
         Icon(
             Icons.Default.Edit,

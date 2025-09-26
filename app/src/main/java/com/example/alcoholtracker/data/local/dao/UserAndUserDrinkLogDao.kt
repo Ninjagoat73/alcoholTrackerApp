@@ -28,7 +28,7 @@ interface UserAndUserDrinkLogDao {
     suspend fun deleteDrinkLog(log: UserDrinkLog)
 
     @Query("SELECT * FROM users WHERE userId = :userId")
-    suspend fun getUserById(userId: String): User
+    suspend fun getUserById(userId: String): User?
 
     @Query("SELECT * FROM log WHERE userId = :userId")
     fun getDrinkLogsByUserId(userId: String): Flow<List<UserDrinkLog>>

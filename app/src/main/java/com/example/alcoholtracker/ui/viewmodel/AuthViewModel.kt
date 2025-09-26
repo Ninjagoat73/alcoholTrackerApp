@@ -31,6 +31,7 @@ class AuthViewModel @Inject constructor(
         auth.addAuthStateListener { firebaseAuth ->
             _userId.value = firebaseAuth.currentUser?.uid
         }
+
         updateUser(FirebaseAuth.getInstance().currentUser)
     }
 

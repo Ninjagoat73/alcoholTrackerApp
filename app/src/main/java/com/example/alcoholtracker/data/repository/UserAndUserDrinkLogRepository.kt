@@ -26,7 +26,7 @@ class UserAndUserDrinkLogRepository @Inject constructor(private val userAndUserD
         userAndUserDrinkLogDao.deleteDrinkLog(log)
     }
 
-    suspend fun getUserById(userId: String): User {
+    suspend fun getUserById(userId: String): User? {
         return userAndUserDrinkLogDao.getUserById(userId)
     }
 

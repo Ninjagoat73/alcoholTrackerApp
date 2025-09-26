@@ -24,7 +24,7 @@ class UserPreferences @Inject constructor (
 
     private val amountProgressBarTarget = context.dataStore.data
         .map { preferences ->
-            preferences[AMOUNT_PROGRESS_BAR_TARGET] ?: 0.0
+            preferences[AMOUNT_PROGRESS_BAR_TARGET] ?: 1000.0
         }
 
     suspend fun updateAmountTarget(target: Double){
@@ -39,7 +39,7 @@ class UserPreferences @Inject constructor (
 
     private val countProgressBarTarget = context.dataStore.data
         .map { preferences ->
-            preferences[COUNT_PROGRESS_BAR_TARGET] ?: 0.0
+            preferences[COUNT_PROGRESS_BAR_TARGET] ?: 5.0
         }
 
     suspend fun updateCountTarget(target: Double){
@@ -54,7 +54,7 @@ class UserPreferences @Inject constructor (
 
     private val moneyProgressBarTarget = context.dataStore.data
         .map { preferences ->
-            preferences[MONEY_PROGRESS_BAR_TARGET] ?: 0.0
+            preferences[MONEY_PROGRESS_BAR_TARGET] ?: 10.0
         }
 
     fun getMoneyTarget(): Flow<Double> {

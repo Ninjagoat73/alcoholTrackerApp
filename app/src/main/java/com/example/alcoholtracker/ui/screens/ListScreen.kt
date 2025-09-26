@@ -14,20 +14,29 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.alcoholtracker.ui.components.AddButton
 import com.example.alcoholtracker.ui.components.HomeTopBar
-import com.example.alcoholtracker.ui.components.alcohollist.AlcoholListFullWrapper
+import com.example.alcoholtracker.ui.components.alcohollist.AlcoholListComposable
+import com.example.alcoholtracker.ui.components.alcohollist.AlcoholListType
+import com.example.alcoholtracker.ui.viewmodel.AuthViewModel
+import com.example.alcoholtracker.ui.viewmodel.UserAndUserDrinkLogViewModel
 
 @Composable
 fun ListScreen(
     navController: NavController,
+    authViewModel: AuthViewModel = hiltViewModel(),
+    userDrinkLogViewModel: UserAndUserDrinkLogViewModel = hiltViewModel()
 ) {
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
         floatingActionButton = { AddButton(navController) },
-        modifier = Modifier.fillMaxSize()) {
+        modifier = Modifier.fillMaxSize()) { innerPadding ->
 
-        Surface(modifier = Modifier.padding(top = it.calculateTopPadding())) {
+            Surface(modifier = Modifier.padding(innerPadding)) {
 
-            AlcoholListFullWrapper()
-        }
+                AlcoholListComposable(
+                    authViewModel,
+                    userDrinkLogViewModel,
+                    AlcoholListType.FULL
+                )
+            }
     }
 }

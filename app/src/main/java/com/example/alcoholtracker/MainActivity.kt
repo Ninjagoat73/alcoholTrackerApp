@@ -52,9 +52,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
     @Inject lateinit var auth: FirebaseAuth
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,12 +61,13 @@ class MainActivity : ComponentActivity() {
 
     override fun onStart() {
         super.onStart()
-
+        Log.e("problem", "i am starting")
         setContent {
             SnapNotifyProvider {
                 AlcoholTrackerTheme {
                     val authViewModel: AuthViewModel = hiltViewModel()
                     val userId by authViewModel.userId.collectAsState()
+
 
                     if (userId != null){
                         MainScreen()
@@ -106,11 +105,14 @@ fun MainScreen() {
 
     val authViewModel: AuthViewModel = hiltViewModel()
     val drinkLogViewModel: UserAndUserDrinkLogViewModel = hiltViewModel()
-
-    val context = LocalContext.current
-    val snackbarHostState = remember { SnackbarHostState() }
-
     val userId by authViewModel.userId.collectAsState()
+    val bottomBarScreens = listOf(
+        Screen.Home,
+        Screen.List,
+        Screen.Analytics,
+        Screen.Profile,
+        Screen.AddDrink
+    )
 
     LaunchedEffect(userId) {
         userId?.let { uid ->
@@ -119,13 +121,7 @@ fun MainScreen() {
     }
 
 
-    val bottomBarScreens = listOf(
-        Screen.Home,
-        Screen.List,
-        Screen.Analytics,
-        Screen.Profile,
-        Screen.AddDrink
-    )
+
 
 
     val navController = rememberNavController()
@@ -148,7 +144,7 @@ fun MainScreen() {
                     ListScreen(navController)
                 }
                 composable(route = Screen.Analytics.rout) {
-                    AnalyticsScreen()
+                    AnalyticsScreen(navController)
                 }
                 composable(route = Screen.Home.rout,) {
                     HomeScreen(navController)
@@ -166,7 +162,7 @@ fun MainScreen() {
         NavHost(
             navController = navController,
             graph = graph,
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.padding(bottom = innerPadding.calculateBottomPadding())
         )
 
     }

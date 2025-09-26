@@ -40,7 +40,7 @@ class UserAndUserDrinkLogViewModel @Inject constructor(
 
 
     fun setUserId(userId: String) {
-        println("Setting userId: $userId")
+
         _userId.value = userId
         val user = FirebaseAuth.getInstance().currentUser
 

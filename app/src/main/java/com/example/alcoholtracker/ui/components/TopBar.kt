@@ -1,7 +1,11 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.example.alcoholtracker.ui.components
 
+import android.R
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material.icons.Icons
@@ -20,7 +24,8 @@ import com.example.alcoholtracker.utils.getFormattedDate
 import com.example.compose.AlcoholTrackerTheme
 import java.time.LocalDate
 
-@OptIn(ExperimentalMaterial3Api::class)
+
+
 @Composable
 fun HomeTopBar(onCalendarClick: () -> Unit) {
     TopAppBar(
@@ -43,6 +48,22 @@ fun HomeTopBar(onCalendarClick: () -> Unit) {
                     tint = MaterialTheme.colorScheme.onPrimary)
             }
         }
+    )
+}
+
+@Composable
+fun AnalyticsTopBar(onCalendarClick: () -> Unit){
+    TopAppBar(
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            titleContentColor = MaterialTheme.colorScheme.onPrimary
+        ),
+        title = {
+            Row {
+                Text("Analytics")
+            }
+        },
+        modifier = Modifier.statusBarsPadding()
     )
 }
 
