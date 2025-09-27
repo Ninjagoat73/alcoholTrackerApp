@@ -1,6 +1,5 @@
 package com.example.alcoholtracker.ui.components.progressbar
 
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,11 +24,10 @@ import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MenuAnchorType
+import androidx.compose.material3.ExposedDropdownMenuAnchorType
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -77,7 +75,7 @@ fun ProgressBarEditDialog(
                     verticalAlignment = Alignment.CenterVertically)
                 {
 
-                    Text(text = "Change Goal",)
+                    Text(text = "Change Goal")
 
                     Spacer(modifier = Modifier.weight(1f))
 
@@ -106,11 +104,11 @@ fun ProgressBarEditDialog(
                             .zIndex(3f))
                     {
                         TextField(
-                            value = selectedGoal.toString().lowercase().replaceFirstChar { it.titlecase() },
+                            value = selectedGoal.lowercase().replaceFirstChar { it.titlecase() },
                             onValueChange = {},
                             readOnly = true,
                             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded)},
-                            modifier = Modifier.menuAnchor(type = MenuAnchorType.PrimaryNotEditable)
+                            modifier = Modifier.menuAnchor(type = ExposedDropdownMenuAnchorType.PrimaryNotEditable)
                         )
 
                         ExposedDropdownMenu(
@@ -120,9 +118,9 @@ fun ProgressBarEditDialog(
                         {
                             types.forEach { type ->
                                 DropdownMenuItem(
-                                    text = { Text(text = type.toString().lowercase().replaceFirstChar { it.titlecase() }) },
+                                    text = { Text(text = type.lowercase().replaceFirstChar { it.titlecase() }) },
                                     onClick = {
-                                        selectedGoal = type.toString()
+                                        selectedGoal = type
                                         isExpanded = false
                                     }
                                 )

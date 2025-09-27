@@ -42,6 +42,7 @@ dependencies {
     implementation("com.google.android.libraries.identity.googleid:googleid:1.1.1")
     implementation("androidx.media3:media3-common-ktx:1.8.0")
     implementation("androidx.compose.material:material-icons-extended:1.7.8")
+    implementation("androidx.compose.ui:ui-graphics:1.9.2")
     testImplementation("junit:junit:4.13.2")
     ksp("androidx.room:room-compiler:2.8.1")
     implementation("com.google.code.gson:gson:2.13.2")

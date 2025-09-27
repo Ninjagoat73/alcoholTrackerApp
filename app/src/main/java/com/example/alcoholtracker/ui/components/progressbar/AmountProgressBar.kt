@@ -41,7 +41,6 @@ class AmountProgressBar: ProgressBarInterface {
     @Composable
     override fun ProgressBarCard(logs: List<UserDrinkLog>, target: Double, onEditClick: () -> Unit) {
 
-        var showDialog by remember { mutableStateOf(false) }
         val summary = twoDaySummaryGetter(logs)
 
         OutlinedCard(modifier = Modifier
