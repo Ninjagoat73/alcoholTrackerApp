@@ -3,6 +3,7 @@ package com.example.alcoholtracker.ui.components.analytics.graphs
 
 import android.R.color.white
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Canvas
@@ -39,13 +41,15 @@ import androidx.compose.ui.unit.sp
 import androidx.room.util.copy
 import com.example.alcoholtracker.data.analytics.PieSlice
 import com.example.compose.AlcoholTrackerTheme
+import kotlin.math.PI
+import kotlin.math.atan2
 
 @Composable
 fun PieChart(
     data: List<PieSlice>,
     modifier: Modifier = Modifier,
-    radius: Float = 500f,
-    innerRadius: Float = 250f,
+    radius: Float = 400f,
+    innerRadius: Float = 200f,
     transparentWidth:Float = 70f
 ){
     var circleCenter by remember {
@@ -68,7 +72,50 @@ fun PieChart(
             modifier = Modifier
                 .fillMaxSize()
                 .pointerInput(key1 = true) {
+                    detectTapGestures(
+                        onTap = { offset ->
+                            val tapAngleInDegrees = (-atan2(
+                                x = circleCenter.y - offset.y,
+                                y = circleCenter.x - offset.x
+                            ) * (180f / PI).toFloat() - 90f).mod(360f)
+                            val centerClicked = if (tapAngleInDegrees < 90) {
+                                offset.x < circleCenter.x + innerRadius && offset.y < circleCenter.y + innerRadius
+                            } else if (tapAngleInDegrees < 180) {
+                                offset.x > circleCenter.x - innerRadius && offset.y < circleCenter.y + innerRadius
+                            } else if (tapAngleInDegrees < 270) {
+                                offset.x > circleCenter.x - innerRadius && offset.y > circleCenter.y - innerRadius
+                            } else {
+                                offset.x < circleCenter.x + innerRadius && offset.y > circleCenter.y - innerRadius
+                            }
+                            if (centerClicked) {
+                                data = data.map {
+                                    it.copy(isTapped = !isCenterTapped)
+                                }
+                                isCenterTapped = !isCenterTapped
+                            } else {
+                                val anglePerValue = 360f / data.sumOf {
+                                    it.value
+                                }
+                                var currAngle = 0f
+                                data.forEach { pieChartInput ->
 
+                                    currAngle += (pieChartInput.value * anglePerValue).toFloat()
+                                    if (tapAngleInDegrees < currAngle) {
+                                        val label = pieChartInput.label
+                                        data = data.map {
+                                            if (label == it.label) {
+                                                it.copy(isTapped = !it.isTapped)
+                                            } else {
+                                                it.copy(isTapped = false)
+                                            }
+                                        }
+                                        return@detectTapGestures
+
+                                    }
+                                }
+                            }
+                        }
+                    )
                 }
         ){
             val width = size.width
@@ -80,7 +127,7 @@ fun PieChart(
             }
 
             val anglePerValue = 360f/totalValue
-            var currentStartAngle = -90f
+            var currentStartAngle = 0f
 
             data.forEach { pieSlice ->
                 val scale = if (pieSlice.isTapped) 1.1f else 1.0f
@@ -107,7 +154,7 @@ fun PieChart(
 
                 var rotateAngle = currentStartAngle-angleToDraw/2f-90f
                 var factor = 1f
-                if (rotateAngle > 0f){
+                if (rotateAngle > 90f){
                     rotateAngle = (rotateAngle +180) % (360f)
                     factor = -0.92f
                 }
@@ -135,7 +182,54 @@ fun PieChart(
                         }
                     }
                 }
+                if (pieSlice.isTapped){
+                    val tabRotation =  currentStartAngle - angleToDraw - 90f
+                    rotate(tabRotation){
+                        drawRoundRect(
+                            topLeft = circleCenter,
+                            size = Size(12f, radius*1.2f),
+                            color = Color.White,
+                            cornerRadius = CornerRadius(15f,15f)
+                        )
+                    }
+                    rotate(tabRotation+angleToDraw){
+                        drawRoundRect(
+                            topLeft = circleCenter,
+                            size = Size(12f, radius*1.2f),
+                            color = Color.White,
+                            cornerRadius = CornerRadius(15f,15f)
+                        )
+                    }
+                    rotate(rotateAngle){
+                        drawIntoCanvas { canvas ->
+                            val paint = android.graphics.Paint().apply {
+                                isAntiAlias = true
+                                textSize = 48f
+                                color = android.graphics.Color.BLACK
+                                textAlign = android.graphics.Paint.Align.CENTER
+                            }
+                            canvas.nativeCanvas.drawText(
+                                pieSlice.label,
+                                circleCenter.x,
+                                circleCenter.y + (radius*1.3f) * factor,
+                                paint,
+                            )
+
+                        }
+                    }
+                }
             }
+            if(data.first().isTapped){
+                rotate(-90f){
+                    drawRoundRect(
+                        topLeft = circleCenter,
+                        size = Size(12f, radius*1.2f),
+                        color = Color.White,
+                        cornerRadius = CornerRadius(15f,15f)
+                    )
+                }
+            }
+
             drawIntoCanvas { canvas ->
                 val frameworkPaint = android.graphics.Paint().apply {
                     isAntiAlias = true
@@ -206,7 +300,7 @@ fun PiePreview(){
             color = Color.Yellow,
             label = "Green",
             value = 4.5,
-            isTapped = false,
+            isTapped = true,
         )
 
     )
