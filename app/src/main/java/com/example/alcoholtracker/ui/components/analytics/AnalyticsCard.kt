@@ -36,7 +36,6 @@ fun AnalyticsCard(
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(title, style = MaterialTheme.typography.titleMedium)
-            Spacer(Modifier.height(8.dp))
             content()
         }
     }

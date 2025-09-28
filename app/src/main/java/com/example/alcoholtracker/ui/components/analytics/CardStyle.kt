@@ -23,15 +23,15 @@ fun Modifier.applyCardStyle(style: CardStyle): Modifier = when (style) {
     CardStyle.Compact -> this
         .fillMaxWidth()
         .height(80.dp)
-        .padding(8.dp)
+        .padding(vertical = 8.dp, horizontal = 16.dp)
 
     CardStyle.Large -> this
         .fillMaxWidth()
         .height(200.dp)
-        .padding(8.dp)
+        .padding(vertical = 8.dp, horizontal = 16.dp)
 
     CardStyle.Landscape -> this
         .fillMaxWidth()
         .aspectRatio(2f)
-        .padding(8.dp)
+        .padding(vertical = 8.dp, horizontal = 16.dp)
 }
