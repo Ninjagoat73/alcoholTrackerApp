@@ -140,6 +140,10 @@ fun onTapped(){
 
 }
 
+fun otherTapped(){
+
+}
+
 @Preview(showBackground = true)
 @Composable
 fun PiePreview(){
