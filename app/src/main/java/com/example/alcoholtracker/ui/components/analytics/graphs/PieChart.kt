@@ -27,15 +27,11 @@ import com.example.alcoholtracker.data.analytics.PieSlice
 
 @Composable
 fun PieChart(
-    data: List<PieSlice>,
     modifier: Modifier = Modifier,
+    data: List<PieSlice>,
 ){
     var circleCenter by remember {
         mutableStateOf(Offset.Zero)
-    }
-
-    var data by remember {
-        mutableStateOf(data)
     }
 
     val totalValue = data.sumOf { it.value }
@@ -144,43 +140,43 @@ fun otherTapped(){
 
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PiePreview(){
-
-    val data = listOf(
-        PieSlice(
-            color = Color.Red,
-            label = "Red",
-            value = 2.0,
-            isTapped = false
-        ),
-        PieSlice(
-            color = Color.Blue,
-            label = "Blue",
-            value = 1.0,
-            isTapped = false
-        ),
-        PieSlice(
-            color = Color.Green,
-            label = "Green",
-            value = 3.0,
-            isTapped = false
-        ),
-                PieSlice(
-                color = Color.Yellow,
-        label = "Yellow",
-        value = 2.5,
-        isTapped = false
-    )
-    )
-    val sortedData = data.sortedByDescending { it.value }
-
-    MaterialTheme {
-        PieChart(
-            sortedData
-        )
-    }
-
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun PiePreview(){
+//
+//    val data = listOf(
+//        PieSlice(
+//            color = Color.Red,
+//            label = "Red",
+//            value = 2.0,
+//            isTapped = false
+//        ),
+//        PieSlice(
+//            color = Color.Blue,
+//            label = "Blue",
+//            value = 1.0,
+//            isTapped = false
+//        ),
+//        PieSlice(
+//            color = Color.Green,
+//            label = "Green",
+//            value = 3.0,
+//            isTapped = false
+//        ),
+//                PieSlice(
+//                color = Color.Yellow,
+//        label = "Yellow",
+//        value = 2.5,
+//        isTapped = false
+//    )
+//    )
+//    val sortedData = data.sortedByDescending { it.value }
+//
+//    MaterialTheme {
+//        PieChart(
+//            sortedData
+//        )
+//    }
+//
+//}
 

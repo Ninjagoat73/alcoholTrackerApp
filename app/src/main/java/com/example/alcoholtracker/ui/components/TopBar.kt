@@ -52,7 +52,7 @@ fun HomeTopBar(onCalendarClick: () -> Unit) {
 }
 
 @Composable
-fun AnalyticsTopBar(onCalendarClick: () -> Unit){
+fun AnalyticsTopBar(){
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,

@@ -36,7 +36,7 @@ import com.vamsi.snapnotify.SnapNotify
 
 @Composable
 fun AddDrinkScreen(
-    navController: NavController,
+    onAddDrink: () -> Unit,
     viewModel: UserAndUserDrinkLogViewModel = hiltViewModel(),
     drinkViewModel: DrinkViewModel = hiltViewModel()) {
 
@@ -113,7 +113,7 @@ fun AddDrinkScreen(
                     dateTime = null,
                     logId = null)
                 viewModel.logDrink(request)
-                navController.popBackStack()
+                onAddDrink
             }
         ) {
             Text("Save Drink")

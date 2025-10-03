@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.plugin.serialization")
     id("org.jetbrains.kotlin.plugin.compose")
     id("com.google.dagger.hilt.android")
     id("com.google.devtools.ksp")
@@ -59,6 +60,22 @@ dependencies {
     implementation("androidx.room:room-ktx:2.8.1")
     implementation("io.github.ivamsi:snapnotify:1.0.4")
 
+    // Jetpack Compose Integration
+    implementation("androidx.navigation:navigation-compose:2.9.5")
+
+    // Views/Fragments Integration
+    implementation("androidx.navigation:navigation-fragment:2.9.5")
+    implementation( "androidx.navigation:navigation-ui:2.9.5")
+
+    // Feature module support for Fragments
+    implementation( "androidx.navigation:navigation-dynamic-features-fragment:2.9.5")
+
+    // Testing Navigation
+    androidTestImplementation( "androidx.navigation:navigation-testing:2.9.5")
+
+    // JSON serialization library, works with the Kotlin serialization plugin.
+    implementation( "org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
+
 
 
     ksp("com.google.dagger:hilt-android-compiler:2.57.1")
@@ -76,5 +93,7 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+
+
 }
 

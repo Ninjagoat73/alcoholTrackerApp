@@ -21,7 +21,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.example.alcoholtracker.ui.components.AddButton
 import com.example.alcoholtracker.ui.components.HomeTopBar
 import com.example.alcoholtracker.ui.components.alcohollist.AlcoholListComposable
@@ -35,13 +34,12 @@ import com.example.alcoholtracker.ui.components.progressbar.ProgressBarType
 import com.example.alcoholtracker.ui.viewmodel.AuthViewModel
 
 
-import com.example.alcoholtracker.ui.viewmodel.DrinkViewModel
 import com.example.alcoholtracker.ui.viewmodel.ProgressBarViewModel
 import com.example.alcoholtracker.ui.viewmodel.UserAndUserDrinkLogViewModel
 
 @Composable
 fun HomeScreen(
-    navController: NavController,
+    onFABClick: () -> Unit,
     progressBarViewModel: ProgressBarViewModel = hiltViewModel(),
     authViewModel: AuthViewModel = hiltViewModel(),
     userDrinkLogViewModel: UserAndUserDrinkLogViewModel = hiltViewModel(),
@@ -73,7 +71,7 @@ fun HomeScreen(
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
         topBar = {HomeTopBar() {} },
-        floatingActionButton = {AddButton(navController)},
+        floatingActionButton = { AddButton(onFABClick)},
         modifier = Modifier.fillMaxSize()
 
 

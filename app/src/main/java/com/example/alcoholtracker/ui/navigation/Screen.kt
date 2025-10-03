@@ -1,11 +1,35 @@
 package com.example.alcoholtracker.ui.navigation
+import kotlinx.serialization.Serializable
 
-sealed class Screen(val rout: String) {
-    data object Home: Screen("HomeScreen")
-    data object Profile: Screen("ProfileScreen")
-    data object Analytics: Screen("AnalyticsScreen")
-    data object List: Screen("ListScreen")
-    data object AddDrink: Screen("AddDrinkScreen")
-    data object SignIn: Screen("SignInScreen")
-    data object SignUp: Screen("SignUpScreen")
-}
+@Serializable
+object Home
+
+@Serializable
+object List
+
+@Serializable
+object Profile
+
+@Serializable
+object SignIn
+
+@Serializable
+object SignUp
+
+@Serializable
+object AddDrink
+
+@Serializable
+object EditDrink
+
+@Serializable
+object Overview
+
+@Serializable
+object Details
+
+@Serializable
+object Finance
+
+@Serializable
+object Health

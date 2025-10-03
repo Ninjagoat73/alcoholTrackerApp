@@ -21,13 +21,13 @@ import com.example.alcoholtracker.ui.viewmodel.UserAndUserDrinkLogViewModel
 
 @Composable
 fun ListScreen(
-    navController: NavController,
+    onFABClick: () -> Unit,
     authViewModel: AuthViewModel = hiltViewModel(),
     userDrinkLogViewModel: UserAndUserDrinkLogViewModel = hiltViewModel()
 ) {
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
-        floatingActionButton = { AddButton(navController) },
+        floatingActionButton = { AddButton(onFABClick) },
         modifier = Modifier.fillMaxSize()) { innerPadding ->
 
             Surface(modifier = Modifier.padding(innerPadding)) {

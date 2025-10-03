@@ -1,49 +1,55 @@
 package com.example.alcoholtracker
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Analytics
+import androidx.compose.material.icons.filled.FormatListNumbered
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.navigation.NavHostController
+import androidx.navigation.NavDestination.Companion.hasRoute
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.createGraph
-import com.example.alcoholtracker.domain.logic.handlers.BeerHandler
 import com.example.alcoholtracker.ui.components.BottomNavigationBar
-import com.example.alcoholtracker.ui.navigation.Screen
+import com.example.alcoholtracker.ui.components.TopLevelRoute
+import com.example.alcoholtracker.ui.navigation.AddDrink
+import com.example.alcoholtracker.ui.navigation.Details
+import com.example.alcoholtracker.ui.navigation.EditDrink
+import com.example.alcoholtracker.ui.navigation.Home
+import com.example.alcoholtracker.ui.navigation.List
+import com.example.alcoholtracker.ui.navigation.Overview
+import com.example.alcoholtracker.ui.navigation.Profile
 import com.example.alcoholtracker.ui.screens.AddDrinkScreen
-import com.example.alcoholtracker.ui.screens.AnalyticsScreen
 import com.example.alcoholtracker.ui.screens.HomeScreen
 import com.example.alcoholtracker.ui.screens.ListScreen
 import com.example.alcoholtracker.ui.screens.ProfileScreen
 import com.example.alcoholtracker.ui.screens.SignInScreen
+import com.example.alcoholtracker.ui.screens.analytics.OverviewScreen
 import com.example.alcoholtracker.ui.viewmodel.AuthViewModel
-import com.example.alcoholtracker.ui.viewmodel.ProgressBarViewModel
 import com.example.alcoholtracker.ui.viewmodel.UserAndUserDrinkLogViewModel
 
 import com.example.compose.AlcoholTrackerTheme
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.auth
 import com.vamsi.snapnotify.SnapNotifyProvider
 import dagger.hilt.android.AndroidEntryPoint
@@ -80,24 +86,6 @@ class MainActivity : ComponentActivity() {
         }
 
     }
-
-
-
-    @Composable
-    private fun updateUI(user: FirebaseUser? = null){
-        val viewModel: UserAndUserDrinkLogViewModel = hiltViewModel()
-        LaunchedEffect(Unit) {
-            val userId = user?.uid
-            println("userId: $userId")
-            viewModel.setUserId(userId?:"")
-        }
-
-    }
-    private fun reload() {
-    }
-    companion object {
-        private const val TAG = "EmailPassword"
-    }
 }
 
 @Composable
@@ -107,11 +95,18 @@ fun MainScreen() {
     val drinkLogViewModel: UserAndUserDrinkLogViewModel = hiltViewModel()
     val userId by authViewModel.userId.collectAsState()
     val bottomBarScreens = listOf(
-        Screen.Home,
-        Screen.List,
-        Screen.Analytics,
-        Screen.Profile,
-        Screen.AddDrink
+        Home,
+        List,
+        Overview,
+        Profile,
+        AddDrink
+    )
+    val topLevelRoutes = listOf(
+        TopLevelRoute("Home", Home, Icons.Default.Home),
+        TopLevelRoute("List", List, Icons.Default.FormatListNumbered),
+        TopLevelRoute("Analytics", Overview, Icons.Default.Analytics),
+        TopLevelRoute("Profile", Profile, Icons.Default.Person)
+
     )
 
     LaunchedEffect(userId) {
@@ -120,50 +115,88 @@ fun MainScreen() {
         }
     }
 
-
-
-
-
     val navController = rememberNavController()
     val showBottomBar = navController
-        .currentBackStackEntryAsState().value?.destination?.route in bottomBarScreens.map { it.rout }
+        .currentBackStackEntryAsState() in bottomBarScreens
 
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
         bottomBar = {
-            if (showBottomBar){
-                BottomNavigationBar(navController)
+            NavigationBar {
+
+                val navBackStackEntry by navController.currentBackStackEntryAsState()
+                val currentDestination = navBackStackEntry?.destination
+
+                topLevelRoutes.forEach { destination ->
+                    NavigationBarItem(
+                        selected = currentDestination?.hierarchy?.any {it.hasRoute(destination.route::class)} == true,
+                        onClick = {
+                            navController.navigate(destination.route) {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+
+                                launchSingleTop = true
+
+                                restoreState = true
+                            }
+
+                        },
+                        icon = {
+                            Icon(
+                                destination.icon,
+                                contentDescription = "Icon"
+                            )
+                        },
+                        label = {Text(destination.name)}
+                    )
+                }
+
             }
         }
     ) { innerPadding ->
 
-        val graph =
-            navController.createGraph(startDestination = Screen.Home.rout) {
-                composable(route = Screen.List.rout) {
-                    ListScreen(navController)
-                }
-                composable(route = Screen.Analytics.rout) {
-                    AnalyticsScreen(navController)
-                }
-                composable(route = Screen.Home.rout,) {
-                    HomeScreen(navController)
-                }
-                composable(route = Screen.Profile.rout) {
-                    ProfileScreen()
-                }
-                composable(route = Screen.AddDrink.rout){
-                    AddDrinkScreen(navController)
-                }
-                composable(route = Screen.SignUp.rout){
-
-                }
-            }
         NavHost(
             navController = navController,
-            graph = graph,
+            startDestination = Home,
             modifier = Modifier.padding(bottom = innerPadding.calculateBottomPadding())
         )
+        {
+            composable<Home> {
+                HomeScreen(
+                    onFABClick = {
+                        navController.navigate(AddDrink)
+                    }
+                )
+            }
+            composable<List> {
+                ListScreen(
+                    onFABClick = {
+                        navController.navigate(AddDrink)
+                    }
+                )
+            }
+            composable<AddDrink> {
+                AddDrinkScreen(
+                    onAddDrink = {
+                        navController.popBackStack()
+                    }
+                )
+            }
+            composable<EditDrink> {
+
+            }
+            composable<Profile> {
+                ProfileScreen()
+            }
+            composable<Overview> {
+                OverviewScreen()
+            }
+            composable<Details> {
+
+            }
+        }
 
     }
 }

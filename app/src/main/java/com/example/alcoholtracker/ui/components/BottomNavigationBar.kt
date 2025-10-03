@@ -1,7 +1,11 @@
 package com.example.alcoholtracker.ui.components
 
+
+import android.net.http.SslCertificate.saveState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material.icons.filled.Analytics
+import androidx.compose.material.icons.filled.FormatListNumbered
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
@@ -12,69 +16,70 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination.Companion.hasRoute
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import com.example.alcoholtracker.ui.navigation.Home
+import com.example.alcoholtracker.ui.navigation.List
 import com.example.alcoholtracker.ui.navigation.NavigationItem
-import com.example.alcoholtracker.ui.navigation.Screen
+import com.example.alcoholtracker.ui.navigation.Overview
+import com.example.alcoholtracker.ui.navigation.Profile
+
+data class TopLevelRoute<T : Any>(val name: String, val route: T, val icon: ImageVector)
+
 
 @Composable
-fun BottomNavigationBar(navController: NavController){
+fun BottomNavigationBar(){
 
-    val navigationItems = listOf(
-        NavigationItem(
-            title = "Home",
-            icon = Icons.Default.Home,
-            route = Screen.Home.rout
-        ),
-        NavigationItem(
-            title = "List",
-            icon = Icons.AutoMirrored.Filled.List,
-            route = Screen.List.rout
-        ),
-        NavigationItem(
-            title = "Analytics",
-            icon = Icons.Default.Settings,
-            route = Screen.Analytics.rout
-        ),
-        NavigationItem(
-            title = "Profile",
-            icon = Icons.Default.Person,
-            route = Screen.Profile.rout
-        )
+    val topLevelRoutes = listOf(
+        TopLevelRoute("Home", Home, Icons.Default.Home),
+        TopLevelRoute("List", List, Icons.Default.FormatListNumbered),
+        TopLevelRoute("Analytics", Overview, Icons.Default.Analytics),
+        TopLevelRoute("Profile", Profile, Icons.Default.Person)
+
     )
-    val selectedNavigationIndex = rememberSaveable {
-        mutableIntStateOf(0)
-    }
 
-    NavigationBar(
+    val navController = rememberNavController()
 
-    ) {
-        navigationItems.forEachIndexed { index, item ->
+
+    NavigationBar {
+
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val currentDestination = navBackStackEntry?.destination
+
+        topLevelRoutes.forEach { destination ->
             NavigationBarItem(
-                selected = selectedNavigationIndex.intValue == index,
+                selected = currentDestination?.hierarchy?.any {it.hasRoute(destination.route::class)} == true,
                 onClick = {
-                    selectedNavigationIndex.intValue = index
-                    navController.navigate(item.route)
+                    navController.navigate(destination.route) {
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+
+                        launchSingleTop = true
+
+                        restoreState = true
+                    }
+
                 },
                 icon = {
-                    Icon(imageVector = item.icon, contentDescription = item.title)
-                },
-                label = {
-                    Text(
-                        item.title,
-                        color = if (index == selectedNavigationIndex.intValue)
-                            Color.Black
-                        else Color.Gray
+                    Icon(
+                        destination.icon,
+                        contentDescription = "Icon"
                     )
                 },
-                colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = MaterialTheme.colorScheme.surface,
-                    indicatorColor = MaterialTheme.colorScheme.primary
-                )
-
+                label = {Text(destination.name)}
             )
         }
+
     }
 }
