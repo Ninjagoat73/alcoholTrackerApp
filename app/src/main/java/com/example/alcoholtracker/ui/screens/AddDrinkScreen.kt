@@ -113,7 +113,7 @@ fun AddDrinkScreen(
                     dateTime = null,
                     logId = null)
                 viewModel.logDrink(request)
-                onAddDrink
+                onAddDrink()
             }
         ) {
             Text("Save Drink")

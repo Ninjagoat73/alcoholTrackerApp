@@ -134,7 +134,7 @@ fun MainScreen() {
                         onClick = {
                             navController.navigate(destination.route) {
                                 popUpTo(navController.graph.findStartDestination().id) {
-                                    saveState = true
+                                    saveState = false
                                 }
 
                                 launchSingleTop = true
