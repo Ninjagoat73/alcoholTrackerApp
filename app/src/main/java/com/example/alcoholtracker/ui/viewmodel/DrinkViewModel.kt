@@ -3,7 +3,6 @@ package com.example.alcoholtracker.ui.viewmodel
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.alcoholtracker.data.local.dao.DrinkDao
 import com.example.alcoholtracker.data.model.Drink
 import com.example.alcoholtracker.data.repository.DrinkRepository
 import com.example.alcoholtracker.domain.logic.handlers.DrinkHandlerRegistry
@@ -12,10 +11,8 @@ import com.example.alcoholtracker.domain.model.DrinkUnit
 import com.vamsi.snapnotify.SnapNotify
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

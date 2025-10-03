@@ -74,9 +74,6 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    init {
-
-    }
 
     @Composable
     fun getUserID(): State<String?> {

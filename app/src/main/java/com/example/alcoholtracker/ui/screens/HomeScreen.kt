@@ -1,14 +1,15 @@
 package com.example.alcoholtracker.ui.screens
 
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -32,8 +33,6 @@ import com.example.alcoholtracker.ui.components.progressbar.ProgressBarEditDialo
 import com.example.alcoholtracker.ui.components.progressbar.ProgressBarInterface
 import com.example.alcoholtracker.ui.components.progressbar.ProgressBarType
 import com.example.alcoholtracker.ui.viewmodel.AuthViewModel
-
-
 import com.example.alcoholtracker.ui.viewmodel.ProgressBarViewModel
 import com.example.alcoholtracker.ui.viewmodel.UserAndUserDrinkLogViewModel
 
@@ -45,7 +44,7 @@ fun HomeScreen(
     userDrinkLogViewModel: UserAndUserDrinkLogViewModel = hiltViewModel(),
 ){
     val userId by authViewModel.getUserID()
-    val userDrinkLogs by userDrinkLogViewModel.getDrinkLogs(userId!!).collectAsState()
+    // val userDrinkLogs by userDrinkLogViewModel.getDrinkLogs(userId!!).collectAsState()
     val twoDayDrinkLogs by userDrinkLogViewModel.getTwoDaySummary(userId!!).collectAsState()
     var showDialog by remember { mutableStateOf(false)}
     val currentType by progressBarViewModel.currentType.collectAsState()
@@ -122,4 +121,3 @@ fun HomeScreen(
 fun PreviewFunction(){
 
 }
-

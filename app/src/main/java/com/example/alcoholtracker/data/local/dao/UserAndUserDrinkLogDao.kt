@@ -8,9 +8,7 @@ import androidx.room.Query
 import androidx.room.Update
 import com.example.alcoholtracker.data.model.User
 import com.example.alcoholtracker.data.model.UserDrinkLog
-import com.example.alcoholtracker.data.model.UserDrinkLogSummary
 import kotlinx.coroutines.flow.Flow
-import java.nio.DoubleBuffer
 
 @Dao
 interface UserAndUserDrinkLogDao {

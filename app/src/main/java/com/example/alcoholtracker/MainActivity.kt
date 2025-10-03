@@ -29,13 +29,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.alcoholtracker.ui.components.BottomNavigationBar
 import com.example.alcoholtracker.ui.components.TopLevelRoute
 import com.example.alcoholtracker.ui.navigation.AddDrink
 import com.example.alcoholtracker.ui.navigation.Details
 import com.example.alcoholtracker.ui.navigation.EditDrink
 import com.example.alcoholtracker.ui.navigation.Home
-import com.example.alcoholtracker.ui.navigation.List
 import com.example.alcoholtracker.ui.navigation.Overview
 import com.example.alcoholtracker.ui.navigation.Profile
 import com.example.alcoholtracker.ui.screens.AddDrinkScreen
@@ -46,7 +44,7 @@ import com.example.alcoholtracker.ui.screens.SignInScreen
 import com.example.alcoholtracker.ui.screens.analytics.OverviewScreen
 import com.example.alcoholtracker.ui.viewmodel.AuthViewModel
 import com.example.alcoholtracker.ui.viewmodel.UserAndUserDrinkLogViewModel
-
+import com.example.alcoholtracker.ui.navigation.List
 import com.example.compose.AlcoholTrackerTheme
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -116,8 +114,8 @@ fun MainScreen() {
     }
 
     val navController = rememberNavController()
-    val showBottomBar = navController
-        .currentBackStackEntryAsState() in bottomBarScreens
+//    val showBottomBar = navController
+//        .currentBackStackEntryAsState() in bottomBarScreens
 
     Scaffold(
         modifier = Modifier
@@ -200,5 +198,3 @@ fun MainScreen() {
 
     }
 }
-
-

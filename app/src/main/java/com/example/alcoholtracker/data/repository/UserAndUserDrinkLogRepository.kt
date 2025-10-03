@@ -3,9 +3,7 @@ package com.example.alcoholtracker.data.repository
 import com.example.alcoholtracker.data.local.dao.UserAndUserDrinkLogDao
 import com.example.alcoholtracker.data.model.User
 import com.example.alcoholtracker.data.model.UserDrinkLog
-import com.example.alcoholtracker.data.model.UserDrinkLogSummary
 import kotlinx.coroutines.flow.Flow
-
 import javax.inject.Inject
 
 class UserAndUserDrinkLogRepository @Inject constructor(private val userAndUserDrinkLogDao: UserAndUserDrinkLogDao)  {

@@ -30,7 +30,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.alcoholtracker.data.model.UserDrinkLog
-import kotlinx.coroutines.flow.StateFlow
 
 class CountProgressBar: ProgressBarInterface {
     @Composable

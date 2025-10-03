@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.rounded.Done
@@ -31,14 +30,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import com.example.alcoholtracker.MainScreen
 import com.example.alcoholtracker.ui.components.ArcBackground
 import com.example.alcoholtracker.ui.viewmodel.AuthViewModel
-import com.example.compose.AlcoholTrackerTheme
-
 
 
 @Composable
@@ -133,4 +128,3 @@ fun SignInScreen(
 
     }
 }
-

@@ -1,8 +1,6 @@
 package com.example.alcoholtracker.domain.logic.handlers
 
-import android.content.Context
 import com.example.alcoholtracker.data.model.Drink
-import com.example.alcoholtracker.data.remote.Beer
 import com.example.alcoholtracker.data.remote.BeerRemoteSource
 import com.example.alcoholtracker.domain.logic.DrinkCategoryHandler
 import com.example.alcoholtracker.domain.model.DrinkUnit

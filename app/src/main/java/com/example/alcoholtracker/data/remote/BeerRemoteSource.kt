@@ -1,10 +1,7 @@
 package com.example.alcoholtracker.data.remote
 
 import android.content.Context
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.example.alcoholtracker.data.model.Drink
-import com.example.alcoholtracker.data.repository.DrinkRepository
-import com.example.alcoholtracker.ui.viewmodel.DrinkViewModel
 import com.google.gson.Gson
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -36,5 +33,3 @@ class BeerRemoteSource @Inject constructor(
          return drinkList
      }
 }
-
-

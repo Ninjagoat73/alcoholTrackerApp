@@ -56,7 +56,7 @@ fun ExpandedDrinkItem(item: UserDrinkLog){
 
     Column(modifier = Modifier.padding(start = 16.dp, bottom = 12.dp, top = 4.dp)) {
         Text("Recipient: ${item.recipient ?: "None"}")
-        Text("Category: ${item.category ?: "N/A"}")
+        Text("Category: ${item.category}")
         Text("Time: $time")
     }
 
