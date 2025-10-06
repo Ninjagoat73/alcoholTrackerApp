@@ -1,5 +1,7 @@
 package com.example.alcoholtracker.ui.components.analytics.graphs
 
+
+
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
@@ -21,33 +23,65 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.rememberTextMeasurer
+import androidx.compose.ui.unit.center
 import androidx.compose.ui.unit.sp
 import com.example.alcoholtracker.data.analytics.PieSlice
+import kotlin.math.PI
+import kotlin.math.atan2
+import kotlin.math.sqrt
 
 @Composable
 fun PieChart(
     modifier: Modifier = Modifier,
     data: List<PieSlice>,
+    isTappable: Boolean = true
 ){
     var circleCenter by remember {
         mutableStateOf(Offset.Zero)
+    }
+    var isCenterTapped by remember {
+        mutableStateOf(false)
     }
 
     val totalValue = data.sumOf { it.value }
     val backgroundColor = MaterialTheme.colorScheme.background
     val textMeasurer = rememberTextMeasurer()
 
+
     Box(
         modifier = modifier,
         contentAlignment = Alignment.Center
     ){
+
+
+
         Canvas(
             modifier = Modifier.fillMaxSize()
                 .pointerInput(data){
-                    detectTapGestures { onTapped() }
+                    detectTapGestures {offset ->
+                        if (isTappable){
+
+                            val xPos = size.center.x - offset.x
+                            val yPos = size.center.y - offset.y
+                            val length = sqrt(xPos*xPos + yPos * yPos)
+
+
+
+                            val tapAngleInDegrees = (-atan2(
+                                x = circleCenter.y - offset.y,
+                                y = circleCenter.x - offset.x
+                            ) * (180f / PI).toFloat() - 90f).mod(360f)
+
+
+
+
+                        }
+                    }
                 },
 
         ) {
+
+
 
             val radius = (size.minDimension / 2f) * 0.9f
             val innerRadius = radius * 0.5f

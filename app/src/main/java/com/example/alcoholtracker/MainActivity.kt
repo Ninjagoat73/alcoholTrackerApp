@@ -41,7 +41,7 @@ import com.example.alcoholtracker.ui.screens.HomeScreen
 import com.example.alcoholtracker.ui.screens.ListScreen
 import com.example.alcoholtracker.ui.screens.ProfileScreen
 import com.example.alcoholtracker.ui.screens.SignInScreen
-import com.example.alcoholtracker.ui.screens.analytics.OverviewScreen
+import com.example.alcoholtracker.ui.screens.AnalyticsScreen
 import com.example.alcoholtracker.ui.viewmodel.AuthViewModel
 import com.example.alcoholtracker.ui.viewmodel.UserAndUserDrinkLogViewModel
 import com.example.alcoholtracker.ui.navigation.List
@@ -189,7 +189,7 @@ fun MainScreen() {
                 ProfileScreen()
             }
             composable<Overview> {
-                OverviewScreen()
+                AnalyticsScreen()
             }
             composable<Details> {
 

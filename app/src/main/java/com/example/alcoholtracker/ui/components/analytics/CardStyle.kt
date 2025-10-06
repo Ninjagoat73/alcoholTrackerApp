@@ -22,12 +22,12 @@ fun Modifier.applyCardStyle(style: CardStyle): Modifier = when (style) {
 
     CardStyle.Compact -> this
         .fillMaxWidth()
-        .height(80.dp)
+        .height(120.dp)
         .padding(vertical = 8.dp, horizontal = 16.dp)
 
     CardStyle.Large -> this
         .fillMaxWidth()
-        .height(200.dp)
+        .height(400.dp)
         .padding(vertical = 8.dp, horizontal = 16.dp)
 
     CardStyle.Landscape -> this

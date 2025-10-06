@@ -1,4 +1,4 @@
-package com.example.alcoholtracker.ui.screens.analytics
+package com.example.alcoholtracker.ui.screens
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,18 +17,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.example.alcoholtracker.ui.components.AnalyticsTopBar
+import com.example.alcoholtracker.ui.components.analytics.FinanceCharts
+import com.example.alcoholtracker.ui.components.analytics.HealthCharts
+import com.example.alcoholtracker.ui.components.analytics.OverviewCharts
 import com.example.alcoholtracker.ui.navigation.AnalyticsTabs
 import com.example.alcoholtracker.ui.viewmodel.UserAndUserDrinkLogViewModel
 import kotlinx.coroutines.launch
 
 @Composable
-fun OverviewScreen(
+fun AnalyticsScreen(
     // onCardClick: (String, List<ChartEntry>, @Composable (Modifier?, List<ChartEntry>) -> Unit) -> Unit,
-    //navController: NavController,
     userDrinkLogViewModel: UserAndUserDrinkLogViewModel = hiltViewModel()
 ){
 
@@ -51,7 +52,7 @@ fun OverviewScreen(
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
         Column(modifier = Modifier
-            .padding(innerPadding)
+            .padding(top = innerPadding.calculateTopPadding())
 
         ) {
 
@@ -85,12 +86,15 @@ fun OverviewScreen(
             HorizontalPager(
                 state = pagerState,
                 modifier = Modifier.fillMaxWidth().weight(1f)
-            ) {
+            ) {page ->
                 Box(
                     modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
                 ) {
-                    Text(AnalyticsTabs.entries[it].title)
+                    when (page){
+                        0 -> OverviewCharts()
+                        1 -> FinanceCharts()
+                        2 -> HealthCharts()
+                    }
                 }
             }
 
