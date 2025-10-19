@@ -51,9 +51,9 @@ fun PieChart(
     modifier: Modifier,
     data: List<PieSlice>,
     startAngle: Float = -90f,
-    outerRingPercent: Int = 35,
+    outerRingPercent: Int = 60,
     innerRingPercent: Int = 10,
-    dividerStrokeWidth: Dp = 0.dp,
+    dividerStrokeWidth: Dp = 3.dp,
     drawText: Boolean = true,
     onClick: ((data: PieSlice, index: Int) -> Unit)? = null
 ) {
@@ -137,8 +137,12 @@ fun PieChart(
         val textMeasurer = rememberTextMeasurer()
         val textMeasureResults: List<TextLayoutResult> = remember(chartDataList) {
             chartDataList.map {
+
+                val percentage = (it.data / sum * 100).toInt()
+
+
                 textMeasurer.measure(
-                    text = "%${it.data.toInt()}",
+                    text = "%$percentage",
                     style = TextStyle(
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold
