@@ -85,9 +85,6 @@ fun AddDrinkScreen(
             }
         )
 
-
-
-
         TextField(value = alcoholPercentage, onValueChange = { alcoholPercentage = it }, label = { Text("Alcohol %") })
 
         TextField(value = cost, onValueChange = { cost = it }, label = { Text("Cost ($)") })

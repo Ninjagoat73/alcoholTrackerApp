@@ -13,28 +13,39 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
+data class DrinkUiState(
+    val localDrinks: List<Drink> = emptyList(),
+    val suggestions: List<Drink> = emptyList(),
+    val isLoading: Boolean = false,
+    val errorMessage: String? = null
+)
 
 @HiltViewModel
 class DrinkViewModel @Inject constructor(
     private val repository: DrinkRepository,
     private val handlerRegistry: DrinkHandlerRegistry
 ) : ViewModel() {
-
-    private val allLocalDrinks = mutableStateListOf<Drink>()
-    private val _suggestions = MutableStateFlow<List<Drink>>(emptyList())
-    val suggestions: StateFlow<List<Drink>> = _suggestions.asStateFlow()
-
+    private val _uiState = MutableStateFlow(DrinkUiState())
+    val uiState: StateFlow<DrinkUiState> = _uiState.asStateFlow()
 
     fun loadLocalDrinks() {
         viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true)}
             try {
-                allLocalDrinks.clear()
-                allLocalDrinks.addAll(repository.getAllDrinks())
+                val drinks = repository.getAllDrinks()
+                _uiState.update {
+                    it.copy(localDrinks = drinks, isLoading = false)
+                }
             }
             catch (e: Exception){
-                SnapNotify.showError("Failed to load local drinks")
+                _uiState.update {
+                    it.copy(errorMessage = "Failed to load drinks", isLoading = false)
+                }
+                SnapNotify.showError("Failed to load local drinks.")
             }
 
         }
@@ -43,20 +54,19 @@ class DrinkViewModel @Inject constructor(
     fun searchDrinks(query: String, category: DrinkCategory)  {
         viewModelScope.launch {
 
-            loadLocalDrinks()
-
-            val localResults = allLocalDrinks
-                .filter { (it.category == category.nameString) && it.name.contains(query, ignoreCase = true) }
+            val currentLocal = _uiState.value.localDrinks
+            val localResults = currentLocal.filter {
+                it.category == category.nameString && it.name.contains(query, ignoreCase = true)
+            }
 
             val finalResults = if (localResults.size < 5) {
                 val remoteResults = repository.searchApiDrinks(query, category)
-                allLocalDrinks.addAll(remoteResults)
-                (localResults + remoteResults)
+                localResults + remoteResults
             } else {
                 localResults
             }
 
-            _suggestions.value = finalResults
+            _uiState.update { it.copy(suggestions = finalResults) }
         }
     }
 

@@ -56,12 +56,8 @@ fun DrinkAutoComplete(
     onError: (Int) -> Unit
 ) {
     var textFieldValue by remember { mutableStateOf(TextFieldValue("")) }
-    val suggestions = drinkViewModel.suggestions.collectAsState()
-
-
-
+    val uiState = drinkViewModel.uiState.collectAsState()
     var showSuggestions by remember { mutableStateOf(false) }
-
     val focusRequester = remember { FocusRequester() }
 
     LaunchedEffect(textFieldValue.text) {
@@ -123,14 +119,13 @@ fun DrinkAutoComplete(
                 .background(Color.White, shape = RoundedCornerShape(8.dp))
                 .animateContentSize()
         ) {
-            if (showSuggestions && suggestions.value.isNotEmpty()) {
+            if (showSuggestions && uiState.value.suggestions.isNotEmpty()) {
                 LazyColumn(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.Start
                 ) {
                     items(
-                        items = suggestions.value,
-                        key = { suggestion -> suggestion.name }
+                        items = uiState.value.suggestions
                     ) { suggestion ->
                         Box(
                             modifier = Modifier
@@ -154,7 +149,7 @@ fun DrinkAutoComplete(
                         }
                     }
                 }
-            } else if (showSuggestions && suggestions.value.isEmpty()) {
+            } else if (showSuggestions && uiState.value.suggestions.isEmpty()) {
                 Text(
                     text = "No drinks available",
                     style = TextStyle(color = Color.Gray, fontSize = 16.sp),
