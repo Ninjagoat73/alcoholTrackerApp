@@ -10,7 +10,7 @@ class BeerHandler @Inject constructor(
     private val source: BeerRemoteSource
 ) : DrinkCategoryHandler
 {
-    override fun fetchSuggestions(query: String): List<Drink> {
+    override suspend fun fetchSuggestions(query: String): List<Drink> {
        return source.getBeers()
     }
 

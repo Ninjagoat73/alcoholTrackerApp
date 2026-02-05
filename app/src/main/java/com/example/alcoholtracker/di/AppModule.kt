@@ -49,7 +49,6 @@ object AppModule {
                 super.onCreate(db)
                 CoroutineScope(Dispatchers.IO).launch {
                     val drinkDao = provideDrinksDatabase(context).drinkDao()
-                      // Insert mock drinks
                 }
             }
         }).build()

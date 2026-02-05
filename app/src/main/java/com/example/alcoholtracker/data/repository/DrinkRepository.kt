@@ -19,7 +19,7 @@ class DrinkRepository @Inject constructor(
 
 
 
-    fun searchApiDrinks(query: String, category: DrinkCategory) : List<Drink>{
+    suspend fun searchApiDrinks(query: String, category: DrinkCategory) : List<Drink>{
         return when (category) {
             DrinkCategory.BEER -> handlerRegistry.beerHandler.fetchSuggestions(query)
             DrinkCategory.WINE -> handlerRegistry.wineHandler.fetchSuggestions(query)
