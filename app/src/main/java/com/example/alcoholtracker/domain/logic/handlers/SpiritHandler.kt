@@ -14,6 +14,11 @@ class SpiritHandler @Inject constructor(
     }
 
     override fun getUnitOptions(): List<DrinkUnit> {
-        TODO("Not yet implemented")
+        return listOf(
+            DrinkUnit("Shot (25 ml)", 20),
+            DrinkUnit("Double Shot (50 ml)", 50),
+            DrinkUnit("Glass (100 ml)", 100),
+            DrinkUnit("milliliters", 1)
+        )
     }
 }

@@ -76,9 +76,6 @@ class DrinkViewModel @Inject constructor(
             DrinkCategory.WINE -> handlerRegistry.wineHandler.getUnitOptions()
             DrinkCategory.SPIRIT -> handlerRegistry.spiritHandler.getUnitOptions()
             DrinkCategory.COCKTAIL -> handlerRegistry.cocktailHandler.getUnitOptions()
-            DrinkCategory.CIDER -> handlerRegistry.ciderHandler.getUnitOptions()
-            DrinkCategory.LIQUEUR -> handlerRegistry.liquerHandler.getUnitOptions()
-            DrinkCategory.MIXED_SHOT -> handlerRegistry.mixedShotHandler.getUnitOptions()
             DrinkCategory.OTHER -> handlerRegistry.otherHandler.getUnitOptions()
         }
     }

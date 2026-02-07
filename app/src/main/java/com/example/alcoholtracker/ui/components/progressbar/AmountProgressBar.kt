@@ -70,7 +70,7 @@ class AmountProgressBar: ProgressBarInterface {
                     contentAlignment = Alignment.BottomCenter
                 )
                 {
-                    ProgressBar(progressCalculator(summary.totalAmount, target))
+                    ProgressBar(progressCalculator(summary.totalAmount.toDouble(), target))
                 }
             }
         }

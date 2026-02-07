@@ -17,8 +17,9 @@ class BeerHandler @Inject constructor(
     override fun getUnitOptions(): List<DrinkUnit> {
         return listOf(
             DrinkUnit("Can (500 ml)", 500),
-            DrinkUnit("Small Bottle (300 ml)", 300),
+            DrinkUnit("Pint (473 ml)", 473),
             DrinkUnit("Bottle (330 ml)", 330),
+            DrinkUnit("Small Bottle (300 ml)", 300),
             DrinkUnit("milliliters", 1)
         )
     }

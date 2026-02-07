@@ -25,9 +25,6 @@ class DrinkRepository @Inject constructor(
             DrinkCategory.WINE -> handlerRegistry.wineHandler.fetchSuggestions(query)
             DrinkCategory.SPIRIT -> handlerRegistry.spiritHandler.fetchSuggestions(query)
             DrinkCategory.COCKTAIL -> handlerRegistry.cocktailHandler.fetchSuggestions(query)
-            DrinkCategory.CIDER -> handlerRegistry.ciderHandler.fetchSuggestions(query)
-            DrinkCategory.LIQUEUR -> handlerRegistry.liquerHandler.fetchSuggestions(query)
-            DrinkCategory.MIXED_SHOT -> handlerRegistry.mixedShotHandler.fetchSuggestions(query)
             DrinkCategory.OTHER -> handlerRegistry.otherHandler.fetchSuggestions(query)
         }
     }

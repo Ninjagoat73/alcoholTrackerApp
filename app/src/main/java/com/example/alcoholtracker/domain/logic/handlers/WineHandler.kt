@@ -4,16 +4,26 @@ import com.example.alcoholtracker.data.model.Drink
 import com.example.alcoholtracker.data.remote.BeerRemoteSource
 import com.example.alcoholtracker.domain.logic.DrinkCategoryHandler
 import com.example.alcoholtracker.domain.model.DrinkUnit
+import com.example.alcoholtracker.ui.components.alcohollist.DrinkItem
 import javax.inject.Inject
 
 class WineHandler @Inject constructor(
     private val source: BeerRemoteSource
 ) : DrinkCategoryHandler {
     override suspend fun fetchSuggestions(query: String): List<Drink> {
-        TODO("Not yet implemented")
+        return listOf(
+            Drink(1, "White Wine", 13.0, "Wine"),
+            Drink(2, "Red Wine", 14.0, "Wine")
+        )
     }
 
     override fun getUnitOptions(): List<DrinkUnit> {
-        TODO("Not yet implemented")
+        return listOf(
+            DrinkUnit("Small Glass (125 ml)", 125),
+            DrinkUnit("Medium Glass (175 ml)", 175),
+            DrinkUnit("Large Glass (250 ml)", 250),
+            DrinkUnit("Bottle (750 ml)", 125),
+            DrinkUnit("milliliters", 1)
+        )
     }
 }

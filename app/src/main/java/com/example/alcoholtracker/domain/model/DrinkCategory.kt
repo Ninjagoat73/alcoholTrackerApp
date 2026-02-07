@@ -1,14 +1,11 @@
 package com.example.alcoholtracker.domain.model
 
-enum class DrinkCategory(val id: Int, val nameString: String, val defaultABV: Double) {
-    BEER(1,"Beer", 6.0),
-    WINE(2,"Wine",12.0),
-    SPIRIT(3, "Spirit",39.0),
-    COCKTAIL(4,"Cocktail", 10.0),
-    CIDER(5, "Cider", 6.0),
-    LIQUEUR(6,"Liqueur", 21.0),
-    MIXED_SHOT(7,"Mixed Shot", 19.5),
-    OTHER(8,"Other", 0.0);
+import com.example.alcoholtracker.R
 
-    override fun toString(): String = nameString
+enum class DrinkCategory(val id: Int, val nameString: String, val defaultABV: Double, val icon: Int) {
+    BEER(1,"Beer & Cider", 6.0, R.drawable.beer),
+    WINE(2,"Wine",12.0, R.drawable.wine),
+    SPIRIT(3, "Spirit",39.0, R.drawable.glass_cup),
+    COCKTAIL(4,"Cocktail", 10.0, R.drawable.glass_martini_alt),
+    OTHER(5,"Other", 0.0, R.drawable.glass_martini_alt);
 }

@@ -29,7 +29,7 @@ data class UserDrinkLog(
     val alcoholPercentage: Double?,
 
     @ColumnInfo("amount")
-    val amount: Double?,
+    val amount: Int,
 
     @ColumnInfo("category")
     val category: DrinkCategory,

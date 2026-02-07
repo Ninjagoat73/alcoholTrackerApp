@@ -70,3 +70,19 @@ fun CurrentDayText(){
         style = MaterialTheme.typography.titleLarge,
     )
 }
+
+@Composable
+fun LogDrinkTopBar(){
+       TopAppBar(
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            titleContentColor = MaterialTheme.colorScheme.onPrimary
+        ),
+        title = {
+            Row {
+                Text("Log a Drink")
+            }
+        },
+        modifier = Modifier.statusBarsPadding()
+    )
+}
