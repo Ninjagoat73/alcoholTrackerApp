@@ -51,6 +51,12 @@ class DrinkViewModel @Inject constructor(
         }
     }
 
+    fun getAllRecipients() {
+        viewModelScope.launch {
+
+        }
+    }
+
     fun searchDrinks(query: String, category: DrinkCategory)  {
         viewModelScope.launch {
 

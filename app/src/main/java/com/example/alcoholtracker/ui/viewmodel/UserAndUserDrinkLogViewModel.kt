@@ -90,6 +90,11 @@ class UserAndUserDrinkLogViewModel @Inject constructor(
         }
     }
 
+    fun getRecipients(userId: String): StateFlow<List<String>> {
+        return userAndUserDrinkLogRepository.getRecipients(userId)
+            .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+    }
+
     init { viewModelScope.launch {
 
         val currentUserId = auth.currentUser?.uid ?: ""

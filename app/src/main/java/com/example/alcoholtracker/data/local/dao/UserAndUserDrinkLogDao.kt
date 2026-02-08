@@ -31,6 +31,10 @@ interface UserAndUserDrinkLogDao {
     @Query("SELECT * FROM log WHERE userId = :userId")
     fun getDrinkLogsByUserId(userId: String): Flow<List<UserDrinkLog>>
 
+    @Query("SELECT DISTINCT recipient FROM log WHERE userId = :userId")
+    fun getRecipients(userId: String): Flow<List<String>>
+
+
     @Query("""
     SELECT * FROM log 
     WHERE userId = :userId 

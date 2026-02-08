@@ -34,7 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.example.alcoholtracker.data.model.Drink
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.example.alcoholtracker.domain.model.DrinkCategory
 import com.example.alcoholtracker.domain.model.DrinkUnit
 import com.example.alcoholtracker.ui.viewmodel.DrinkViewModel
@@ -44,37 +44,38 @@ import com.example.alcoholtracker.ui.viewmodel.DrinkViewModel
 fun AmountDropDown(
     drinkCategory: DrinkCategory?,
     onSelected: (DrinkUnit) -> Unit,
-    onTyped : (Int) -> Unit,
-    viewModel: DrinkViewModel,
-){
+    onTyped: (Int) -> Unit,
+    viewModel: DrinkViewModel = hiltViewModel(),
+) {
 
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(8.dp))
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    )
     {
         var selected by remember { mutableStateOf<DrinkUnit?>(DrinkUnit("milliliters", 1)) }
-        var amount by remember { mutableIntStateOf(1) }
+        var amount by remember { mutableIntStateOf(500) }
         var expanded by remember { mutableStateOf(false) }
         val options = viewModel.getDrinkUnitsForCategory(drinkCategory ?: DrinkCategory.OTHER)
 
 
-        Column(){
+        Column() {
             Row() {
                 Text(
-                text = "Amount",
-                style = MaterialTheme.typography.labelLarge,
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier
-                    .padding(bottom = 8.dp, start = 8.dp, top = 12.dp, end = 8.dp)
-                    .weight(0.5F)
+                    text = "Amount",
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier
+                        .padding(bottom = 8.dp, start = 8.dp, top = 12.dp, end = 8.dp)
+                        .weight(0.5F)
                 )
                 Text(
-                text = "Unit",
-                style = MaterialTheme.typography.labelLarge,
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier
-                    .padding(bottom = 8.dp, start = 16.dp, top = 12.dp)
-                    .weight(1F)
+                    text = "Unit",
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier
+                        .padding(bottom = 8.dp, start = 16.dp, top = 12.dp)
+                        .weight(1F)
                 )
             }
             Row() {
@@ -88,46 +89,52 @@ fun AmountDropDown(
                     keyboardOptions = KeyboardOptions.Default.copy(
                         keyboardType = KeyboardType.Number
                     ),
-                    modifier = Modifier.weight(0.5f).padding(end = 8.dp),
+                    modifier = Modifier
+                        .weight(0.5f)
+                        .padding(end = 8.dp),
                     shape = RoundedCornerShape(24.dp),
                     singleLine = true,
                     trailingIcon = {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        IconButton(
-                            onClick = {
-                                val current = amount
-                                amount = current + 1
-                                onTyped(amount)
-                            },
-                            modifier = Modifier.size(24.dp)
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center
                         ) {
-                            Icon(Icons.Default.KeyboardArrowUp, contentDescription = "Increase")
-                        }
-                        IconButton(
-                            onClick = {
-                                val current = amount
-                                if (current > 0) {
-                                    amount = (current - 1)
+                            IconButton(
+                                onClick = {
+                                    val current = amount
+                                    amount = current + 1
                                     onTyped(amount)
-                                }
-                            },
-                            modifier = Modifier.size(24.dp)
-                        ) {
-                            Icon(Icons.Default.KeyboardArrowDown, contentDescription = "Decrease")
+                                },
+                                modifier = Modifier.size(24.dp)
+                            ) {
+                                Icon(Icons.Default.KeyboardArrowUp, contentDescription = "Increase")
+                            }
+                            IconButton(
+                                onClick = {
+                                    val current = amount
+                                    if (current > 0) {
+                                        amount = (current - 1)
+                                        onTyped(amount)
+                                    }
+                                },
+                                modifier = Modifier.size(24.dp)
+                            ) {
+                                Icon(
+                                    Icons.Default.KeyboardArrowDown,
+                                    contentDescription = "Decrease"
+                                )
+                            }
                         }
-                    }
-                },
+                    },
                 )
 
                 ExposedDropdownMenuBox(
                     expanded = expanded,
                     onExpandedChange = { expanded = !expanded },
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier
+                        .weight(1f)
                         .height(64.dp)
-                ){
+                ) {
                     OutlinedTextField(
                         value = selected?.name ?: "Select a unit",
                         onValueChange = { },
@@ -138,9 +145,11 @@ fun AmountDropDown(
                             focusedBorderColor = MaterialTheme.colorScheme.primary,
                             unfocusedBorderColor = MaterialTheme.colorScheme.outline
                         ),
-                        modifier = Modifier.menuAnchor(type = ExposedDropdownMenuAnchorType.PrimaryEditable)
+                        modifier = Modifier
+                            .menuAnchor(type = ExposedDropdownMenuAnchorType.PrimaryEditable)
                             .clickable {
-                                expanded = true }
+                                expanded = true
+                            }
                             .padding(start = 8.dp),
                         shape = RoundedCornerShape(24.dp)
 
@@ -157,12 +166,12 @@ fun AmountDropDown(
                                     onSelected(option)
                                     selected = option
                                     expanded = false
-                                    }
-                                )
-                            }
+                                }
+                            )
                         }
                     }
                 }
+            }
         }
     }
 }

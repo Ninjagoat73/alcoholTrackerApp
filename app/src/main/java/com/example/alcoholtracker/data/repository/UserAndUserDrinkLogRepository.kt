@@ -28,6 +28,9 @@ class UserAndUserDrinkLogRepository @Inject constructor(private val userAndUserD
         return userAndUserDrinkLogDao.getUserById(userId)
     }
 
+    fun getRecipients(userId: String): Flow<List<String>> {
+        return userAndUserDrinkLogDao.getRecipients(userId)
+    }
 
     fun getDrinkLogsByUserId(userId: String): Flow<List<UserDrinkLog>> {
         return userAndUserDrinkLogDao.getDrinkLogsByUserId(userId)

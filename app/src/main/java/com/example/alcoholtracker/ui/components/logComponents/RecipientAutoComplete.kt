@@ -15,57 +15,38 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import com.example.alcoholtracker.data.model.Drink
-import com.example.alcoholtracker.domain.model.DrinkCategory
-import com.example.alcoholtracker.ui.viewmodel.DrinkViewModel
-import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.distinctUntilChanged
+import com.example.alcoholtracker.ui.viewmodel.AuthViewModel
+import com.example.alcoholtracker.ui.viewmodel.UserAndUserDrinkLogViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DrinkAutoComplete(
-    category: DrinkCategory?,
-    onTyped: (String) -> Unit,
-    onSelected: (Drink) -> Unit,
-    drinkViewModel: DrinkViewModel = hiltViewModel()
+fun RecipientAutoComplete(
+    onAction: (String) -> Unit,
+    userAndUserDrinkLogViewModel: UserAndUserDrinkLogViewModel = hiltViewModel(),
+    authViewModel: AuthViewModel = hiltViewModel(),
 ) {
-    val uiState by drinkViewModel.uiState.collectAsState()
+
+    val userId = authViewModel.getUserID().value
+    val options =
+        userAndUserDrinkLogViewModel.getRecipients(userId!!).collectAsState(emptyList()).value
     var expanded by remember { mutableStateOf(false) }
     var selected by remember { mutableStateOf("") }
-    val options = uiState.suggestions
 
-
-    LaunchedEffect(category) {
-        selected = ""
-    }
-
-    LaunchedEffect(selected, category) {
-        if (category == null) return@LaunchedEffect
-
-        snapshotFlow { selected }
-            .debounce(300)
-            .distinctUntilChanged()
-            .collect { query ->
-                drinkViewModel.searchDrinks(query, category)
-            }
-    }
 
     Column(
         modifier = Modifier.fillMaxWidth(),
 
         ) {
         Text(
-            text = "Drink",
+            text = "Recipient",
             style = MaterialTheme.typography.labelLarge,
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.padding(bottom = 8.dp, start = 4.dp, top = 16.dp)
@@ -79,7 +60,7 @@ fun DrinkAutoComplete(
                 value = selected,
                 onValueChange = {
                     selected = it
-                    onTyped(selected)
+                    onAction(selected)
                 },
                 label = null,
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
@@ -92,21 +73,21 @@ fun DrinkAutoComplete(
                     .clickable { expanded = true }
                     .fillMaxWidth(),
                 shape = RoundedCornerShape(24.dp),
-                placeholder = { Text("Select a drink...") }
+                placeholder = { Text("Select a recipient") }
             )
 
             val filteringOptions =
-                options.filter { it.name.contains(selected, ignoreCase = true) }
+                options.filter { it.contains(selected, ignoreCase = true) }
             if (filteringOptions.isNotEmpty()) {
                 ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
                     filteringOptions.forEach { selectionOption ->
                         DropdownMenuItem(
                             onClick = {
-                                selected = selectionOption.name
+                                selected = selectionOption
                                 expanded = false
-                                onSelected(selectionOption)
+                                onAction(selectionOption)
                             },
-                            text = { Text(text = selectionOption.name) }
+                            text = { Text(text = selectionOption) }
                         )
                     }
                 }
