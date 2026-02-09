@@ -29,6 +29,7 @@ import com.example.alcoholtracker.ui.viewmodel.UserAndUserDrinkLogViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecipientAutoComplete(
+    drinkToEditRecipient: String? = null,
     onAction: (String) -> Unit,
     userAndUserDrinkLogViewModel: UserAndUserDrinkLogViewModel = hiltViewModel(),
     authViewModel: AuthViewModel = hiltViewModel(),
@@ -38,7 +39,7 @@ fun RecipientAutoComplete(
     val options =
         userAndUserDrinkLogViewModel.getRecipients(userId!!).collectAsState(emptyList()).value
     var expanded by remember { mutableStateOf(false) }
-    var selected by remember { mutableStateOf("") }
+    var selected by remember { mutableStateOf(drinkToEditRecipient ?: "Me") }
 
 
     Column(

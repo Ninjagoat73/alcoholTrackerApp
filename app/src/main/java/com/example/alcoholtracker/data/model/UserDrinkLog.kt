@@ -1,11 +1,13 @@
 package com.example.alcoholtracker.data.model
 
 import androidx.room.ColumnInfo
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.example.alcoholtracker.di.Converters
 import com.example.alcoholtracker.domain.model.DrinkCategory
+import com.example.alcoholtracker.domain.model.DrinkUnit
 import java.time.LocalDateTime
 
 @Entity(tableName = "log")
@@ -36,6 +38,12 @@ data class UserDrinkLog(
 
     @ColumnInfo("recipient")
     val recipient: String?,
+
+    @ColumnInfo("inputAmount")
+    val inputAmount: Double?,
+
+    @Embedded(prefix = "unit_")
+    val drinkUnit: DrinkUnit?,
 
     @TypeConverters(Converters::class)
     @ColumnInfo("date")

@@ -22,7 +22,7 @@ import androidx.compose.material3.TimePickerDialog
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,9 +30,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.alcoholtracker.utils.getLocalDate
+import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalTime
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -45,12 +46,6 @@ fun DateAndTimePicker(
 ) {
 
 
-    var pickedDate by remember {
-        mutableStateOf(currentDate)
-    }
-    var pickedTime by remember {
-        mutableStateOf(currentTime)
-    }
     var showDateDialog by remember {
         mutableStateOf(false)
     }
@@ -59,23 +54,21 @@ fun DateAndTimePicker(
     }
 
     val datePickerState = rememberDatePickerState()
-    val timeDialogState = rememberTimePickerState(
-        is24Hour = true
-    )
-
-    val formattedDate by remember {
-        derivedStateOf {
-            DateTimeFormatter
-                .ofPattern("dd MMM yyyy")
-                .format(pickedDate)
+    
+    LaunchedEffect(currentDate) {
+        currentDate?.let { date ->
+            datePickerState.selectedDateMillis = date.atStartOfDay(java.time.ZoneOffset.UTC)
+                .toInstant()
+                .toEpochMilli()
         }
     }
-    val formattedTime by remember {
-        derivedStateOf {
-            DateTimeFormatter
-                .ofPattern("hh:mm")
-                .format(pickedTime)
-        }
+
+    val formattedDate = remember(currentDate) {
+        currentDate?.format(DateTimeFormatter.ofPattern("dd MMM yyyy")) ?: ""
+    }
+
+    val formattedTime = remember(currentTime) {
+        currentTime?.format(DateTimeFormatter.ofPattern("HH:mm")) ?: ""
     }
 
     Column() {
@@ -160,10 +153,12 @@ fun DateAndTimePicker(
                     onDismissRequest = { showDateDialog = false },
                     confirmButton = {
                         TextButton(onClick = {
-
-                            val localDate = getLocalDate(datePickerState.selectedDateMillis)
-                            pickedDate = localDate
-                            onDateSelected(localDate)
+                            datePickerState.selectedDateMillis?.let { millis ->
+                                val localDate = Instant.ofEpochMilli(millis)
+                                    .atZone(ZoneId.of("UTC")) // Match the timezone used in LaunchedEffect
+                                    .toLocalDate()
+                                onDateSelected(localDate)
+                            }
                             showDateDialog = false
                         }) {
                             Text("OK")
@@ -179,15 +174,18 @@ fun DateAndTimePicker(
                 }
             }
             if (showTimeDialog) {
+
+                val timeState = rememberTimePickerState(
+                    initialHour = currentTime?.hour ?: 0,
+                    initialMinute = currentTime?.minute ?: 0,
+                    is24Hour = true
+                )
+
                 TimePickerDialog(
                     onDismissRequest = { showTimeDialog = false },
                     confirmButton = {
                         TextButton(onClick = {
-                            val selectedTime = LocalTime.of(
-                                timeDialogState.hour,
-                                timeDialogState.minute
-                            )
-                            pickedTime = selectedTime
+                            val selectedTime = LocalTime.of(timeState.hour, timeState.minute)
                             onTimeSelected(selectedTime)
                             showTimeDialog = false
                         }) {
@@ -201,7 +199,7 @@ fun DateAndTimePicker(
                     },
                     title = { Text("") }
                 ) {
-                    TimePicker(state = timeDialogState)
+                    TimePicker(state = timeState)
 
                 }
 

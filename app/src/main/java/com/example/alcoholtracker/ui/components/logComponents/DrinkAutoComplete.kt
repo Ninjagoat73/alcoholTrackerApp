@@ -2,6 +2,7 @@ package com.example.alcoholtracker.ui.components.logComponents
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -34,6 +35,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DrinkAutoComplete(
+    drinkToEditName: String,
     category: DrinkCategory?,
     onTyped: (String) -> Unit,
     onSelected: (Drink) -> Unit,
@@ -41,18 +43,12 @@ fun DrinkAutoComplete(
 ) {
     val uiState by drinkViewModel.uiState.collectAsState()
     var expanded by remember { mutableStateOf(false) }
-    var selected by remember { mutableStateOf("") }
     val options = uiState.suggestions
 
-
-    LaunchedEffect(category) {
-        selected = ""
-    }
-
-    LaunchedEffect(selected, category) {
+    LaunchedEffect(drinkToEditName, category) {
         if (category == null) return@LaunchedEffect
 
-        snapshotFlow { selected }
+        snapshotFlow { drinkToEditName }
             .debounce(300)
             .distinctUntilChanged()
             .collect { query ->
@@ -76,10 +72,9 @@ fun DrinkAutoComplete(
             modifier = Modifier.fillMaxWidth()
         ) {
             OutlinedTextField(
-                value = selected,
+                value = drinkToEditName,
                 onValueChange = {
-                    selected = it
-                    onTyped(selected)
+                    onTyped(it)
                 },
                 label = null,
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
@@ -96,23 +91,36 @@ fun DrinkAutoComplete(
             )
 
             val filteringOptions =
-                options.filter { it.name.contains(selected, ignoreCase = true) }
+                options.filter { it.name.contains(drinkToEditName, ignoreCase = true) }
             if (filteringOptions.isNotEmpty()) {
                 ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
                     filteringOptions.forEach { selectionOption ->
                         DropdownMenuItem(
                             onClick = {
-                                selected = selectionOption.name
+                                onTyped(selectionOption.name)
                                 expanded = false
                                 onSelected(selectionOption)
                             },
-                            text = { Text(text = selectionOption.name) }
+                            text = { SuggestionText(selectionOption) }
                         )
                     }
                 }
             }
         }
     }
+}
 
-
+@Composable
+fun SuggestionText(suggestion: Drink) {
+    Row(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Text(
+            text = suggestion.name,
+            modifier = Modifier.weight(1f)
+        )
+        Text(
+            text = suggestion.alcoholContent.toString() + "%",
+        )
+    }
 }

@@ -86,9 +86,8 @@ fun HomeScreen(
                     .fillMaxWidth()
                 ){
                     AlcoholListComposable(
-                        authViewModel = authViewModel,
-                        userDrinkLogViewModel = userDrinkLogViewModel,
-                        AlcoholListType.HOME
+                        AlcoholListType.HOME,
+                        {}
                     )
                 }
 

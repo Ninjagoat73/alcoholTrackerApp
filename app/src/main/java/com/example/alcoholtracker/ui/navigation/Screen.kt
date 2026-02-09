@@ -1,4 +1,5 @@
 package com.example.alcoholtracker.ui.navigation
+
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -17,7 +18,7 @@ object SignIn
 object SignUp
 
 @Serializable
-object AddDrink
+data class AddDrink(val logId: Int? = null)
 
 @Serializable
 object EditDrink

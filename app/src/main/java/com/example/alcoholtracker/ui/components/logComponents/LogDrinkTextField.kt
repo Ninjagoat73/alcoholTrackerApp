@@ -18,11 +18,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableDoubleStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
@@ -32,18 +27,14 @@ import kotlin.math.round
 
 @Composable
 fun ABVAndPriceTextFields(
+    abv: Double,
+    price: Double,
     defaultABV: Double,
     onABVChange: (Double) -> Unit,
     onPriceChange: (Double) -> Unit
 ) {
 
 
-    var alcPercentage by remember { mutableDoubleStateOf(defaultABV) }
-    var cost by remember { mutableDoubleStateOf(0.0) }
-
-    LaunchedEffect(defaultABV) {
-        alcPercentage = defaultABV
-    }
     Row(
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -60,16 +51,12 @@ fun ABVAndPriceTextFields(
                 modifier = Modifier.padding(bottom = 8.dp, start = 8.dp, top = 16.dp)
             )
             OutlinedTextField(
-                value = "$alcPercentage",
+                value = "$abv",
                 onValueChange = { newValue ->
                     val filtered = newValue.filter { it.isDigit() || it == '.' }
-                    val parsed = filtered.toDoubleOrNull()
-                    if (parsed != null && parsed in 0.0..100.0 && filtered.length <= 5) {
-                        alcPercentage = parsed
-                        onABVChange(alcPercentage)
-                    } else if (filtered.isEmpty()) {
-                        alcPercentage = 0.0
-                        onABVChange(0.0)
+                    val parsed = filtered.toDoubleOrNull() ?: 0.0
+                    if (parsed in 0.0..100.0 && filtered.length <= 5) {
+                        onABVChange(parsed)
                     }
                 },
                 suffix = { Text("%") },
@@ -80,9 +67,8 @@ fun ABVAndPriceTextFields(
                     ) {
                         IconButton(
                             onClick = {
-                                val current = alcPercentage + 0.1
-                                alcPercentage = round(current * 10.0) / 10.0
-                                onABVChange(alcPercentage)
+                                val newAbv = round((abv + 0.1) * 10.0) / 10.0
+                                onABVChange(newAbv)
                             },
                             modifier = Modifier.size(24.dp)
                         ) {
@@ -91,10 +77,9 @@ fun ABVAndPriceTextFields(
                         IconButton(
                             onClick = {
 
-                                if (alcPercentage > 0.0) {
-                                    val current = alcPercentage - 0.1
-                                    alcPercentage = round(current * 10.0) / 10.0
-                                    onABVChange(alcPercentage)
+                                if (abv > 0.0) {
+                                    val newAbv = round((abv - 0.1) * 10.0) / 10.0
+                                    onABVChange(newAbv)
                                 }
                             },
                             modifier = Modifier.size(24.dp)
@@ -126,17 +111,11 @@ fun ABVAndPriceTextFields(
                 modifier = Modifier.padding(bottom = 8.dp, start = 8.dp, top = 16.dp)
             )
             OutlinedTextField(
-                value = "$cost",
+                value = "$price",
                 onValueChange = { newValue ->
                     val filtered = newValue.filter { it.isDigit() || it == '.' }
-                    val parsed = filtered.toDoubleOrNull()
-                    if (parsed != null && parsed > 0) {
-                        cost = parsed
-                        onPriceChange(cost)
-                    } else if (filtered.isEmpty()) {
-                        cost = 0.0
-                        onPriceChange(0.0)
-                    }
+                    val parsed = filtered.toDoubleOrNull() ?: 0.0
+                    onPriceChange(parsed)
                 },
                 suffix = { Text("€") },
                 trailingIcon = {
@@ -146,9 +125,8 @@ fun ABVAndPriceTextFields(
                     ) {
                         IconButton(
                             onClick = {
-                                val current = cost + 0.1
-                                cost = round(current * 10.0) / 10.0
-                                onPriceChange(cost)
+                                val newPrice = round((price + 0.1) * 10.0) / 10.0
+                                onPriceChange(newPrice)
                             },
                             modifier = Modifier.size(24.dp)
                         ) {
@@ -157,10 +135,9 @@ fun ABVAndPriceTextFields(
                         IconButton(
                             onClick = {
 
-                                if (cost > 0.0) {
-                                    val current = cost - 0.1
-                                    cost = round(current * 10.0) / 10.0
-                                    onPriceChange(cost)
+                                if (price > 0.0) {
+                                    val newPrice = round((price - 0.1) * 10.0) / 10.0
+                                    onPriceChange(newPrice)
                                 }
                             },
                             modifier = Modifier.size(24.dp)

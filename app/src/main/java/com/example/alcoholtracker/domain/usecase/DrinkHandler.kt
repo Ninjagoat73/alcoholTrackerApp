@@ -13,7 +13,7 @@ class DrinkHandler @Inject constructor(
 ) {
     suspend fun createDrink(
         request: DrinkCreateRequest
-    ){
+    ) {
         val userId = auth.currentUser?.uid ?: return
         val drink = UserDrinkLog(
             userId = userId,
@@ -24,21 +24,24 @@ class DrinkHandler @Inject constructor(
             amount = request.volume,
             cost = request.cost,
             recipient = request.recipient,
+            inputAmount = request.inputAmount,
+            drinkUnit = request.drinkUnit,
+
             date = request.dateTime ?: LocalDateTime.now(),
 
-        )
+            )
         logRepo.insertDrinkLog(drink)
 
     }
 
     suspend fun editDrink(
-        drinkToUpdate: UserDrinkLog,
+        drinkToUpdate: Int,
         request: DrinkCreateRequest
 
-    ){
+    ) {
         val userId = auth.currentUser?.uid ?: return
         val drink = UserDrinkLog(
-            logId = drinkToUpdate.logId,
+            logId = drinkToUpdate,
             userId = userId,
             drinkId = 0,
             name = request.name,
@@ -47,6 +50,8 @@ class DrinkHandler @Inject constructor(
             amount = request.volume,
             cost = request.cost,
             recipient = request.recipient,
+            inputAmount = request.inputAmount,
+            drinkUnit = request.drinkUnit,
             date = request.dateTime ?: LocalDateTime.now(),
 
             )
@@ -55,7 +60,7 @@ class DrinkHandler @Inject constructor(
 
     suspend fun deleteDrink(
         drinkToDelete: UserDrinkLog
-    ){
+    ) {
         logRepo.deleteDrinkLog(drinkToDelete)
     }
 }

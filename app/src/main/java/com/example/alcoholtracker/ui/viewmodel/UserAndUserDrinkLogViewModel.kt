@@ -1,19 +1,23 @@
 package com.example.alcoholtracker.ui.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import com.example.alcoholtracker.data.model.User
 
 import com.example.alcoholtracker.data.model.UserDrinkLog
 import com.example.alcoholtracker.data.repository.UserAndUserDrinkLogRepository
 import com.example.alcoholtracker.domain.usecase.DrinkCreateRequest
 import com.example.alcoholtracker.domain.usecase.DrinkHandler
+import com.example.alcoholtracker.ui.navigation.AddDrink
 import com.google.firebase.auth.FirebaseAuth
 import com.vamsi.snapnotify.SnapNotify
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,7 +25,8 @@ import javax.inject.Inject
 @HiltViewModel
 class UserAndUserDrinkLogViewModel @Inject constructor(
     private val userAndUserDrinkLogRepository: UserAndUserDrinkLogRepository,
-    private val drinkHandler: DrinkHandler
+    private val drinkHandler: DrinkHandler,
+    private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
@@ -32,8 +37,26 @@ class UserAndUserDrinkLogViewModel @Inject constructor(
     private val _drinkLogs = MutableStateFlow<List<UserDrinkLog>>(emptyList())
     val twoDaySummary: StateFlow<List<UserDrinkLog>?> = _twoDaySummary
 
+    private val _drinkToEdit = MutableStateFlow<UserDrinkLog?>(null)
+    val drinkToEdit = _drinkToEdit.asStateFlow()
 
-    fun getDrinkLogs(userId: String): StateFlow<List<UserDrinkLog>>{
+    init {
+        val route = savedStateHandle.toRoute<AddDrink>()
+
+        if (route.logId != null) {
+            fetchDrinkDetails(route.logId)
+        }
+    }
+
+    private fun fetchDrinkDetails(logId: Int) {
+        viewModelScope.launch {
+            val drink = userAndUserDrinkLogRepository.getDrinkById(logId)
+            _drinkToEdit.value = drink
+
+        }
+    }
+
+    fun getDrinkLogs(userId: String): StateFlow<List<UserDrinkLog>> {
         return userAndUserDrinkLogRepository.getDrinkLogsByUserId(userId)
             .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
     }
@@ -49,8 +72,8 @@ class UserAndUserDrinkLogViewModel @Inject constructor(
             if (localUser == null) {
                 val newUser = User(
                     userId,
-                    user?.displayName ?:"",
-                    user?.email?:""
+                    user?.displayName ?: "",
+                    user?.email ?: ""
                 )
                 userAndUserDrinkLogRepository.insertUser(newUser)
             }
@@ -63,28 +86,27 @@ class UserAndUserDrinkLogViewModel @Inject constructor(
             .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
     }
 
-    fun deleteDrink(log: UserDrinkLog){
+    fun deleteDrink(log: UserDrinkLog) {
         viewModelScope.launch {
             drinkHandler.deleteDrink(log)
         }
     }
 
 
-    fun logDrink(request: DrinkCreateRequest){
+    fun logDrink(request: DrinkCreateRequest) {
 
         viewModelScope.launch {
             try {
                 drinkHandler.createDrink(request)
                 SnapNotify.showSuccess("Drink logged")
-            }
-            catch (e: Exception){
+            } catch (e: Exception) {
                 SnapNotify.showError("Failed to log drink")
             }
 
         }
     }
 
-    fun updateDrink(drinkToUpdate: UserDrinkLog, request: DrinkCreateRequest){
+    fun updateDrink(drinkToUpdate: Int, request: DrinkCreateRequest) {
         viewModelScope.launch {
             drinkHandler.editDrink(drinkToUpdate, request)
         }
@@ -95,21 +117,23 @@ class UserAndUserDrinkLogViewModel @Inject constructor(
             .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
     }
 
-    init { viewModelScope.launch {
+    init {
+        viewModelScope.launch {
 
-        val currentUserId = auth.currentUser?.uid ?: ""
-        if (currentUserId.isNotEmpty()) {
-            _userId.value = currentUserId
-            println("ViewModel created/restored. userId: $currentUserId")
-        } else {
-            println("Warning: No user logged in!")
-        }
-        auth.addAuthStateListener { firebaseAuth ->
-            val newUserId = firebaseAuth.currentUser?.uid ?: ""
-            if (newUserId != _userId.value) {
-                _userId.value = newUserId
-                println("Auth state changed. New userId: $newUserId")
+            val currentUserId = auth.currentUser?.uid ?: ""
+            if (currentUserId.isNotEmpty()) {
+                _userId.value = currentUserId
+                println("ViewModel created/restored. userId: $currentUserId")
+            } else {
+                println("Warning: No user logged in!")
+            }
+            auth.addAuthStateListener { firebaseAuth ->
+                val newUserId = firebaseAuth.currentUser?.uid ?: ""
+                if (newUserId != _userId.value) {
+                    _userId.value = newUserId
+                    println("Auth state changed. New userId: $newUserId")
+                }
             }
         }
-    } }
+    }
 }

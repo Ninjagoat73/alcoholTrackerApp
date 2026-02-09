@@ -34,17 +34,17 @@ import com.example.alcoholtracker.ui.navigation.AddDrink
 import com.example.alcoholtracker.ui.navigation.Details
 import com.example.alcoholtracker.ui.navigation.EditDrink
 import com.example.alcoholtracker.ui.navigation.Home
+import com.example.alcoholtracker.ui.navigation.List
 import com.example.alcoholtracker.ui.navigation.Overview
 import com.example.alcoholtracker.ui.navigation.Profile
 import com.example.alcoholtracker.ui.screens.AddDrinkScreen
+import com.example.alcoholtracker.ui.screens.AnalyticsScreen
 import com.example.alcoholtracker.ui.screens.HomeScreen
 import com.example.alcoholtracker.ui.screens.ListScreen
 import com.example.alcoholtracker.ui.screens.ProfileScreen
 import com.example.alcoholtracker.ui.screens.SignInScreen
-import com.example.alcoholtracker.ui.screens.AnalyticsScreen
 import com.example.alcoholtracker.ui.viewmodel.AuthViewModel
 import com.example.alcoholtracker.ui.viewmodel.UserAndUserDrinkLogViewModel
-import com.example.alcoholtracker.ui.navigation.List
 import com.example.compose.AlcoholTrackerTheme
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -56,7 +56,8 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    @Inject lateinit var auth: FirebaseAuth
+    @Inject
+    lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,11 +74,12 @@ class MainActivity : ComponentActivity() {
                     val userId by authViewModel.userId.collectAsState()
 
 
-                    if (userId != null){
+                    if (userId != null) {
                         MainScreen()
-                    }else{
-                        SignInScreen(authViewModel,
-                                onGuestLogin = { authViewModel.signInAnonymously() })
+                    } else {
+                        SignInScreen(
+                            authViewModel,
+                            onGuestLogin = { authViewModel.signInAnonymously() })
                     }
                 }
             }
@@ -97,7 +99,7 @@ fun MainScreen() {
         List,
         Overview,
         Profile,
-        AddDrink
+        AddDrink()
     )
     val topLevelRoutes = listOf(
         TopLevelRoute("Home", Home, Icons.Default.Home),
@@ -128,7 +130,7 @@ fun MainScreen() {
 
                 topLevelRoutes.forEach { destination ->
                     NavigationBarItem(
-                        selected = currentDestination?.hierarchy?.any {it.hasRoute(destination.route::class)} == true,
+                        selected = currentDestination?.hierarchy?.any { it.hasRoute(destination.route::class) } == true,
                         onClick = {
                             navController.navigate(destination.route) {
                                 popUpTo(navController.graph.findStartDestination().id) {
@@ -147,7 +149,7 @@ fun MainScreen() {
                                 contentDescription = "Icon"
                             )
                         },
-                        label = {Text(destination.name)}
+                        label = { Text(destination.name) }
                     )
                 }
 
@@ -164,14 +166,17 @@ fun MainScreen() {
             composable<Home> {
                 HomeScreen(
                     onFABClick = {
-                        navController.navigate(AddDrink)
+                        navController.navigate(AddDrink())
                     }
                 )
             }
             composable<List> {
                 ListScreen(
                     onFABClick = {
-                        navController.navigate(AddDrink)
+                        navController.navigate(AddDrink(null))
+                    },
+                    onEditClick = {
+                        navController.navigate(AddDrink(it.logId))
                     }
                 )
             }

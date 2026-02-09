@@ -34,12 +34,16 @@ interface UserAndUserDrinkLogDao {
     @Query("SELECT DISTINCT recipient FROM log WHERE userId = :userId")
     fun getRecipients(userId: String): Flow<List<String>>
 
+    @Query("SELECT * FROM log WHERE logId = :logId")
+    suspend fun getDrinkById(logId: Int): UserDrinkLog?
 
-    @Query("""
+    @Query(
+        """
     SELECT * FROM log 
     WHERE userId = :userId 
     AND date(date) IN (date('now'), date('now', '-1 day'))
-""")
+"""
+    )
     fun getTwoDayLogs(userId: String): Flow<List<UserDrinkLog>>
 
 }

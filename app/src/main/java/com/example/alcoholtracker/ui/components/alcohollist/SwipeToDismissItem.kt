@@ -37,7 +37,8 @@ fun SwipeToDismissItem(
     item: UserDrinkLog,
     onRemove: () -> Unit,
     modifier: Modifier,
-    listType: AlcoholListType
+    listType: AlcoholListType,
+    onEditClick: (UserDrinkLog) -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
     val swipeToDismissState = rememberSwipeToDismissBoxState(
@@ -99,7 +100,7 @@ fun SwipeToDismissItem(
                     .animateContentSize()
             ) {
 
-                DrinkItem(item, listType)
+                DrinkItem(item, listType, { onEditClick(it) })
 
 
                 if (expanded && listType == AlcoholListType.FULL) {

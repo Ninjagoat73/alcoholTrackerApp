@@ -1,6 +1,7 @@
 package com.example.alcoholtracker.ui.screens
 
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,6 +17,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableIntStateOf
@@ -34,14 +37,11 @@ import com.example.alcoholtracker.domain.usecase.adddrinkfuns.getFinalAmount
 import com.example.alcoholtracker.domain.usecase.adddrinkfuns.getLocalDateTime
 import com.example.alcoholtracker.ui.components.LogDrinkTopBar
 import com.example.alcoholtracker.ui.components.logComponents.ABVAndPriceTextFields
-
 import com.example.alcoholtracker.ui.components.logComponents.AmountDropDown
 import com.example.alcoholtracker.ui.components.logComponents.CategoryDropDown
-
 import com.example.alcoholtracker.ui.components.logComponents.DateAndTimePicker
 import com.example.alcoholtracker.ui.components.logComponents.DrinkAutoComplete
 import com.example.alcoholtracker.ui.components.logComponents.RecipientAutoComplete
-import com.example.alcoholtracker.ui.viewmodel.DrinkViewModel
 import com.example.alcoholtracker.ui.viewmodel.UserAndUserDrinkLogViewModel
 import com.vamsi.snapnotify.SnapNotify
 import java.time.LocalDate
@@ -52,8 +52,14 @@ import java.time.LocalTime
 fun AddDrinkScreen(
     onAddDrink: () -> Unit,
     viewModel: UserAndUserDrinkLogViewModel = hiltViewModel(),
-    drinkViewModel: DrinkViewModel = hiltViewModel()
 ) {
+
+    val drinkToEdit by viewModel.drinkToEdit.collectAsState()
+
+    val edit = drinkToEdit != null
+
+    Log.d("DrinkToEdit", drinkToEdit.toString())
+
 
     var alcoholPercentage by remember { mutableDoubleStateOf(0.0) }
     var cost by remember { mutableDoubleStateOf(0.0) }
@@ -67,7 +73,18 @@ fun AddDrinkScreen(
     var selectedTime by remember { mutableStateOf(LocalTime.now()) }
     val scrollState = rememberScrollState()
 
-
+    LaunchedEffect(drinkToEdit) {
+        drinkToEdit?.let {
+            alcoholPercentage = it.alcoholPercentage ?: 0.0
+            cost = it.cost ?: 0.0
+            selectedCategory = it.category
+            selectedAmount = it.amount
+            typedDrinkName = it.name
+            recipient = it.recipient ?: "Me"
+            selectedDate = it.date.toLocalDate()
+            selectedTime = it.date.toLocalTime()
+        }
+    }
 
 
     Scaffold(
@@ -85,14 +102,27 @@ fun AddDrinkScreen(
                         volume = getFinalAmount(selectedDrinkUnit, selectedAmount.toDouble()),
                         cost = cost,
                         recipient = recipient,
+                        inputAmount = selectedAmount.toDouble(),
+                        drinkUnit = selectedDrinkUnit,
                         dateTime = getLocalDateTime(selectedDate, selectedTime),
-                        logId = null
+                        logId = drinkToEdit?.logId
                     )
-                    viewModel.logDrink(request)
-                    onAddDrink()
+                    if (edit) {
+                        viewModel.updateDrink(drinkToEdit!!.logId, request)
+                        onAddDrink()
+                    } else {
+                        viewModel.logDrink(request)
+                        onAddDrink()
+                    }
                 },
                 icon = { Icon(Icons.Filled.Add, "Add Button") },
-                text = { Text("Add Drink") }
+                text = {
+                    if (edit) {
+                        Text("Update Drink")
+                    } else {
+                        Text("Add Drink")
+                    }
+                }
 
             )
         }
@@ -119,19 +149,25 @@ fun AddDrinkScreen(
                     }
                 },
             )
+
             DrinkAutoComplete(
+                drinkToEditName = typedDrinkName,
                 category = selectedCategory,
                 onTyped = { typedDrinkName = it },
                 onSelected = { selectedDrink = it },
             )
 
             AmountDropDown(
+                amount = selectedAmount,
+                selectedUnit = selectedDrinkUnit,
                 drinkCategory = selectedCategory ?: DrinkCategory.OTHER,
                 onSelected = { selectedDrinkUnit = it },
                 onTyped = { selectedAmount = it },
             )
 
             ABVAndPriceTextFields(
+                abv = alcoholPercentage,
+                price = cost,
                 defaultABV = selectedDrink?.alcoholContent ?: 0.0,
                 onABVChange = { alcoholPercentage = it },
                 onPriceChange = { cost = it }
@@ -139,6 +175,7 @@ fun AddDrinkScreen(
 
 
             RecipientAutoComplete(
+                drinkToEditRecipient = drinkToEdit?.recipient,
                 onAction = { recipient = it },
             )
 

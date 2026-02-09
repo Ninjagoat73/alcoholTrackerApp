@@ -4,6 +4,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -13,11 +17,14 @@ import com.example.alcoholtracker.data.model.UserDrinkLog
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun DrinkItem(item: UserDrinkLog,
-              listType: AlcoholListType){
+fun DrinkItem(
+    item: UserDrinkLog,
+    listType: AlcoholListType,
+    onEditClick: (UserDrinkLog) -> Unit
+) {
 
     val formatter = DateTimeFormatter.ofPattern("dd-MM")
-    val date  = item.date.toLocalDate().format(formatter)
+    val date = item.date.toLocalDate().format(formatter)
 
     ListItem(
         headlineContent = {
@@ -43,6 +50,15 @@ fun DrinkItem(item: UserDrinkLog,
                         text = date.toString(),
                         modifier = Modifier.weight(1f)
                     )
+                    Button(
+                        onClick = {
+                            onEditClick(item)
+                        },
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Icon(Icons.Default.Edit, "Edit")
+                    }
+
                 }
             }
         }
@@ -50,7 +66,7 @@ fun DrinkItem(item: UserDrinkLog,
 }
 
 @Composable
-fun ExpandedDrinkItem(item: UserDrinkLog){
+fun ExpandedDrinkItem(item: UserDrinkLog) {
     val timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss")
     val time = item.date.toLocalTime().format(timeFormatter)
 

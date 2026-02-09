@@ -26,7 +26,6 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -42,6 +41,8 @@ import com.example.alcoholtracker.ui.viewmodel.DrinkViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AmountDropDown(
+    amount: Int,
+    selectedUnit: DrinkUnit? = null,
     drinkCategory: DrinkCategory?,
     onSelected: (DrinkUnit) -> Unit,
     onTyped: (Int) -> Unit,
@@ -53,8 +54,6 @@ fun AmountDropDown(
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     )
     {
-        var selected by remember { mutableStateOf<DrinkUnit?>(DrinkUnit("milliliters", 1)) }
-        var amount by remember { mutableIntStateOf(500) }
         var expanded by remember { mutableStateOf(false) }
         val options = viewModel.getDrinkUnitsForCategory(drinkCategory ?: DrinkCategory.OTHER)
 
@@ -83,8 +82,8 @@ fun AmountDropDown(
                 OutlinedTextField(
                     value = amount.toString(),
                     onValueChange = {
-                        amount = it.toInt()
-                        onTyped(amount)
+                        val newValue = it.toIntOrNull() ?: 0.0
+                        onTyped(newValue.toInt())
                     },
                     keyboardOptions = KeyboardOptions.Default.copy(
                         keyboardType = KeyboardType.Number
@@ -101,9 +100,7 @@ fun AmountDropDown(
                         ) {
                             IconButton(
                                 onClick = {
-                                    val current = amount
-                                    amount = current + 1
-                                    onTyped(amount)
+                                    onTyped(amount + 1)
                                 },
                                 modifier = Modifier.size(24.dp)
                             ) {
@@ -111,10 +108,8 @@ fun AmountDropDown(
                             }
                             IconButton(
                                 onClick = {
-                                    val current = amount
-                                    if (current > 0) {
-                                        amount = (current - 1)
-                                        onTyped(amount)
+                                    if (amount > 0) {
+                                        onTyped(amount - 1)
                                     }
                                 },
                                 modifier = Modifier.size(24.dp)
@@ -136,7 +131,7 @@ fun AmountDropDown(
                         .height(64.dp)
                 ) {
                     OutlinedTextField(
-                        value = selected?.name ?: "Select a unit",
+                        value = selectedUnit?.name ?: "Select a unit",
                         onValueChange = { },
                         readOnly = true,
                         label = null,
@@ -164,7 +159,6 @@ fun AmountDropDown(
                                 text = { Text(option.name) },
                                 onClick = {
                                     onSelected(option)
-                                    selected = option
                                     expanded = false
                                 }
                             )

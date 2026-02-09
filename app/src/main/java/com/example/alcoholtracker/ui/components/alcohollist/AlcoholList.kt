@@ -9,22 +9,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.example.alcoholtracker.data.model.UserDrinkLog
 import com.example.alcoholtracker.ui.viewmodel.AuthViewModel
 import com.example.alcoholtracker.ui.viewmodel.UserAndUserDrinkLogViewModel
 
-enum class AlcoholListType{FULL, HOME}
+enum class AlcoholListType { FULL, HOME }
 
 @Composable
 fun AlcoholListComposable(
-    authViewModel: AuthViewModel,
-    userDrinkLogViewModel: UserAndUserDrinkLogViewModel,
-    listType: AlcoholListType
+    listType: AlcoholListType,
+    onEditClick: (UserDrinkLog) -> Unit,
+    authViewModel: AuthViewModel = hiltViewModel(),
+    userDrinkLogViewModel: UserAndUserDrinkLogViewModel = hiltViewModel(),
 ) {
 
     val userId by authViewModel.getUserID()
     val drinkLogs by userDrinkLogViewModel.getDrinkLogs(userId!!).collectAsState()
 
-    Box(modifier = Modifier.fillMaxSize()){
+    Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn {
 
             item {
@@ -39,7 +42,8 @@ fun AlcoholListComposable(
                     item = item,
                     onRemove = { userDrinkLogViewModel.deleteDrink(item) },
                     modifier = Modifier.animateItem(tween(200)),
-                    listType = listType
+                    listType = listType,
+                    onEditClick = { onEditClick(it) }
                 )
             }
         }
