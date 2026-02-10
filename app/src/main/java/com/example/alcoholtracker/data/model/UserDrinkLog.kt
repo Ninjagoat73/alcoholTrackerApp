@@ -42,6 +42,10 @@ data class UserDrinkLog(
     @ColumnInfo("inputAmount")
     val inputAmount: Double?,
 
+    @ColumnInfo("isFavorite")
+    val isFavorite: Boolean,
+
+
     @Embedded(prefix = "unit_")
     val drinkUnit: DrinkUnit?,
 

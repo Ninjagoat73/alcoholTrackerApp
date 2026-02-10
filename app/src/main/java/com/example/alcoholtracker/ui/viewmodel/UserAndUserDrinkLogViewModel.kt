@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.example.alcoholtracker.data.model.User
-
 import com.example.alcoholtracker.data.model.UserDrinkLog
 import com.example.alcoholtracker.data.repository.UserAndUserDrinkLogRepository
 import com.example.alcoholtracker.domain.usecase.DrinkCreateRequest
@@ -14,10 +13,14 @@ import com.example.alcoholtracker.ui.navigation.AddDrink
 import com.google.firebase.auth.FirebaseAuth
 import com.vamsi.snapnotify.SnapNotify
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -36,6 +39,9 @@ class UserAndUserDrinkLogViewModel @Inject constructor(
     private val _twoDaySummary = MutableStateFlow<List<UserDrinkLog>?>(null)
     private val _drinkLogs = MutableStateFlow<List<UserDrinkLog>>(emptyList())
     val twoDaySummary: StateFlow<List<UserDrinkLog>?> = _twoDaySummary
+
+    private val _searchQuery = MutableStateFlow("")
+    val searchQuery = _searchQuery.asStateFlow()
 
     private val _drinkToEdit = MutableStateFlow<UserDrinkLog?>(null)
     val drinkToEdit = _drinkToEdit.asStateFlow()
@@ -56,10 +62,52 @@ class UserAndUserDrinkLogViewModel @Inject constructor(
         }
     }
 
+    fun updateSearchQuery(query: String) {
+        _searchQuery.value = query
+    }
+
     fun getDrinkLogs(userId: String): StateFlow<List<UserDrinkLog>> {
         return userAndUserDrinkLogRepository.getDrinkLogsByUserId(userId)
             .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
     }
+
+    // 1. Create Raw Flows that "switch" when the userId changes
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val rawRecentFlow = _userId.flatMapLatest { id ->
+        if (id.isEmpty()) flowOf(emptyList())
+        else userAndUserDrinkLogRepository.getRecentLogs(id)
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val rawFrequentFlow = _userId.flatMapLatest { id ->
+        if (id.isEmpty()) flowOf(emptyList())
+        else userAndUserDrinkLogRepository.getFrequentLogs(id)
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val rawFavoriteFlow = _userId.flatMapLatest { id ->
+        if (id.isEmpty()) flowOf(emptyList())
+        else userAndUserDrinkLogRepository.getFavoriteLogs(id)
+    }
+
+    // 2. Combine the Raw Flows with the Search Query for filtering
+    val recentDrinks: StateFlow<List<UserDrinkLog>> =
+        combine(_searchQuery, rawRecentFlow) { query, logs ->
+            if (query.isBlank()) logs
+            else logs.filter { it.name.contains(query, ignoreCase = true) }
+        }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+
+    val frequentLogs: StateFlow<List<UserDrinkLog>> =
+        combine(_searchQuery, rawFrequentFlow) { query, logs ->
+            if (query.isBlank()) logs
+            else logs.filter { it.name.contains(query, ignoreCase = true) }
+        }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+
+    val favoriteLogs: StateFlow<List<UserDrinkLog>> =
+        combine(_searchQuery, rawFavoriteFlow) { query, logs ->
+            if (query.isBlank()) logs
+            else logs.filter { it.name.contains(query, ignoreCase = true) }
+        }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
 
     fun setUserId(userId: String) {

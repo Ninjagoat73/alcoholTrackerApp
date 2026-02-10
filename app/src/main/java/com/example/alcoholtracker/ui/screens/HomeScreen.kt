@@ -23,9 +23,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.example.alcoholtracker.ui.components.AddButton
+import com.example.alcoholtracker.ui.components.AlcoholListType
 import com.example.alcoholtracker.ui.components.HomeTopBar
 import com.example.alcoholtracker.ui.components.alcohollist.AlcoholListComposable
-import com.example.alcoholtracker.ui.components.alcohollist.AlcoholListType
 import com.example.alcoholtracker.ui.components.progressbar.AmountProgressBar
 import com.example.alcoholtracker.ui.components.progressbar.CountProgressBar
 import com.example.alcoholtracker.ui.components.progressbar.MoneyProgressBar
@@ -42,16 +42,16 @@ fun HomeScreen(
     progressBarViewModel: ProgressBarViewModel = hiltViewModel(),
     authViewModel: AuthViewModel = hiltViewModel(),
     userDrinkLogViewModel: UserAndUserDrinkLogViewModel = hiltViewModel(),
-){
+) {
     val userId by authViewModel.getUserID()
     // val userDrinkLogs by userDrinkLogViewModel.getDrinkLogs(userId!!).collectAsState()
     val twoDayDrinkLogs by userDrinkLogViewModel.getTwoDaySummary(userId!!).collectAsState()
-    var showDialog by remember { mutableStateOf(false)}
+    var showDialog by remember { mutableStateOf(false) }
     val currentType by progressBarViewModel.currentType.collectAsState()
 
-    val moneyTarget by  progressBarViewModel.moneyTarget.collectAsState()
+    val moneyTarget by progressBarViewModel.moneyTarget.collectAsState()
     val countTarget by progressBarViewModel.countTarget.collectAsState()
-    val amountTarget by  progressBarViewModel.amountTarget.collectAsState()
+    val amountTarget by progressBarViewModel.amountTarget.collectAsState()
     val currentTargets =
         mapOf(
             ProgressBarType.MONEY to moneyTarget,
@@ -69,33 +69,32 @@ fun HomeScreen(
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
-        topBar = {HomeTopBar() {} },
-        floatingActionButton = { AddButton(onFABClick)},
-        modifier = Modifier.fillMaxSize()
-
-
+        topBar = { HomeTopBar() {} },
+        floatingActionButton = { AddButton(onFABClick) },
+        modifier = Modifier.fillMaxSize(),
     ) { innerPadding ->
         Surface(modifier = Modifier.padding(innerPadding)) {
 
             Column {
 
-                OutlinedCard(modifier = Modifier
-                    .padding(16.dp)
-                    .clip(RoundedCornerShape(12.dp))
-                    .height(300.dp)
-                    .fillMaxWidth()
-                ){
+                OutlinedCard(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .clip(RoundedCornerShape(12.dp))
+                        .height(300.dp)
+                        .fillMaxWidth()
+                ) {
                     AlcoholListComposable(
                         AlcoholListType.HOME,
                         {}
                     )
                 }
 
-                if (showDialog){
+                if (showDialog) {
                     ProgressBarEditDialog(
                         currentType,
                         currentTargets,
-                        onDismiss = {showDialog = false},
+                        onDismiss = { showDialog = false },
                         onConfirm = { selectedType, selectedTarget ->
                             progressBarViewModel.updateType(selectedType.toString())
                             progressBarViewModel.updateTarget(selectedTarget, selectedType)
@@ -106,7 +105,7 @@ fun HomeScreen(
                 progressBar.ProgressBarCard(
                     twoDayDrinkLogs,
                     target = currentTarget!!,
-                    onEditClick = {showDialog = true}
+                    onEditClick = { showDialog = true }
                 )
             }
         }
@@ -114,9 +113,8 @@ fun HomeScreen(
 }
 
 
-
-@Preview (showBackground = true)
+@Preview(showBackground = true)
 @Composable
-fun PreviewFunction(){
+fun PreviewFunction() {
 
 }

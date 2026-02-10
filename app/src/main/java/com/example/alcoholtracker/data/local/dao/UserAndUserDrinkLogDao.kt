@@ -37,6 +37,23 @@ interface UserAndUserDrinkLogDao {
     @Query("SELECT * FROM log WHERE logId = :logId")
     suspend fun getDrinkById(logId: Int): UserDrinkLog?
 
+    @Query("SELECT * FROM log WHERE userId = :userId ORDER BY date DESC")
+    fun getRecentLogs(userId: String): Flow<List<UserDrinkLog>>
+
+    @Query(
+        """
+        SELECT *, COUNT(*) as frequency 
+        FROM log 
+        WHERE userId = :userId 
+        GROUP BY name, category, alcoholPercentage, amount 
+        ORDER BY frequency DESC
+        """
+    )
+    fun getFrequentLogs(userId: String): Flow<List<UserDrinkLog>>
+
+    @Query("Select * from log where userId = :userId and isFavorite = 1")
+    fun getFavoritesLogs(userId: String): Flow<List<UserDrinkLog>>
+
     @Query(
         """
     SELECT * FROM log 

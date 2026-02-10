@@ -11,10 +11,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.example.alcoholtracker.data.model.UserDrinkLog
+import com.example.alcoholtracker.ui.components.AlcoholListType
 import com.example.alcoholtracker.ui.viewmodel.AuthViewModel
 import com.example.alcoholtracker.ui.viewmodel.UserAndUserDrinkLogViewModel
 
-enum class AlcoholListType { FULL, HOME }
 
 @Composable
 fun AlcoholListComposable(

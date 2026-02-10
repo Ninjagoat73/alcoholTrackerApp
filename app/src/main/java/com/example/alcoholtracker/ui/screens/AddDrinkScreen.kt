@@ -51,6 +51,7 @@ import java.time.LocalTime
 @Composable
 fun AddDrinkScreen(
     onAddDrink: () -> Unit,
+    onBackClick: () -> Unit,
     viewModel: UserAndUserDrinkLogViewModel = hiltViewModel(),
 ) {
 
@@ -88,7 +89,11 @@ fun AddDrinkScreen(
 
 
     Scaffold(
-        topBar = { LogDrinkTopBar() },
+        topBar = {
+            LogDrinkTopBar(
+                onBackClick = { onBackClick() }
+            )
+        },
         containerColor = MaterialTheme.colorScheme.background,
         modifier = Modifier
             .fillMaxSize(),
@@ -125,10 +130,10 @@ fun AddDrinkScreen(
                 }
 
             )
-        }
+        },
 
 
-    ) { innerPadding ->
+        ) { innerPadding ->
 
 
         Column(
@@ -166,7 +171,7 @@ fun AddDrinkScreen(
             )
 
             ABVAndPriceTextFields(
-                abv = alcoholPercentage,
+                abv = selectedDrink?.alcoholContent ?: alcoholPercentage,
                 price = cost,
                 defaultABV = selectedDrink?.alcoholContent ?: 0.0,
                 onABVChange = { alcoholPercentage = it },

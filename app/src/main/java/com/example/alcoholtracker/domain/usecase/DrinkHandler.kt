@@ -26,6 +26,7 @@ class DrinkHandler @Inject constructor(
             recipient = request.recipient,
             inputAmount = request.inputAmount,
             drinkUnit = request.drinkUnit,
+            isFavorite = false,
 
             date = request.dateTime ?: LocalDateTime.now(),
 
@@ -52,6 +53,7 @@ class DrinkHandler @Inject constructor(
             recipient = request.recipient,
             inputAmount = request.inputAmount,
             drinkUnit = request.drinkUnit,
+            isFavorite = false,
             date = request.dateTime ?: LocalDateTime.now(),
 
             )

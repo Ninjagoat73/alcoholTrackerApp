@@ -25,6 +25,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -56,6 +57,28 @@ fun AmountDropDown(
     {
         var expanded by remember { mutableStateOf(false) }
         val options = viewModel.getDrinkUnitsForCategory(drinkCategory ?: DrinkCategory.OTHER)
+        var previousUnit by remember { mutableStateOf<DrinkUnit?>(DrinkUnit("milliliters", 1)) }
+
+        LaunchedEffect(selectedUnit) {
+            val isCurrentUnitMilliliters = selectedUnit?.name == "milliliters"
+            val wasPreviousUnitMilliliters = previousUnit?.name == "milliliters"
+
+            when {
+                !isCurrentUnitMilliliters && wasPreviousUnitMilliliters -> {
+                    onTyped(1)
+                }
+
+                !wasPreviousUnitMilliliters && isCurrentUnitMilliliters -> {
+                    onTyped(100)
+                }
+
+                else -> {
+
+                }
+            }
+            previousUnit = selectedUnit
+
+        }
 
 
         Column() {

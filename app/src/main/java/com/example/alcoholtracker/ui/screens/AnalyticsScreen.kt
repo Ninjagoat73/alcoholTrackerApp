@@ -9,7 +9,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.PrimaryScrollableTabRow
+import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
@@ -31,32 +31,24 @@ import kotlinx.coroutines.launch
 fun AnalyticsScreen(
     // onCardClick: (String, List<ChartEntry>, @Composable (Modifier?, List<ChartEntry>) -> Unit) -> Unit,
     userDrinkLogViewModel: UserAndUserDrinkLogViewModel = hiltViewModel()
-){
+) {
 
     val scope = rememberCoroutineScope()
-    val pagerState = rememberPagerState(pageCount =  { AnalyticsTabs.entries.size})
-    val selectedTabIndex = remember{ derivedStateOf { pagerState.currentPage } }
-
-    val charts = listOf(
-        "Pie chart 1",
-        "Pie chart 2",
-        "Pie chart 3",
-        "Pie chart 4",
-        "Bar Graph"
-    )
-
+    val pagerState = rememberPagerState(pageCount = { AnalyticsTabs.entries.size })
+    val selectedTabIndex = remember { derivedStateOf { pagerState.currentPage } }
 
     Scaffold(
         topBar = { AnalyticsTopBar() },
         containerColor = MaterialTheme.colorScheme.background,
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
-        Column(modifier = Modifier
-            .padding(top = innerPadding.calculateTopPadding())
+        Column(
+            modifier = Modifier
+                .padding(top = innerPadding.calculateTopPadding())
 
         ) {
 
-            PrimaryScrollableTabRow(
+            PrimaryTabRow(
                 selectedTabIndex = selectedTabIndex.value,
                 modifier = Modifier.fillMaxWidth()
             ) {
@@ -68,7 +60,7 @@ fun AnalyticsScreen(
                                 pagerState.animateScrollToPage(currentTab.ordinal)
                             }
                         },
-                        text = {Text(currentTab.title)},
+                        text = { Text(currentTab.title) },
                         icon = {
                             Icon(
                                 imageVector = if (selectedTabIndex.value == index)
@@ -85,12 +77,14 @@ fun AnalyticsScreen(
 
             HorizontalPager(
                 state = pagerState,
-                modifier = Modifier.fillMaxWidth().weight(1f)
-            ) {page ->
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+            ) { page ->
                 Box(
                     modifier = Modifier.fillMaxSize(),
                 ) {
-                    when (page){
+                    when (page) {
                         0 -> OverviewCharts()
                         1 -> FinanceCharts()
                         2 -> HealthCharts()

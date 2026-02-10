@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -38,16 +39,18 @@ fun HomeTopBar(onCalendarClick: () -> Unit) {
         },
         actions = {
             IconButton(onClick = onCalendarClick) {
-                Icon(Icons.Default.DateRange,
+                Icon(
+                    Icons.Default.DateRange,
                     contentDescription = "Select Date",
-                    tint = MaterialTheme.colorScheme.onPrimary)
+                    tint = MaterialTheme.colorScheme.onPrimary
+                )
             }
         }
     )
 }
 
 @Composable
-fun AnalyticsTopBar(){
+fun AnalyticsTopBar() {
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -63,17 +66,18 @@ fun AnalyticsTopBar(){
 }
 
 @Composable
-fun CurrentDayText(){
+fun CurrentDayText() {
     val todayDate = getFormattedDate(LocalDate.now())
     val yesterdayDate = getFormattedDate(LocalDate.now().plusDays(-1))
-    Text("$yesterdayDate - $todayDate",
+    Text(
+        "$yesterdayDate - $todayDate",
         style = MaterialTheme.typography.titleLarge,
     )
 }
 
 @Composable
-fun LogDrinkTopBar(){
-       TopAppBar(
+fun LogDrinkTopBar(onBackClick: () -> Unit) {
+    TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             titleContentColor = MaterialTheme.colorScheme.onPrimary
@@ -83,6 +87,18 @@ fun LogDrinkTopBar(){
                 Text("Log a Drink")
             }
         },
-        modifier = Modifier.statusBarsPadding()
+        modifier = Modifier.statusBarsPadding(),
+        navigationIcon = {
+            IconButton(
+                onClick = { onBackClick() }
+            ) {
+                Icon(
+                    Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Back",
+                    tint = MaterialTheme.colorScheme.onPrimary
+                )
+            }
+        }
     )
 }
+

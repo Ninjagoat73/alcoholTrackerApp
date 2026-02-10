@@ -4,7 +4,6 @@ import com.example.alcoholtracker.data.model.Drink
 import com.example.alcoholtracker.data.remote.BeerRemoteSource
 import com.example.alcoholtracker.domain.logic.DrinkCategoryHandler
 import com.example.alcoholtracker.domain.model.DrinkUnit
-import com.example.alcoholtracker.ui.components.alcohollist.DrinkItem
 import javax.inject.Inject
 
 class WineHandler @Inject constructor(

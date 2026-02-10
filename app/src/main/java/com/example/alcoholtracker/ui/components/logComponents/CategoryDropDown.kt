@@ -33,42 +33,47 @@ data class Category(
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
-    @Composable
-    fun CategoryDropDown(
-        selected: DrinkCategory?,
-        onSelected: (DrinkCategory) -> Unit,
+@Composable
+fun CategoryDropDown(
+    selected: DrinkCategory?,
+    onSelected: (DrinkCategory) -> Unit,
+) {
+
+    var expanded by remember { mutableStateOf(false) }
+    val categories = DrinkCategory.entries.toList()
+
+    Column(
+        modifier = Modifier.fillMaxWidth()
     ) {
-
-        var expanded by remember { mutableStateOf(false) }
-        val categories = DrinkCategory.entries.toList()
-
-        Column(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(
+        Text(
             text = "Category",
             style = MaterialTheme.typography.labelLarge,
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.padding(bottom = 8.dp, start = 4.dp, top = 16.dp)
         )
-            ExposedDropdownMenuBox(
+        ExposedDropdownMenuBox(
             expanded = expanded,
             onExpandedChange = { expanded = !expanded },
             modifier = Modifier.fillMaxWidth()
-        ){
+        ) {
             OutlinedTextField(
                 value = selected?.nameString ?: "Select a category",
-                onValueChange = {  },
+                onValueChange = { },
                 readOnly = true,
-                leadingIcon = {selected?.let {
-                    Icon(
-                        painter = painterResource(id = it.icon),
-                        contentDescription = null,
-                        modifier = Modifier.size(24.dp)
+                leadingIcon = {
+                    selected?.let {
+                        Icon(
+                            painter = painterResource(id = it.icon),
+                            contentDescription = null,
+                            modifier = Modifier.size(24.dp)
+                        )
+                    } ?: Icon(Icons.Filled.Category, contentDescription = null)
+                },
+                trailingIcon = {
+                    ExposedDropdownMenuDefaults.TrailingIcon(
+                        expanded = expanded
                     )
-                } ?: Icon(Icons.Filled.Category, contentDescription = null)},
-                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(
-                    expanded = expanded) },
+                },
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = MaterialTheme.colorScheme.primary,
                     unfocusedBorderColor = MaterialTheme.colorScheme.outline
@@ -87,7 +92,7 @@ data class Category(
             ) {
                 categories.forEach { option ->
                     DropdownMenuItem(
-                        text = { Text(option.nameString)},
+                        text = { Text(option.nameString) },
                         leadingIcon = {
                             Icon(
                                 painter = painterResource(id = option.icon),
@@ -103,7 +108,7 @@ data class Category(
                 }
             }
         }
-        }
-
-
     }
+
+
+}

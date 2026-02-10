@@ -54,7 +54,7 @@ fun DateAndTimePicker(
     }
 
     val datePickerState = rememberDatePickerState()
-    
+
     LaunchedEffect(currentDate) {
         currentDate?.let { date ->
             datePickerState.selectedDateMillis = date.atStartOfDay(java.time.ZoneOffset.UTC)

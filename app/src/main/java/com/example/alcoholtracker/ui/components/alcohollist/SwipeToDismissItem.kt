@@ -29,6 +29,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import com.example.alcoholtracker.data.model.UserDrinkLog
+import com.example.alcoholtracker.ui.components.AlcoholListType
+import com.example.alcoholtracker.ui.components.DrinkItem
+import com.example.alcoholtracker.ui.components.ExpandedDrinkItem
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -100,7 +103,7 @@ fun SwipeToDismissItem(
                     .animateContentSize()
             ) {
 
-                DrinkItem(item, listType, { onEditClick(it) })
+                DrinkItem(item, listType, { onEditClick(it) }, {})
 
 
                 if (expanded && listType == AlcoholListType.FULL) {

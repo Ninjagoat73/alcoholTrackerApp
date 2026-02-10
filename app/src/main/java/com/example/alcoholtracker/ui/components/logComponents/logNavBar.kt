@@ -1,11 +1,8 @@
-package com.example.alcoholtracker.ui.components
-
+package com.example.alcoholtracker.ui.components.logComponents
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Analytics
-import androidx.compose.material.icons.filled.FormatListNumbered
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Code
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -18,24 +15,20 @@ import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.alcoholtracker.ui.navigation.Home
-import com.example.alcoholtracker.ui.navigation.List
-import com.example.alcoholtracker.ui.navigation.Overview
-import com.example.alcoholtracker.ui.navigation.Profile
+import com.example.alcoholtracker.ui.navigation.AddDrink
+import com.example.alcoholtracker.ui.navigation.Search
 
-data class TopLevelRoute<T : Any>(val name: String, val route: T, val icon: ImageVector)
+data class LogNavRoute<T : Any>(val name: String, val route: T, val icon: ImageVector)
 
 
 @Composable
-fun BottomNavigationBar(navController: NavController){
+fun LogNavBar(navController: NavController) {
 
     val topLevelRoutes = listOf(
-        TopLevelRoute("Home", Home, Icons.Default.Home),
-        TopLevelRoute("List", List, Icons.Default.FormatListNumbered),
-        TopLevelRoute("Analytics", Overview, Icons.Default.Analytics),
-        TopLevelRoute("Profile", Profile, Icons.Default.Person)
-
+        LogNavRoute("Search", Search, Icons.Default.Search),
+        LogNavRoute("Custom", AddDrink(), Icons.Default.Code),
     )
+
 
     NavigationBar {
 
@@ -44,7 +37,7 @@ fun BottomNavigationBar(navController: NavController){
 
         topLevelRoutes.forEach { destination ->
             NavigationBarItem(
-                selected = currentDestination?.hierarchy?.any {it.hasRoute(destination.route::class)} == true,
+                selected = currentDestination?.hierarchy?.any { it.hasRoute(destination.route::class) } == true,
                 onClick = {
                     navController.navigate(destination.route) {
                         popUpTo(navController.graph.findStartDestination().id) {
@@ -63,7 +56,7 @@ fun BottomNavigationBar(navController: NavController){
                         contentDescription = "Icon"
                     )
                 },
-                label = {Text(destination.name)}
+                label = { Text(destination.name) }
             )
         }
 
